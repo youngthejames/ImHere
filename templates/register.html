@@ -1,0 +1,24 @@
+<html>
+
+<body>
+
+    <h1><center>Register</center></h1>
+
+    <center>
+    <form method="POST" action="/register">
+    <label>username:</label> <input type="text" name="username"><br>
+    <label>password:</label> <input type="password" name="password"><br>
+    <label>verify password:</label> <input type="password" name="vpassword"><br>
+    <input type="submit" value="register">
+    </form>
+    {% if nomatch %}
+        passwords don't match!
+    {% elif incomplete %}
+        fill in all of the fields!
+    {% endif %}
+    </center>
+
+
+</body>
+
+</html>

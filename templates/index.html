@@ -4,7 +4,11 @@
 
     <h1><center>ImHere</center></h1>
 
-    Welcome to the app!
+    {% if username %}
+        Welcome to the app, {{username}}!
+    {% else %}
+        Welcome to the app, anonymous!
+    {% endif %}
 
 </body>
 
