@@ -1,8 +1,17 @@
 #!/usr/bin/env python2.7
 
 import os
+import httplib2
+import uuid
+import json
+
+import oauth2client
+import apiclient
+import flask
+import sqlalchemy
+
 from sqlalchemy import *
-from sqlalchemy.pool import NullPool
+# from sqlalchemy.pool import NullPool
 from flask import Flask, render_template, request, g
 
 tmpl_dir = os.path.join(
@@ -10,7 +19,7 @@ tmpl_dir = os.path.join(
     'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
 
-engine = create_engine('postgresql://ricardo:password@localhost/mydb')
+engine = create_engine('postgres://cwuepekp:SkVXF4KcwLJvTNKT41e7ruWQDcF3OSEU@jumbo.db.elephantsql.com:5432/cwuepekp')
 
 
 @app.before_request
@@ -22,6 +31,36 @@ def before_request():
         import traceback; traceback.print_exc()
         g.conn = None
 
+# get/create user id in db
+def get_or_create_user(db, user):
+    return 7
+
+# make sure that user is authenticated w/ live session on every protected request
+@app.before_request
+def manage_session():
+    # want to go through oauth flow for this route specifically
+    # not get stuck in redirect loop
+    if(request.path == '/oauth2callback'):
+        return
+    # want to allow users to public pages without a session
+    if('protected' not in request.path):
+        return
+    # validate that user has valid session
+    # add the google user info into session
+    if 'credentials' not in flask.session:
+        return flask.redirect(flask.url_for('oauth2callback'))
+    credentials = oauth2client.client.OAuth2Credentials.from_json(flask.session['credentials'])
+    if credentials.access_token_expired:
+        return flask.redirect(flask.url_for('oauth2callback'))
+    else:
+        http_auth = credentials.authorize(httplib2.Http())
+        userinfo_client = apiclient.discovery.build('oauth2', 'v2', http_auth)
+        user = userinfo_client.userinfo().v2().me().get().execute()
+
+        # TODO should block non @columbia.edu addresses
+
+        flask.session['google_user'] = user
+        flask.session['id'] = get_or_create_user(g.conn, user)
 
 @app.teardown_request
 def teardown_request(exception):
@@ -31,13 +70,41 @@ def teardown_request(exception):
         pass
 
 
-@app.route('/', methods=['GET', 'POST'])
-def main():
-    if request.method == 'GET':
-        return render_template('login.html')
-        
-    else:
-        return render_template('index.html')
+@app.route('/')
+def index():
+    return 'this is an unauthenticated page'
+
+@app.route('/protected')
+def protected():
+    return json.dumps(flask.session['google_user'])
+
+@app.route('/oauth/callback')
+def oauth2callback():
+  flow = oauth2client.client.flow_from_clientsecrets(
+      'client_secrets.json',
+      scope=['https://www.googleapis.com/auth/userinfo.email','https://www.googleapis.com/auth/userinfo.profile'],
+      redirect_uri=flask.url_for('oauth2callback', _external=True))
+  if 'code' not in flask.request.args:
+    auth_uri = flow.step1_get_authorize_url()
+    return flask.redirect(auth_uri)
+  else:
+    auth_code = flask.request.args.get('code')
+    credentials = flow.step2_exchange(auth_code)
+    flask.session['credentials'] = credentials.to_json()
+    return flask.redirect(flask.url_for('protected'))
+
+@app.route('/oauth/logout')
+def logout():
+    flask.session.clear()
+    return flask.redirect(flask.url_for('index'))
+
+# @app.route('/', methods=['GET', 'POST'])
+# def main():
+#     if request.method == 'GET':
+#         return render_template('login.html')
+#
+#     else:
+#         return render_template('index.html')
 
 
 @app.route('/login')
@@ -76,7 +143,7 @@ def register():
         # coming from login page
         elif len(request.form) is 0:
             return render_template('register.html')
-            
+
 
 if __name__ == '__main__':
     import click
@@ -94,12 +161,13 @@ if __name__ == '__main__':
             python app.py
 
         Show the help text using:
-        
+
             python app.py --help
-        
+
         '''
         HOST, PORT = host, port
         print 'running on %s:%d' % (HOST, PORT)
+        app.secret_key = str(uuid.uuid4())
         app.run(host=HOST, port=PORT, debug=debug, threaded=threaded)
 
     run()

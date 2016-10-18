@@ -25,9 +25,6 @@ def index():
     print user
 
     return 'hi'
-    # drive_service = discovery.build('drive', 'v2', http_auth)
-    # files = drive_service.files().list().execute()
-    # return json.dumps(files)
 
 
 @app.route('/oauth2callback')
