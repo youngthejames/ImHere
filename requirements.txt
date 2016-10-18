@@ -1,0 +1,8 @@
+flask
+sqlalchemy
+psycopg2
+click
+oauth2client
+google-api-python-client
+requests
+requests_oauth
