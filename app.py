@@ -14,6 +14,8 @@ from sqlalchemy import *
 # from sqlalchemy.pool import NullPool
 from flask import Flask, render_template, request, g
 
+from models import users_model
+
 tmpl_dir = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
     'templates')
@@ -31,9 +33,6 @@ def before_request():
         import traceback; traceback.print_exc()
         g.conn = None
 
-# get/create user id in db
-def get_or_create_user(db, user):
-    return 7
 
 # make sure that user is authenticated w/ live session on every protected request
 @app.before_request
@@ -49,18 +48,23 @@ def manage_session():
     # add the google user info into session
     if 'credentials' not in flask.session:
         return flask.redirect(flask.url_for('oauth2callback'))
+
     credentials = oauth2client.client.OAuth2Credentials.from_json(flask.session['credentials'])
     if credentials.access_token_expired:
         return flask.redirect(flask.url_for('oauth2callback'))
     else:
+        # use token to get user profile from google oauth api
         http_auth = credentials.authorize(httplib2.Http())
         userinfo_client = apiclient.discovery.build('oauth2', 'v2', http_auth)
         user = userinfo_client.userinfo().v2().me().get().execute()
 
-        # TODO should block non @columbia.edu addresses
+        if 'columbia.edu' not in user['email']:
+            return flask.redirect(flask.url_for('bademail'))
+
+        um = users_model.Users(g.conn)
 
         flask.session['google_user'] = user
-        flask.session['id'] = get_or_create_user(g.conn, user)
+        flask.session['id'] = um.get_or_create_user(user)
 
 @app.teardown_request
 def teardown_request(exception):
@@ -77,6 +81,10 @@ def index():
 @app.route('/protected')
 def protected():
     return json.dumps(flask.session['google_user'])
+
+@app.route('/bademail')
+def bademail():
+    return 'only columbia.edu email address accepted'
 
 @app.route('/oauth/callback')
 def oauth2callback():
