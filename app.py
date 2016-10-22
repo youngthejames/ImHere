@@ -13,6 +13,7 @@ import sqlalchemy
 from sqlalchemy import *
 # from sqlalchemy.pool import NullPool
 from flask import Flask, render_template, request, g
+from datetime import datetime
 
 from models import users_model
 
@@ -92,18 +93,52 @@ def index():
 @app.route('/main_student')
 def main_student():
 
+    # set correct 'active' for each course
+    cursor = g.conn.execute('select * from courses')
+    for result in cursor:
+        now = datetime.time(datetime.now())
+        eligible = (True if (now > result[2] and now < result[3]) else False)
+        if eligible:
+            g.conn.execute(
+                'update courses set active = 1 where cid = %s'
+                % result[0])
+        else:
+            g.conn.execute(
+                'update courses set active = 0 where cid = %s'
+                % result[0])
+    cursor.close()
+
+    # now find relevant classes to user
     classes = []
+    query = ('select courses.cid, courses.name, courses.start_time, '
+             'courses.end_time, courses.start_date, courses.end_date, '
+             'courses.day, courses.active, enrolled_in.sid '
+             'from courses, enrolled_in '
+             'where courses.cid = enrolled_in.cid '
+             "and enrolled_in.sid = '%s'"
+             % flask.session['id'])
 
-    cursor = g.conn.execute(
-        "select courses.name from courses, enrolled_in where courses.cid = enrolled_in.cid and enrolled_in.sid = '%s'" % flask.session['id'])
+    cursor = g.conn.execute(query)
 
+    # result references each of the fields below
     for result in cursor:
         classes.append(result)
 
-    if len(classes) is 0:
-        print 'shit'
-
+    cursor.close()
     context = dict(data = classes)
+
+    # used in html jinja2 formatting
+    '''
+    n[0] == class id
+    n[1] == class name
+    n[2] == class start time
+    n[3] == class end time
+    n[4] == class start date
+    n[5] == class end date
+    n[6] == class day
+    n[7] == course active <int>
+    n[8] == student id
+    '''
 
     return render_template('main_student.html', **context)
 

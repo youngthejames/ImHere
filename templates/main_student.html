@@ -6,13 +6,32 @@
 
     <h2>ImHere</h2><br>
 
+    <!-- first show classes that are available to be signed in -->
     {% for n in data %}
+        {% if n[7] == 1 %}
 
-        <h4>{{n[0]}}</h4>
-        Sign in now!
-        Secret Code
-        I'm Here!
-        
+            <p>
+            <h4>{{n[1]}}</h4>
+
+            Sign in now!
+            Secret Code
+            I'm Here!
+            </p><br>
+
+        {% endif %}
+    {% endfor %}
+
+    <!-- then show classes that are not ongoing at this time/date -->
+    {% for n in data %}
+        {% if n[7] == 0 %}
+
+            <p>
+            <h4>{{n[1]}}</h4>
+
+            Next class at {{n[2]}}
+            </p><br>
+
+        {% endif %}
     {% endfor %}
 
     </center>
