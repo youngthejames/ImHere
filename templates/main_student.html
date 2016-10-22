@@ -13,9 +13,11 @@
             <p>
             <h4>{{n[1]}}</h4>
 
-            Sign in now!
-            Secret Code
-            I'm Here!
+            <form action="/bademail" method="post">
+                Sign in now!
+                <input type="text" name="secret_code" value="Secret Code">
+                <input type="submit" value="Submit">
+            </form>
             </p><br>
 
         {% endif %}
