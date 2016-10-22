@@ -21,7 +21,8 @@ tmpl_dir = os.path.join(
     'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
 
-engine = create_engine('postgres://cwuepekp:SkVXF4KcwLJvTNKT41e7ruWQDcF3OSEU@jumbo.db.elephantsql.com:5432/cwuepekp')
+engine = create_engine(
+    'postgres://cwuepekp:SkVXF4KcwLJvTNKT41e7ruWQDcF3OSEU@jumbo.db.elephantsql.com:5432/cwuepekp')
 
 
 @app.before_request
@@ -30,11 +31,12 @@ def before_request():
         g.conn = engine.connect()
     except:
         print 'uh oh, problem connecting to database'
-        import traceback; traceback.print_exc()
+        import traceback
+        traceback.print_exc()
         g.conn = None
 
 
-# make sure that user is authenticated w/ live session on every protected request
+# make sure user is authenticated w/ live session on every protected request
 @app.before_request
 def manage_session():
     # want to go through oauth flow for this route specifically
@@ -49,7 +51,8 @@ def manage_session():
     if 'credentials' not in flask.session:
         return flask.redirect(flask.url_for('oauth2callback'))
 
-    credentials = oauth2client.client.OAuth2Credentials.from_json(flask.session['credentials'])
+    credentials = oauth2client.client.OAuth2Credentials.from_json(
+        flask.session['credentials'])
     if credentials.access_token_expired:
         return flask.redirect(flask.url_for('oauth2callback'))
     else:
@@ -66,60 +69,61 @@ def manage_session():
         flask.session['google_user'] = user
         flask.session['id'] = um.get_or_create_user(user)
 
+
 @app.teardown_request
 def teardown_request(exception):
     try:
         g.conn.close()
     except Exception as e:
-        pass
+        print e
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return 'this is an unauthenticated page'
+    if request.method == 'GET':
+        if 'credentials' not in flask.session:
+            return render_template('login.html')
+        else:
+            return render_template('main_student.html')
+    elif request.method == 'POST':
+        return flask.redirect(flask.url_for('protected'))
+
 
 @app.route('/protected')
 def protected():
-    return json.dumps(flask.session['google_user'])
+    return flask.redirect(flask.url_for('index'))
+    # return json.dumps(flask.session['google_user'])
+
 
 @app.route('/bademail')
 def bademail():
     return 'only columbia.edu email address accepted'
 
+
 @app.route('/oauth/callback')
 def oauth2callback():
-  flow = oauth2client.client.flow_from_clientsecrets(
-      'client_secrets.json',
-      scope=['https://www.googleapis.com/auth/userinfo.email','https://www.googleapis.com/auth/userinfo.profile'],
-      redirect_uri=flask.url_for('oauth2callback', _external=True))
-  if 'code' not in flask.request.args:
-    auth_uri = flow.step1_get_authorize_url()
-    return flask.redirect(auth_uri)
-  else:
-    auth_code = flask.request.args.get('code')
-    credentials = flow.step2_exchange(auth_code)
-    flask.session['credentials'] = credentials.to_json()
-    return flask.redirect(flask.url_for('protected'))
+    flow = oauth2client.client.flow_from_clientsecrets(
+        'client_secrets.json',
+        scope=[
+            'https://www.googleapis.com/auth/userinfo.email',
+            'https://www.googleapis.com/auth/userinfo.profile'],
+        redirect_uri=flask.url_for('oauth2callback', _external=True))
+    if 'code' not in flask.request.args:
+        auth_uri = flow.step1_get_authorize_url()
+        return flask.redirect(auth_uri)
+    else:
+        auth_code = flask.request.args.get('code')
+        credentials = flow.step2_exchange(auth_code)
+        flask.session['credentials'] = credentials.to_json()
+        return flask.redirect(flask.url_for('protected'))
+
 
 @app.route('/oauth/logout')
 def logout():
     flask.session.clear()
     return flask.redirect(flask.url_for('index'))
 
-# @app.route('/', methods=['GET', 'POST'])
-# def main():
-#     if request.method == 'GET':
-#         return render_template('login.html')
-#
-#     else:
-#         return render_template('index.html')
-
-
-@app.route('/login')
-def login():
-    return render_template('login.html')
-
-
+'''
 @app.route('/register', methods=['GET', 'POST'])
 def register():
 
@@ -151,7 +155,7 @@ def register():
         # coming from login page
         elif len(request.form) is 0:
             return render_template('register.html')
-
+'''
 
 if __name__ == '__main__':
     import click
