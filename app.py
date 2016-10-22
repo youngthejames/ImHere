@@ -84,9 +84,14 @@ def index():
         if 'credentials' not in flask.session:
             return render_template('login.html')
         else:
-            return render_template('main_student.html')
+            return flask.redirect(flask.url_for('main_student'))
     elif request.method == 'POST':
         return flask.redirect(flask.url_for('protected'))
+
+
+@app.route('/main_student')
+def main_student():
+    return render_template('main_student.html')
 
 
 @app.route('/protected')
