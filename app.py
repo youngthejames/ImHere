@@ -91,7 +91,21 @@ def index():
 
 @app.route('/main_student')
 def main_student():
-    return render_template('main_student.html')
+
+    classes = []
+
+    cursor = g.conn.execute(
+        "select courses.name from courses, enrolled_in where courses.cid = enrolled_in.cid and enrolled_in.sid = '%s'" % flask.session['id'])
+
+    for result in cursor:
+        classes.append(result)
+
+    if len(classes) is 0:
+        print 'shit'
+
+    context = dict(data = classes)
+
+    return render_template('main_student.html', **context)
 
 
 @app.route('/protected')
