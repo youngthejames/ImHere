@@ -156,16 +156,22 @@ def register():
         return render_template('register.html', name=flask.session['google_user']['name'])
     else:
         if request.form['type'] == 'student':
-            query = '''
-            insert into students (sid, uni) values({0}, '{1}')
-            '''.format(flask.session['id'], request.form['uni']);
-            g.conn.execute(query)
+            try:
+                query = '''
+                insert into students (sid, uni) values({0}, '{1}')
+                '''.format(flask.session['id'], request.form['uni']);
+                g.conn.execute(query)
+            except:
+                pass
             return flask.redirect(flask.url_for('main_student'))
         else:
-            query = '''
-            insert into teachers (tid) values({0})
-            '''.format(flask.session['id'])
-            g.conn.execute(query)
+            try:
+                query = '''
+                insert into teachers (tid) values({0})
+                '''.format(flask.session['id'])
+                g.conn.execute(query)
+            except:
+                pass
             # return flask.redirect(flask.url_for('main_teacher'))
             return flask.redirect(flask.url_for('index'))
 
