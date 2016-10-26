@@ -5,7 +5,7 @@
     <h1><center>Register</center></h1>
 
     <center>
-    <form method="POST" action="/register">
+    <!-- <form method="POST" action="/register">
     <label>username:</label> <input type="text" name="username"><br>
     <label>password:</label> <input type="password" name="password"><br>
     <label>verify password:</label> <input type="password" name="vpassword"><br>
@@ -15,9 +15,38 @@
         passwords don't match!
     {% elif incomplete %}
         fill in all of the fields!
-    {% endif %}
+    {% endif %} -->
+
+    <h2>Hi, {{name}}!</h2>
+
+    <form method="POST" action="/protected/register">
+      <p>I am a</p>
+      <label><input type="radio" name="type" value="student" checked="checked">Student</input></label></br>
+      <label><input type="radio" name="type" value="teacher">Teacher</input></label></br>
+
+      <label for="uni">My UNI is</label>
+      <input type="text" name="uni" id="uni" placeholder="uni"></input></br>
+      <button type="submit">Submit</button>
+    </form>
     </center>
 
+
+    <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+    <script>
+    $(document).ready(function(){
+        $('input[type="radio"]').on('change', function(){
+          if(this.value === 'teacher'){
+            $('label[for="uni"]').hide();
+            $('#uni').hide();
+          }
+          else{
+            $('label[for="uni"]').show();
+            $('#uni').show();
+          }
+        })
+    });
+
+    </script>
 
 </body>
 

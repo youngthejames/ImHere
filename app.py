@@ -50,6 +50,7 @@ def manage_session():
     # validate that user has valid session
     # add the google user info into session
     if 'credentials' not in flask.session:
+        flask.session['redirect'] = request.path
         return flask.redirect(flask.url_for('oauth2callback'))
 
     credentials = oauth2client.client.OAuth2Credentials.from_json(
@@ -148,6 +149,28 @@ def protected():
     return flask.redirect(flask.url_for('index'))
     # return json.dumps(flask.session['google_user'])
 
+@app.route('/protected/register', methods=['GET', 'POST'])
+def register():
+
+    if request.method == 'GET':
+        return render_template('register.html', name=flask.session['google_user']['name'])
+    else:
+        if request.form['type'] == 'student':
+            query = '''
+            insert into students (sid, uni) values({0}, '{1}')
+            '''.format(flask.session['id'], request.form['uni']);
+            g.conn.execute(query)
+            return flask.redirect(flask.url_for('main_student'))
+        else:
+            query = '''
+            insert into teachers (tid) values({0})
+            '''.format(flask.session['id'])
+            g.conn.execute(query)
+            # return flask.redirect(flask.url_for('main_teacher'))
+            return flask.redirect(flask.url_for('index'))
+
+
+
 
 @app.route('/bademail')
 def bademail():
@@ -169,7 +192,9 @@ def oauth2callback():
         auth_code = flask.request.args.get('code')
         credentials = flow.step2_exchange(auth_code)
         flask.session['credentials'] = credentials.to_json()
-        return flask.redirect(flask.url_for('protected'))
+        redirect = flask.session['redirect']
+        flask.session.pop('redirect', None)
+        return flask.redirect(redirect)
 
 
 @app.route('/oauth/logout')
@@ -177,39 +202,6 @@ def logout():
     flask.session.clear()
     return flask.redirect(flask.url_for('index'))
 
-'''
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-
-    if request.method == 'GET':
-        return render_template('register.html')
-
-    elif request.method == 'POST':
-
-        # user hit register inside of the register page
-        if len(request.form) is 3:
-
-            username = request.form["username"]
-            password = request.form["password"]
-            vpassword = request.form["vpassword"]
-
-            if username == '' or password == '' or vpassword == '':
-                return render_template('register.html', incomplete=True)
-
-            # TODO: check if username is already in database
-
-            # check for a password mismatch
-            if password != vpassword:
-                return render_template('register.html', nomatch=True)
-
-            # valid login
-            else:
-                return render_template('index.html', username=username)
-
-        # coming from login page
-        elif len(request.form) is 0:
-            return render_template('register.html')
-'''
 
 if __name__ == '__main__':
     import click
