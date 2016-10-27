@@ -91,83 +91,64 @@ def index():
         return flask.redirect(flask.url_for('protected'))
 
 
-@app.route('/protected/main_student')
+@app.route('/protected/main_student', methods=['GET', 'POST'])
 def main_student():
 
-    now = datetime.time(datetime.now())
-    today = date.today()
+        # find relevant classes to user
+        classes = []
+        query = ('select courses.cid, courses.name, courses.start_time, '
+                'courses.end_time, courses.start_date, courses.end_date, '
+                'courses.day, courses.active, enrolled_in.sid '
+                'from courses, enrolled_in '
+                'where courses.cid = enrolled_in.cid '
+                "and enrolled_in.sid = '%s'"
+                % flask.session['id'])
 
-    query = ('select enrolled_in.cid '
-             'from enrolled_in, session '
-             "where enrolled_in.sid = '%s' "
-             'and enrolled_in.cid = session.cid '
-             "and session.expires > '%s' "
-             "and session.day >= '%s'"
-             % (flask.session['id'], now, today))
+        cursor = g.conn.execute(query)
 
-    # find a valid session that matches a class that the user is in
-    cursor = g.conn.execute(query)
+        # result references each of the fields below
+        for result in cursor:
+            classes.append(result)
 
-    counter = 0
-    cid = None
-    # only ever returns from one session
-    for result in cursor:
-        counter += 1
-        cid = result[0]
+        cursor.close()
+        context = dict(data = classes)
 
-    if cid is not None:
-        g.conn.execute("update courses set active = 1 where cid = '%d'" % cid)
+        # if in here, check if secret code matches
+	if 'secret_code' in request.form.keys():
+            secret_code = request.form['secret_code']
+            now = datetime.time(datetime.now())
+            today = date.today()
 
-    query = ('select enrolled_in.cid '
-             'from enrolled_in, session '
-             "where enrolled_in.sid = '%s'"
-             'and enrolled_in.cid = session.cid '
-             "and session.expires <= '%s' "
-             "and session.day < '%s'"
-             % (flask.session['id'], now, today))
+            query = ('select seid '
+                     'from session, enrolled_in '
+                     "where enrolled_in.sid = '%s' "
+                     'and enrolled_in.cid = session.cid '
+                     "and session.expires > '%s' "
+                     "and session.day >= '%s'"
+                     % (flask.session['id'], now, today))
 
-    cursor = g.conn.execute(query)
-    
-    counter = 0
-    cid = None
-    # only ever returns from one session
-    for result in cursor:
-        print result
-        print 'hello'
+            cursor = g.conn.execute(query)
 
-    # now find relevant classes to user
-    classes = []
-    query = ('select courses.cid, courses.name, courses.start_time, '
-             'courses.end_time, courses.start_date, courses.end_date, '
-             'courses.day, courses.active, enrolled_in.sid '
-             'from courses, enrolled_in '
-             'where courses.cid = enrolled_in.cid '
-             "and enrolled_in.sid = '%s'"
-             % flask.session['id'])
+            for result in cursor:
+                seid = result[0]
 
-    cursor = g.conn.execute(query)
+            query = "select secret from session where seid = '%s'" % seid
+            cursor = g.conn.execute(query)
 
-    # result references each of the fields below
-    for result in cursor:
-        classes.append(result)
+            for result in cursor:
+                actual_secret = result[0]
 
-    cursor.close()
-    context = dict(data = classes)
+            if actual_secret == secret_code:
 
-    # used in html jinja2 formatting
-    '''
-    n[0] == class id
-    n[1] == class name
-    n[2] == class start time
-    n[3] == class end time
-    n[4] == class start date
-    n[5] == class end date
-    n[6] == class day
-    n[7] == course active <int>
-    n[8] == student id
-    '''
+                # create attendance record here
+                g.conn.execute("insert into attendance_record values ('%s', '%s')" % (flask.session['id'], seid))
+                return render_template('main_student.html', correct = True, **context)
+            else:
+                return render_template('main_student.html', incorrect = True, **context)
 
-    return render_template('main_student.html', **context)
+        # looking at the page before a secret code has been submitted
+        else:
+            return render_template('main_student.html', **context)
 
 
 @app.route('/protected')

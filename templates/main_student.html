@@ -6,19 +6,31 @@
 
     <h2>ImHere</h2><br>
 
-    <!-- first show classes that are available to be signed in -->
+    <!-- first show classes that have an available session -->
     {% for n in data %}
         {% if n[7] == 1 %}
 
             <p>
             <h4>{{n[1]}}</h4>
 
-            <form action="/bademail" method="post">
+            {% if correct %}
+
+            Successful sign-in!
+
+            {% else %}
+
+            <form action="/protected/main_student" method="post">
                 Sign in now!
                 <input type="text" name="secret_code" value="Secret Code">
                 <input type="submit" value="Submit">
             </form>
             </p><br>
+
+                {% if incorrect %}
+                Incorrect secret code!!!
+                {% endif %}
+
+            {% endif %}
 
         {% endif %}
     {% endfor %}
