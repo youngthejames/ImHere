@@ -1,28 +1,24 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Add a Class</title>
-    </head>
-    <body>
-    <center>
-        <h2>IMHERE</h2>
-        <br>
-        <p>Create a Class</p>
-        <form method="POST" action="/teach-home">
-            Name:<input type="text" name="classname" required>
-            <br>
-            <br>
-            Start Time: <input type="text" name="start time" required>
-            End Time: <input type="text" name="end time" required>
-            <p>Student Emails</p>
-            <textarea name="emails" required>Please enter one email per line</textarea>
-            <br>
-            <input type="submit" name="Create">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add a Class</title>
+</head>
+<body>
+<center>
+    <h2>ImHere</h2><br>
 
-        </form>
-    </center>
+    <h4>Create a Class</h4>
+    <form method="POST" action="/protected/add_class">
+        Name: <input type="text" name="classname" required><br><br>
+
+        <h4>Student Unis</h4>
+        <textarea rows="6" cols="50" placeholder="Please enter one uni per line" name="unis" required></textarea><br>
+        <button>Create Class</button>
+
+    </form>
+</center>
 
 
-    </body>
-    </html>
+</body>
+</html>

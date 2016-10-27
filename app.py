@@ -170,15 +170,10 @@ def main_teacher():
             g.conn.execute("update courses set active = 1 where courses.cid = '%s'" % cid)
             randseid = random.randint(1, 1000)
             randsecret = random.randint(1000, 9999)
-            print randseid
-            print randsecret
-            print cid
 
-            print type(cid)
             g.conn.execute("insert into session values (%d, %s, '%d', '%s', '%s')" % (randseid, cid, randsecret, '23:59:59', today))
-            print 'after execute'
 
-
+    # find relevant classes and their valid sessions
     classes = []
     query = ('select courses.cid, name, active, secret '
              'from teaches inner join courses on '
@@ -201,25 +196,31 @@ def main_teacher():
     return render_template('main_teacher.html', **context)
 
 
-@app.route('/protected/add_class')
+@app.route('/protected/add_class', methods=['POST', 'GET'])
 def add_class():
     if request.method == "GET":
         return render_template('add_class.html')
     elif request.method =="POST":
-        c_name = request.form['classname']
-        start_time = request.form['start_time']
-        end_time = request.form['end_time']
-        latest_cid = g.conn.execute("select max(cid) from courses;")[0] + 1
-        query = "insert into courses values(%d, %s, %s, %s, None, None, None, False);" % (latest_cid, request.form["name"], start_time, end_time)
+        classname = request.form['classname']
+        randcid = random.randint(1000, 9999)
+        #start_time = request.form['start_time']
+        #end_time = request.form['end_time']
+        #latest_cid = g.conn.execute("select max(cid) from courses;")[0] + 1
+        query = "insert into courses (cid, name, active) values(%d, '%s', 0)" % (randcid, classname)
         g.conn.execute(query)
-        query = "insert into teaches(tid, sid) values(%s, %d);" % (flask.session['id'], latest_cid)
+
+        query = "insert into teaches values(%s, %d);" % (flask.session['id'], randcid)
         g.conn.execute(query)
-        for line in request.form['students']:
-            if re.match(".*@columbia.edu", line):
-                query = "select sid from students where name = %s;" %(line)
-                cursor = g.conn.execute(query)
-                for sid in cursor:
-                    q2 = "insert into enrolled_in(cid, sid) values(%d, %d);" % (latest_cid, sid)
+
+        for line in request.form['unis'].split('\n'):
+            line = line.strip('\r')
+            query = "select sid from students where uni = '%s'" % (line)
+            cursor = g.conn.execute(query)
+            for sid in cursor:
+                q2 = "insert into enrolled_in values(%d, %d);" % (sid[0], randcid)
+                g.conn.execute(q2)
+
+        return flask.redirect(flask.url_for('main_teacher'))
 
 
 @app.route('/protected')
