@@ -9,6 +9,7 @@ import oauth2client
 import apiclient
 import flask
 import sqlalchemy
+import random
 
 from sqlalchemy import *
 # from sqlalchemy.pool import NullPool
@@ -86,7 +87,7 @@ def index():
         if 'credentials' not in flask.session:
             return render_template('login.html')
         else:
-            return flask.redirect(flask.url_for('main_student'))
+            return flask.redirect(flask.url_for('main_teacher'))
     elif request.method == 'POST':
         return flask.redirect(flask.url_for('protected'))
 
@@ -151,50 +152,51 @@ def main_student():
             return render_template('main_student.html', **context)
 
 
-@app.route('/protected/main_teacher')
-def main_teacher(): #TODO main teacher page
+@app.route('/protected/main_teacher', methods=['GET', 'POST'])
+def main_teacher():
+
+    now = datetime.time(datetime.now())
+    today = date.today()
+
+    if request.method=="POST":
+        if "close" in request.form.keys():
+            cid = request.form["close"]
+            g.conn.execute("update session set expires = '%s' where session.cid = '%s'" % (now, cid))
+            #g.conn.execute("update session set day = '%s' where session.cid = '%s'" % (today, cid))
+            g.conn.execute("update courses set active = 0 where courses.cid = '%s'" % cid)
+
+        elif "open" in request.form.keys():
+            cid = request.form["open"]
+            g.conn.execute("update courses set active = 1 where courses.cid = '%s'" % cid)
+            randseid = random.randint(1, 1000)
+            randsecret = random.randint(1000, 9999)
+            print randseid
+            print randsecret
+            print cid
+
+            print type(cid)
+            g.conn.execute("insert into session values (%d, %s, '%d', '%s', '%s')" % (randseid, cid, randsecret, '23:59:59', today))
+            print 'after execute'
+
 
     classes = []
-    query = ('select courses.cid, courses.name, courses.start_time, '
-             'courses.end_time, courses.start_date, courses.end_date, '
-             'courses.day, courses.active, teaches.tid '
-             'from courses, teaches '
-             'where courses.cid = teaches.cid '
-             "and teaches.tid = '%s'"
-             % flask.session['id'])
+    query = ('select courses.cid, name, active, secret '
+             'from teaches inner join courses on '
+             '(courses.cid = teaches.cid and '
+             "teaches.tid = '%s') "
+             'left outer join session on '
+             '(courses.cid = session.cid and '
+             "session.expires > '%s' and "
+             "session.day >= '%s')"
+             % (flask.session['id'], now, today))
 
     cursor = g.conn.execute(query)
+
     for result in cursor:
         classes.append(result)
     cursor.close()
 
-    for i,c in enumerate(classes):
-        cid = c[0]
-        query = "select students.name from students INNER JOIN enrolled_in on (students.sid = enrolled_in.sid) where cid = %d " % cid
-        cursor = g.conn.execute(query)
-        names=[]
-        for name in cursor:
-            names.append(name)
-        classes[i].append(names)
     context = dict(data = classes)
-
-
-    if request.method=="POST":
-        if "Close attendance window" in request.form.keys():
-            cl = request.form["Close attendance window"]
-            g.conn.execute("update classes set active=0 where classes.name=%s" % cl)
-            #close attendance window at cl
-        elif "add" in request.form.keys():
-            cl = request.form["add"]
-            name = request.form['adname']
-            g.conn.execute
-        elif "remove" in request.form.keys():
-            cl = request.form["remove"]
-            name = request.form['rmname']
-        elif "Open attendance window" in request.form.keys():
-            cl = request.form["Open attendance window"]
-            g.conn.execute("update classes set active=1 where classes.name=%s" % cl)
-            #create a session
 
     return render_template('main_teacher.html', **context)
 

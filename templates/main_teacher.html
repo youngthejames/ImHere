@@ -8,43 +8,34 @@
 
 <center>
     <h2>ImHere</h2>
+
+    <a href="/protected/add_class">Add a Class</a><br><br>
+
     {% for n in data %}
-        {% if n[7] == 1 %}
+        {% if n[2] == 1 %}
 
             <h4>{{n[1]}}</h4>
-            <form method="POST" action="/main_teacher">
-            <input type="submit" name="Close attendance window" value="{{n[1]}}">
-            <br>
-                Add a student: <input type="text" name="adname"><input type="submit" name="add" value="{{n[1]}}">
-                Remove a student: <input type="text" name="rmname"><input type="submit" name="remove" value="{{n[1]}}">
+            <form method="POST" action="/protected/main_teacher">
+            <button name="close" value="{{n[0]}}">Close Attendance Window
+            </button>
+            </form><br>
 
-            </form>
-            Enrolled:
-            <br>
-            {% for name in n[9] %}
-                {{name}}
-                <br>
-            {% endfor %}
+            Secret Code:<br>
+            {{n[3]}}<br><br>
+
         {% endif %}
     {% endfor %}
 
 
     {% for n in data %}
-        {% if n[7] == 0 %}
-        {% for n in data %}
-            <h4>n[1]</h4>
-            <form method="POST" action="/main_teacher">
-            <input type="submit" name="Open Attendance Window" value="{{n[1]}}">
-                <br>
-                Add a student: <input type="text" name="sname"><input type="submit" name="add" value="{{n[1]}}">
-                Remove a student: <input type="text" name="rsname"><input type="submit" name="remove" value="{{n[1]}}">
-            </form>
-         Enrolled:
-            <br>
-            {% for name in n[9] %}
-                {{name}}
-                <br>
-            {% endfor %}
+        {% if n[2] == 0 %}
+
+            <h4>{{n[1]}}</h4>
+            <form method="POST" action="/protected/main_teacher">
+            <button name="open" value="{{n[0]}}">Open Attendance Window
+            </button>
+            </form><br>
+
         {% endif %}
     {% endfor %}
 
