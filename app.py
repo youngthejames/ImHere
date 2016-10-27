@@ -87,7 +87,20 @@ def index():
         if 'credentials' not in flask.session:
             return render_template('login.html')
         else:
-            return flask.redirect(flask.url_for('main_teacher'))
+            query = 'select * from students where sid = %s' % flask.session['id']
+            cursor = g.conn.execute(query)
+
+            for result in cursor:
+                return flask.redirect(flask.url_for('main_student'))
+
+            query = 'select * from teachers where tid = %s' % flask.session['id']
+            cursor = g.conn.execute(query)
+
+            for result in cursor:
+                return flask.redirect(flask.url_for('main_teacher'))
+
+            return flask.redirect(flask.url_for('login'))
+
     elif request.method == 'POST':
         return flask.redirect(flask.url_for('protected'))
 

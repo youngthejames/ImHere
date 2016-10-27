@@ -28,7 +28,7 @@
         {% if n[2] == 1 %}
 
             <form method="POST" action="/protected/view_class">
-            <button name="cid" value="{{n[0]}}">{{n[1]}}</button></form>
+            <button name="cid" value="{{n[0]}}" class="btn-link"><h4>{{n[1]}}</h4></button></form>
 
             <form method="POST" action="/protected/main_teacher">
             <button name="close" value="{{n[0]}}">Close Attendance Window
