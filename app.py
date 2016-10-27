@@ -223,6 +223,47 @@ def add_class():
         return flask.redirect(flask.url_for('main_teacher'))
 
 
+@app.route('/protected/view_class', methods=['POST', 'GET'])
+def view_class():
+    if request.method == "POST":
+
+        cid = request.form['cid']
+
+        if 'student' in request.form.keys():
+            uni = request.form['student']
+
+            query = "select sid from students where uni = '%s'" % uni
+            cursor = g.conn.execute(query)
+
+            for result in cursor:
+                sid = result[0]
+
+            query = 'insert into enrolled_in values (%s, %s)' % (sid, cid)
+            g.conn.execute(query)
+            print 'after execute query'
+
+        query = 'select name from courses where cid = %s' % cid
+        cursor = g.conn.execute(query)
+
+        for result in cursor:
+            name = result[0]
+
+        query = 'select name, family_name, email from users, enrolled_in where users.uid = enrolled_in.sid and enrolled_in.cid = %s' % cid
+        cursor = g.conn.execute(query)
+
+        students = []
+        for result in cursor:
+            students.append(result)
+        cursor.close()
+
+        context = dict(data = students)
+
+        return render_template('view_class.html', cid=cid, cname=name, **context)
+
+    elif request.method == "GET":
+        return flask.redirect(flask.url_for('index'))
+
+
 @app.route('/protected')
 def protected():
     return flask.redirect(flask.url_for('index'))

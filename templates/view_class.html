@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{cname}}</title>
+</head>
+<body>
+<center>
+    <h2>ImHere</h2><br>
+
+    <h3>{{cname}}</h3>
+
+    Add Student to Class:<br>
+    <form method="POST" action="/protected/view_class">
+        <input type="text" required name="student" value="uni">
+        <br>
+        <button name="cid" value={{cid}}>submit</button>
+    </form><br><br>
+
+    <table cellspacing="5">
+    <thead>
+        <tr><th>Name</th><th>E-Mail</th></tr>
+    </thead>
+    {% for n in data %}
+    <tr>
+        <td>{{n[0]}} {{n[1]}}</td>
+        <td>| {{n[2]}}</td>
+    </tr>
+    {% endfor %}
+    </table><br><br>
+
+
+
+    <a href="/protected/main_teacher">Home</a>
+</center>
+
+</body>
+</html>

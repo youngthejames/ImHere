@@ -3,6 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <style>
+    .btn-link {
+        border:none;
+        outline:none;
+        background:none;
+        cursor:pointer;
+        color:#4863a8;
+        padding-top:1em;
+        text-decoration:underline;
+        font-family:inherit;
+        font-size:inherit;
+    }
+    </style>
 </head>
 <body>
 
@@ -14,7 +27,9 @@
     {% for n in data %}
         {% if n[2] == 1 %}
 
-            <h4>{{n[1]}}</h4>
+            <form method="POST" action="/protected/view_class">
+            <button name="cid" value="{{n[0]}}">{{n[1]}}</button></form>
+
             <form method="POST" action="/protected/main_teacher">
             <button name="close" value="{{n[0]}}">Close Attendance Window
             </button>
@@ -30,11 +45,13 @@
     {% for n in data %}
         {% if n[2] == 0 %}
 
-            <h4>{{n[1]}}</h4>
+            <form method="POST" action="/protected/view_class">
+            <button name="cid" value="{{n[0]}}" class="btn-link"><h4>{{n[1]}}</h4></button></form>
+
             <form method="POST" action="/protected/main_teacher">
             <button name="open" value="{{n[0]}}">Open Attendance Window
             </button>
-            </form><br>
+            </form><br><br>
 
         {% endif %}
     {% endfor %}
