@@ -13,7 +13,7 @@ import sqlalchemy
 from sqlalchemy import *
 # from sqlalchemy.pool import NullPool
 from flask import Flask, render_template, request, g
-from datetime import datetime
+from datetime import datetime, date
 
 from models import users_model
 
@@ -91,23 +91,49 @@ def index():
         return flask.redirect(flask.url_for('protected'))
 
 
-@app.route('/main_student')
+@app.route('/protected/main_student')
 def main_student():
 
-    # set correct 'active' for each course
-    cursor = g.conn.execute('select * from courses')
+    now = datetime.time(datetime.now())
+    today = date.today()
+
+    query = ('select enrolled_in.cid '
+             'from enrolled_in, session '
+             "where enrolled_in.sid = '%s' "
+             'and enrolled_in.cid = session.cid '
+             "and session.expires > '%s' "
+             "and session.day >= '%s'"
+             % (flask.session['id'], now, today))
+
+    # find a valid session that matches a class that the user is in
+    cursor = g.conn.execute(query)
+
+    counter = 0
+    cid = None
+    # only ever returns from one session
     for result in cursor:
-        now = datetime.time(datetime.now())
-        eligible = (True if (now > result[2] and now < result[3]) else False)
-        if eligible:
-            g.conn.execute(
-                'update courses set active = 1 where cid = %s'
-                % result[0])
-        else:
-            g.conn.execute(
-                'update courses set active = 0 where cid = %s'
-                % result[0])
-    cursor.close()
+        counter += 1
+        cid = result[0]
+
+    if cid is not None:
+        g.conn.execute("update courses set active = 1 where cid = '%d'" % cid)
+
+    query = ('select enrolled_in.cid '
+             'from enrolled_in, session '
+             "where enrolled_in.sid = '%s'"
+             'and enrolled_in.cid = session.cid '
+             "and session.expires <= '%s' "
+             "and session.day < '%s'"
+             % (flask.session['id'], now, today))
+
+    cursor = g.conn.execute(query)
+    
+    counter = 0
+    cid = None
+    # only ever returns from one session
+    for result in cursor:
+        print result
+        print 'hello'
 
     # now find relevant classes to user
     classes = []
