@@ -151,6 +151,75 @@ def main_student():
             return render_template('main_student.html', **context)
 
 
+@app.route('/protected/main_teacher')
+def main_teacher(): #TODO main teacher page
+
+    classes = []
+    query = ('select courses.cid, courses.name, courses.start_time, '
+             'courses.end_time, courses.start_date, courses.end_date, '
+             'courses.day, courses.active, teaches.tid '
+             'from courses, teaches '
+             'where courses.cid = teaches.cid '
+             "and teaches.tid = '%s'"
+             % flask.session['id'])
+
+    cursor = g.conn.execute(query)
+    for result in cursor:
+        classes.append(result)
+    cursor.close()
+
+    for i,c in enumerate(classes):
+        cid = c[0]
+        query = "select students.name from students INNER JOIN enrolled_in on (students.sid = enrolled_in.sid) where cid = %d " % cid
+        cursor = g.conn.execute(query)
+        names=[]
+        for name in cursor:
+            names.append(name)
+        classes[i].append(names)
+    context = dict(data = classes)
+
+
+    if request.method=="POST":
+        if "Close attendance window" in request.form.keys():
+            cl = request.form["Close attendance window"]
+            g.conn.execute("update classes set active=0 where classes.name=%s" % cl)
+            #close attendance window at cl
+        elif "add" in request.form.keys():
+            cl = request.form["add"]
+            name = request.form['adname']
+            g.conn.execute
+        elif "remove" in request.form.keys():
+            cl = request.form["remove"]
+            name = request.form['rmname']
+        elif "Open attendance window" in request.form.keys():
+            cl = request.form["Open attendance window"]
+            g.conn.execute("update classes set active=1 where classes.name=%s" % cl)
+            #create a session
+
+    return render_template('main_teacher.html', **context)
+
+
+@app.route('/protected/add_class')
+def add_class():
+    if request.method == "GET":
+        return render_template('add_class.html')
+    elif request.method =="POST":
+        c_name = request.form['classname']
+        start_time = request.form['start_time']
+        end_time = request.form['end_time']
+        latest_cid = g.conn.execute("select max(cid) from courses;")[0] + 1
+        query = "insert into courses values(%d, %s, %s, %s, None, None, None, False);" % (latest_cid, request.form["name"], start_time, end_time)
+        g.conn.execute(query)
+        query = "insert into teaches(tid, sid) values(%s, %d);" % (flask.session['id'], latest_cid)
+        g.conn.execute(query)
+        for line in request.form['students']:
+            if re.match(".*@columbia.edu", line):
+                query = "select sid from students where name = %s;" %(line)
+                cursor = g.conn.execute(query)
+                for sid in cursor:
+                    q2 = "insert into enrolled_in(cid, sid) values(%d, %d);" % (latest_cid, sid)
+
+
 @app.route('/protected')
 def protected():
     return flask.redirect(flask.url_for('index'))
