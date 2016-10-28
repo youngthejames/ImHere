@@ -23,8 +23,10 @@ tmpl_dir = os.path.join(
     'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
 
-engine = create_engine(
-    'postgres://cwuepekp:SkVXF4KcwLJvTNKT41e7ruWQDcF3OSEU@jumbo.db.elephantsql.com:5432/cwuepekp')
+engine = create_engine(('postgres://',
+                        'cwuepekp:SkVXF4KcwLJvTNKT41e7ruWQDcF3OSEU',
+                        '@jumbo.db.elephantsql.com:5432',
+                        '/cwuepekp'))
 
 
 @app.before_request
@@ -87,13 +89,15 @@ def index():
         if 'credentials' not in flask.session:
             return render_template('login.html')
         else:
-            query = 'select * from students where sid = %s' % flask.session['id']
+            query = 'select * from students where sid = %s' \
+                    % flask.session['id']
             cursor = g.conn.execute(query)
 
             for result in cursor:
                 return flask.redirect(flask.url_for('main_student'))
 
-            query = 'select * from teachers where tid = %s' % flask.session['id']
+            query = 'select * from teachers where tid = %s' \
+                    % flask.session['id']
             cursor = g.conn.execute(query)
 
             for result in cursor:
@@ -111,12 +115,12 @@ def main_student():
         # find relevant classes to user
         classes = []
         query = ('select courses.cid, courses.name, courses.start_time, '
-                'courses.end_time, courses.start_date, courses.end_date, '
-                'courses.day, courses.active, enrolled_in.sid '
-                'from courses, enrolled_in '
-                'where courses.cid = enrolled_in.cid '
-                "and enrolled_in.sid = '%s'"
-                % flask.session['id'])
+                 'courses.end_time, courses.start_date, courses.end_date, '
+                 'courses.day, courses.active, enrolled_in.sid '
+                 'from courses, enrolled_in '
+                 'where courses.cid = enrolled_in.cid '
+                 "and enrolled_in.sid = '%s'"
+                 % flask.session['id'])
 
         cursor = g.conn.execute(query)
 
@@ -125,10 +129,10 @@ def main_student():
             classes.append(result)
 
         cursor.close()
-        context = dict(data = classes)
+        context = dict(data=classes)
 
         # if in here, check if secret code matches
-	if 'secret_code' in request.form.keys():
+        if 'secret_code' in request.form.keys():
             secret_code = request.form['secret_code']
             now = datetime.time(datetime.now())
             today = date.today()
@@ -155,10 +159,19 @@ def main_student():
             if actual_secret == secret_code:
 
                 # create attendance record here
-                g.conn.execute("insert into attendance_record values ('%s', '%s')" % (flask.session['id'], seid))
-                return render_template('main_student.html', correct = True, **context)
+                query = "insert into attendance_record values ('%s', '%s')" \
+                        % (flask.session['id'], seid)
+                g.conn.execute(query)
+
+                return render_template(
+                        'main_student.html',
+                        correct=True,
+                        **context)
             else:
-                return render_template('main_student.html', incorrect = True, **context)
+                return render_template(
+                        'main_student.html',
+                        incorrect=True,
+                        **context)
 
         # looking at the page before a secret code has been submitted
         else:
@@ -171,20 +184,29 @@ def main_teacher():
     now = datetime.time(datetime.now())
     today = date.today()
 
-    if request.method=="POST":
+    if request.method == "POST":
         if "close" in request.form.keys():
             cid = request.form["close"]
-            g.conn.execute("update session set expires = '%s' where session.cid = '%s'" % (now, cid))
-            #g.conn.execute("update session set day = '%s' where session.cid = '%s'" % (today, cid))
-            g.conn.execute("update courses set active = 0 where courses.cid = '%s'" % cid)
+            query = ("update session set expires = '%s' "
+                     "where session.cid = '%s'"
+                     % (now, cid))
+            g.conn.execute(query)
+
+            query = "update courses set active = 0 where courses.cid = '%s'" \
+                    % cid
+            g.conn.execute(query)
 
         elif "open" in request.form.keys():
             cid = request.form["open"]
-            g.conn.execute("update courses set active = 1 where courses.cid = '%s'" % cid)
+            query = "update courses set active = 1 where courses.cid = '%s'" \
+                    % cid
+            g.conn.execute(query)
             randseid = random.randint(1, 1000)
             randsecret = random.randint(1000, 9999)
 
-            g.conn.execute("insert into session values (%d, %s, '%d', '%s', '%s')" % (randseid, cid, randsecret, '23:59:59', today))
+            query = "insert into session values (%d, %s, '%d', '%s', '%s')" \
+                    % (randseid, cid, randsecret, '23:59:59', today)
+            g.conn.execute(query)
 
     # find relevant classes and their valid sessions
     classes = []
@@ -204,7 +226,7 @@ def main_teacher():
         classes.append(result)
     cursor.close()
 
-    context = dict(data = classes)
+    context = dict(data=classes)
 
     return render_template('main_teacher.html', **context)
 
@@ -213,16 +235,18 @@ def main_teacher():
 def add_class():
     if request.method == "GET":
         return render_template('add_class.html')
-    elif request.method =="POST":
+    elif request.method == "POST":
         classname = request.form['classname']
         randcid = random.randint(1000, 9999)
-        #start_time = request.form['start_time']
-        #end_time = request.form['end_time']
-        #latest_cid = g.conn.execute("select max(cid) from courses;")[0] + 1
-        query = "insert into courses (cid, name, active) values(%d, '%s', 0)" % (randcid, classname)
+        # start_time = request.form['start_time']
+        # end_time = request.form['end_time']
+        # latest_cid = g.conn.execute("select max(cid) from courses;")[0] + 1
+        query = "insert into courses (cid, name, active) values(%d, '%s', 0)" \
+                % (randcid, classname)
         g.conn.execute(query)
 
-        query = "insert into teaches values(%s, %d);" % (flask.session['id'], randcid)
+        query = 'insert into teaches values(%s, %d)' \
+                % (flask.session['id'], randcid)
         g.conn.execute(query)
 
         for line in request.form['unis'].split('\n'):
@@ -230,7 +254,8 @@ def add_class():
             query = "select sid from students where uni = '%s'" % (line)
             cursor = g.conn.execute(query)
             for sid in cursor:
-                q2 = "insert into enrolled_in values(%d, %d);" % (sid[0], randcid)
+                q2 = 'insert into enrolled_in values(%d, %d)' \
+                     % (sid[0], randcid)
                 g.conn.execute(q2)
 
         return flask.redirect(flask.url_for('main_teacher'))
@@ -261,7 +286,11 @@ def view_class():
         for result in cursor:
             name = result[0]
 
-        query = 'select name, family_name, email from users, enrolled_in where users.uid = enrolled_in.sid and enrolled_in.cid = %s' % cid
+        query = ('select name, family_name, email '
+                 'from users, enrolled_in '
+                 'where users.uid = enrolled_in.sid '
+                 'and enrolled_in.cid = %s'
+                 % cid)
         cursor = g.conn.execute(query)
 
         students = []
@@ -269,9 +298,13 @@ def view_class():
             students.append(result)
         cursor.close()
 
-        context = dict(data = students)
+        context = dict(data=students)
 
-        return render_template('view_class.html', cid=cid, cname=name, **context)
+        return render_template(
+                'view_class.html',
+                cid=cid,
+                cname=name,
+                **context)
 
     elif request.method == "GET":
         return flask.redirect(flask.url_for('index'))
@@ -280,19 +313,21 @@ def view_class():
 @app.route('/protected')
 def protected():
     return flask.redirect(flask.url_for('index'))
-    # return json.dumps(flask.session['google_user'])
+
 
 @app.route('/protected/register', methods=['GET', 'POST'])
 def register():
 
     if request.method == 'GET':
-        return render_template('register.html', name=flask.session['google_user']['name'])
+        return render_template(
+                'register.html',
+                name=flask.session['google_user']['name'])
     else:
         if request.form['type'] == 'student':
             try:
                 query = '''
                 insert into students (sid, uni) values({0}, '{1}')
-                '''.format(flask.session['id'], request.form['uni']);
+                '''.format(flask.session['id'], request.form['uni'])
                 g.conn.execute(query)
             except:
                 pass
@@ -307,8 +342,6 @@ def register():
                 pass
             # return flask.redirect(flask.url_for('main_teacher'))
             return flask.redirect(flask.url_for('index'))
-
-
 
 
 @app.route('/bademail')
