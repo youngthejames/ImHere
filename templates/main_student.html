@@ -10,7 +10,6 @@
     {% for n in data %}
         {% if n[7] == 1 %}
 
-            <p>
             <h4>{{n[1]}}</h4>
 
             {% if valid %}
@@ -23,8 +22,7 @@
                 Sign in now!
                 <input type="text" name="secret_code" placeholder="Secret Code">
                 <input type="submit" value="Submit">
-            </form>
-            </p>
+            </form><br>
 
                 {% if not first %}
                     {% if not valid %}

@@ -15,7 +15,7 @@ from sqlalchemy import *
 from flask import Flask, render_template, request, g
 from datetime import datetime, date
 
-from models import users_model, students_model, index_model
+from models import users_model, students_model, index_model, teachers_model
 
 tmpl_dir = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
@@ -96,7 +96,8 @@ def index():
             im = index_model.Index(g.conn, flask.session['id'])
             if im.is_student() and im.is_teacher():
                 #TODO: allow for switching between student/teacher pages
-                pass
+                # for now, just redirect to teacher
+                return flask.redirect(flask.url_for('main_teacher'))
             elif im.is_student():
                 return flask.redirect(flask.url_for('main_student'))
             elif im.is_teacher():
@@ -130,71 +131,24 @@ def main_student():
             else:
                 valid = False
                 
-            return render_template(
-                    'main_student.html',
-                    valid=valid,
-                    **context)
-        else:
-            # unreachable
-            pass
+            return render_template('main_student.html', valid=valid, **context)
 
 
 @app.route('/protected/main_teacher', methods=['GET', 'POST'])
 def main_teacher():
 
-    now = datetime.time(datetime.now())
-    today = date.today()
+    tm = teachers_model.Teachers(g.conn, flask.session['id'])
 
     if request.method == 'POST':
-
         if "close" in request.form.keys():
-
             cid = request.form["close"]
-
-            query = ("update sessions set expires = '%s' "
-                     "where sessions.cid = '%s'"
-                     % (now, cid))
-            g.conn.execute(query)
-
-            query = "update courses set active = 0 where courses.cid = '%s'" \
-                    % cid
-            g.conn.execute(query)
-
+            tm.close_session(cid)
         elif "open" in request.form.keys():
-
             cid = request.form["open"]
+            tm.open_session(cid)
 
-            query = "update courses set active = 1 where courses.cid = '%s'" \
-                    % cid
-            g.conn.execute(query)
-
-            # generate a random secret 4-digit int for a session
-            randsecret = random.randint(1000, 9999)
-            query = ('insert into sessions (cid, secret, expires, day) '
-                     "values (%s, '%d', '%s', '%s')"
-                     % (cid, randsecret, '23:59:59', today))
-            g.conn.execute(query)
-
-    # find relevant classes and their valid sessions
-    classes = []
-    query = ('select courses.cid, name, active, secret '
-             'from teaches inner join courses on '
-             '(courses.cid = teaches.cid and '
-             "teaches.tid = '%s') "
-             'left outer join sessions on '
-             '(courses.cid = sessions.cid and '
-             "sessions.expires > '%s' and "
-             "sessions.day >= '%s')"
-             % (flask.session['id'], now, today))
-
-    cursor = g.conn.execute(query)
-
-    empty = True if cursor.rowcount == 0 else False
-
-    for result in cursor:
-        classes.append(result)
-    cursor.close()
-
+    classes = tm.get_classes()
+    empty = True if len(classes) == 0 else False
     context = dict(data=classes)
 
     return render_template('main_teacher.html', empty=empty, **context)
