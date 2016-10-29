@@ -21,13 +21,13 @@
 
             <form action="/protected/main_student" method="post">
                 Sign in now!
-                <input type="text" name="secret_code" value="Secret Code">
+                <input type="text" name="secret_code" placeholder="Secret Code">
                 <input type="submit" value="Submit">
             </form>
             </p>
 
                 {% if incorrect %}
-                Incorrect secret code!!!
+                <font color="red">invalid secret code</font>
                 {% endif %}
 
             {% endif %}
