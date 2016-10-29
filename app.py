@@ -23,9 +23,9 @@ tmpl_dir = os.path.join(
     'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
 
-engine = create_engine(('postgres://',
-                        'cwuepekp:SkVXF4KcwLJvTNKT41e7ruWQDcF3OSEU',
-                        '@jumbo.db.elephantsql.com:5432',
+engine = create_engine(('postgres://'
+                        'cwuepekp:SkVXF4KcwLJvTNKT41e7ruWQDcF3OSEU'
+                        '@jumbo.db.elephantsql.com:5432'
                         '/cwuepekp'))
 
 
