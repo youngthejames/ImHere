@@ -197,7 +197,7 @@ def main_teacher():
     now = datetime.time(datetime.now())
     today = date.today()
 
-    if request.method == "POST":
+    if request.method == 'POST':
 
         if "close" in request.form.keys():
 
@@ -241,22 +241,24 @@ def main_teacher():
 
     cursor = g.conn.execute(query)
 
+    empty = True if cursor.rowcount == 0 else False
+
     for result in cursor:
         classes.append(result)
     cursor.close()
 
     context = dict(data=classes)
 
-    return render_template('main_teacher.html', **context)
+    return render_template('main_teacher.html', empty=empty, **context)
 
 
 @app.route('/protected/add_class', methods=['POST', 'GET'])
 def add_class():
 
-    if request.method == "GET":
+    if request.method == 'GET':
         return render_template('add_class.html')
 
-    elif request.method == "POST":
+    elif request.method == 'POST':
 
         classname = request.form['classname']
         query = "insert into courses (name, active) values('%s', 0)" % classname
@@ -301,10 +303,43 @@ def add_class():
         return flask.redirect(flask.url_for('main_teacher'))
 
 
+@app.route('/protected/remove_class', methods=['POST', 'GET'])
+def remove_class():
+    
+    if request.method == 'GET':
+        classes = []
+        query = ('select courses.cid, courses.name '
+                 'from courses, teaches '
+                 'where courses.cid = teaches.cid '
+                 'and teaches.tid = %s'
+                 % flask.session['id'])
+        cursor = g.conn.execute(query)
+
+        for result in cursor:
+            classes.append(result)
+
+        context = dict(data=classes)
+
+        return render_template('remove_class.html', **context)
+
+    elif request.method == 'POST':
+
+        # cid to be removed
+        cid = request.form['cid']
+
+        query = ('delete from teaches '
+                 'where cid = %s '
+                 'and tid = %s'
+                 % (cid, flask.session['id']))
+        g.conn.execute(query)
+
+        return flask.redirect(flask.url_for('index'))
+
+
 @app.route('/protected/view_class', methods=['POST', 'GET'])
 def view_class():
-    if request.method == "POST":
 
+    if request.method == 'POST':
         cid = request.form['cid']
 
         if 'add_student' in request.form.keys():
@@ -380,7 +415,7 @@ def view_class():
                 cname=cname,
                 **context)
 
-    elif request.method == "GET":
+    elif request.method == 'GET':
         return flask.redirect(flask.url_for('index'))
 
 
@@ -398,6 +433,7 @@ def register():
                 name=flask.session['google_user']['name'])
 
     elif request.method == 'POST':
+
         if request.form['type'] == 'student':
             try:
                 query = '''
@@ -407,6 +443,7 @@ def register():
             except:
                 pass
             return flask.redirect(flask.url_for('main_student'))
+
         else:
             try:
                 query = '''
@@ -415,7 +452,7 @@ def register():
                 g.conn.execute(query)
             except:
                 pass
-            # return flask.redirect(flask.url_for('main_teacher'))
+
             return flask.redirect(flask.url_for('index'))
 
 

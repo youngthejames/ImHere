@@ -22,13 +22,18 @@
 <center>
     <h2>ImHere</h2>
 
-    <a href="/protected/add_class">Add a Class</a><br><br>
+    <a href="/protected/add_class">Add a Class</a>
+    {% if not empty %}
+        <a href="/protected/remove_class">Remove a Class</a><br><br> 
+    {% endif %}
 
     {% for n in data %}
         {% if n[2] == 1 %}
 
             <form method="POST" action="/protected/view_class">
-            <button name="cid" value="{{n[0]}}" class="btn-link"><h4>{{n[1]}}</h4></button></form>
+            <button name="cid" value="{{n[0]}}" class="btn-link"><h4>{{n[1]}}</h4>
+            </button>
+            </form>
 
             <form method="POST" action="/protected/main_teacher">
             <button name="close" value="{{n[0]}}">Close Attendance Window
