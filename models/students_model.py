@@ -1,6 +1,7 @@
 from model import Model
 from datetime import datetime, date
 
+
 class Students(Model):
 
     def __init__(self, dbconn, sid):
@@ -43,4 +44,3 @@ class Students(Model):
         query = 'insert into attendance_records values (%s, %s)' \
                 % (self.sid, seid)
         self.db.execute(query)
-

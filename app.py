@@ -15,7 +15,7 @@ from sqlalchemy import *
 from flask import Flask, render_template, request, g
 from datetime import datetime, date
 
-from models import users_model, students_model
+from models import users_model, students_model, index_model
 
 tmpl_dir = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
@@ -93,28 +93,13 @@ def index():
             return render_template('login.html')
 
         else:
-
-            is_student = False
-            is_teacher = False
-
-            query = 'select * from students where sid = %s' \
-                    % flask.session['id']
-            cursor = g.conn.execute(query)
-            if cursor.rowcount == 1:
-                is_student = True
-
-            query = 'select * from teachers where tid = %s' \
-                    % flask.session['id']
-            cursor = g.conn.execute(query)
-            if cursor.rowcount == 1:
-                is_teacher = True
-
-            if is_student and is_teacher:
+            im = index_model.Index(g.conn, flask.session['id'])
+            if im.is_student() and im.is_teacher():
                 #TODO: allow for switching between student/teacher pages
                 pass
-            elif is_student and not is_teacher:
+            elif im.is_student():
                 return flask.redirect(flask.url_for('main_student'))
-            elif not is_student and is_teacher:
+            elif im.is_teacher():
                 return flask.redirect(flask.url_for('main_teacher'))
             else:
                 return render_template('login.html', not_registered=True)
@@ -149,10 +134,9 @@ def main_student():
                     'main_student.html',
                     valid=valid,
                     **context)
-
-    # looking at the page before a secret code has been submitted
-    else:
-        return render_template('main_student.html', **context)
+        else:
+            # unreachable
+            pass
 
 
 @app.route('/protected/main_teacher', methods=['GET', 'POST'])

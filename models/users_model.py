@@ -1,5 +1,6 @@
 from model import Model
 
+
 class Users(Model):
 
     def get_or_create_user(self, user):
@@ -10,7 +11,7 @@ class Users(Model):
             """.format(user['given_name'], user['family_name'], user['email'])
 
             self.db.execute(insert)
-        except: #TODO
+        except:  # TODO
             pass
 
         query = """
@@ -19,3 +20,4 @@ class Users(Model):
 
         result = self.db.execute(query)
         return self.deproxy(result)[0]['uid']
+
