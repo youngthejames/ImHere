@@ -126,55 +126,33 @@ def index():
 @app.route('/protected/main_student', methods=['GET', 'POST'])
 def main_student():
 
-        sm = students_model.Students(g.conn, flask.session['id'])
-        classes = sm.get_classes()
+    sm = students_model.Students(g.conn, flask.session['id'])
+    classes = sm.get_classes()
 
-        context = dict(data=classes)
+    context = dict(data=classes)
 
-        # if in here, check if secret code matches
+    if request.method == 'GET':
+        return render_template('main_student.html', first=True, **context)
+
+    elif request.method == 'POST':
         if 'secret_code' in request.form.keys():
-            secret_code = request.form['secret_code']
-            now = datetime.time(datetime.now())
-            today = date.today()
+            provided_secret = request.form['secret_code']
+            actual_secret, seid = sm.get_secret_and_seid()
 
-            query = ('select seid '
-                     'from sessions, enrolled_in '
-                     "where enrolled_in.sid = '%s' "
-                     'and enrolled_in.cid = sessions.cid '
-                     "and sessions.expires > '%s' "
-                     "and sessions.day >= '%s'"
-                     % (flask.session['id'], now, today))
-            cursor = g.conn.execute(query)
-
-            result = cursor.fetchone()
-            seid = result[0]
-
-            query = "select secret from sessions where seid = '%s'" % seid
-            cursor = g.conn.execute(query)
-
-            result = cursor.fetchone()
-            actual_secret = result[0]
-
-            if actual_secret == secret_code:
-
-                # create attendance record here
-                query = "insert into attendance_records values ('%s', '%s')" \
-                        % (flask.session['id'], seid)
-                g.conn.execute(query)
-
-                return render_template(
-                        'main_student.html',
-                        correct=True,
-                        **context)
+            if provided_secret == actual_secret:
+                sm.insert_attendance_record(seid)
+                valid = True
             else:
-                return render_template(
-                        'main_student.html',
-                        incorrect=True,
-                        **context)
+                valid = False
+                
+            return render_template(
+                    'main_student.html',
+                    valid=valid,
+                    **context)
 
-        # looking at the page before a secret code has been submitted
-        else:
-            return render_template('main_student.html', **context)
+    # looking at the page before a secret code has been submitted
+    else:
+        return render_template('main_student.html', **context)
 
 
 @app.route('/protected/main_teacher', methods=['GET', 'POST'])

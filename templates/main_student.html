@@ -13,7 +13,7 @@
             <p>
             <h4>{{n[1]}}</h4>
 
-            {% if correct %}
+            {% if valid %}
 
             Successful sign-in!
 
@@ -26,8 +26,10 @@
             </form>
             </p>
 
-                {% if incorrect %}
-                <font color="red">invalid secret code</font>
+                {% if not first %}
+                    {% if not valid %}
+                    <font color="red">invalid secret code</font>
+                    {% endif %}
                 {% endif %}
 
             {% endif %}
