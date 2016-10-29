@@ -290,8 +290,8 @@ def view_class():
 
         cid = request.form['cid']
 
-        if 'student' in request.form.keys():
-            uni = request.form['student']
+        if 'add_student' in request.form.keys():
+            uni = request.form['add_student']
 
             query = "select sid from students where uni = '%s'" % uni
             cursor = g.conn.execute(query)
@@ -304,6 +304,26 @@ def view_class():
                 g.conn.execute(query)
             except:
                 #TODO: insert failed because sid nonexistent in students
+                pass
+
+        elif 'remove_student' in request.form.keys():
+            uni = request.form['remove_student']
+
+            query = "select sid from students where uni = '%s'" % uni
+            cursor = g.conn.execute(query)
+
+            for result in cursor:
+                sid = result[0]
+
+            try:
+                query = ('delete from enrolled_in '
+                         'where sid = %s '
+                         'and cid = %s'
+                         % (sid, cid))
+                g.conn.execute(query)
+                #TODO: delete all attendance_records of this class of student
+            except:
+                #TODO: delete failed because sid not in enrolled_in
                 pass
 
         query = 'select name from courses where cid = %s' % cid

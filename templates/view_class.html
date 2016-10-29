@@ -10,12 +10,31 @@
 
     <h3>{{cname}}</h3>
 
+    <table cellspacing="35">
+    <thead>
+    <tr>
+
+    <th>
     Add Student to Class:<br>
     <form method="POST" action="/protected/view_class">
-        <input type="text" required name="student" placeholder="uni">
+        <input type="text" required name="add_student" placeholder="uni">
         <br>
-        <button name="cid" value={{cid}}>submit</button>
-    </form><br><br>
+        <button name="cid" value={{cid}}>add</button>
+    </form>
+    </th>
+
+    <th>
+    Del Student from Class:<br>
+    <form method="POST" action="/protected/view_class">
+        <input type="text" required name="remove_student" placeholder="uni">
+        <br>
+        <button name="cid" value={{cid}}>remove</button>
+    </form>
+    </th>
+
+    </tr>
+    </thead>
+    </table><br>
 
     {% if data %}
     <table cellspacing="5">
