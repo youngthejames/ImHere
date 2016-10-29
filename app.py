@@ -12,7 +12,6 @@ import sqlalchemy
 import random
 
 from sqlalchemy import *
-# from sqlalchemy.pool import NullPool
 from flask import Flask, render_template, request, g
 from datetime import datetime, date
 
@@ -94,25 +93,31 @@ def index():
             return render_template('login.html')
 
         else:
-            # first try to redirect to students
+
+            is_student = False
+            is_teacher = False
+
             query = 'select * from students where sid = %s' \
                     % flask.session['id']
             cursor = g.conn.execute(query)
+            if cursor.rowcount == 1:
+                is_student = True
 
-            for result in cursor:
-                return flask.redirect(flask.url_for('main_student'))
-
-            # then try to redirect to teachers
             query = 'select * from teachers where tid = %s' \
                     % flask.session['id']
             cursor = g.conn.execute(query)
+            if cursor.rowcount == 1:
+                is_teacher = True
 
-            for result in cursor:
+            if is_student and is_teacher:
+                #TODO: allow for switching between student/teacher pages
+                pass
+            elif is_student and not is_teacher:
+                return flask.redirect(flask.url_for('main_student'))
+            elif not is_student and is_teacher:
                 return flask.redirect(flask.url_for('main_teacher'))
-
-            # user has not registered for a student/teacher account
-            # reload login.html and inform them that they aren't registered
-            return render_template('login.html', not_registered=True)
+            else:
+                return render_template('login.html', not_registered=True)
 
     elif request.method == 'POST':
         return flask.redirect(flask.url_for('protected'))
@@ -153,17 +158,16 @@ def main_student():
                      "and sessions.expires > '%s' "
                      "and sessions.day >= '%s'"
                      % (flask.session['id'], now, today))
-
             cursor = g.conn.execute(query)
 
-            for result in cursor:
-                seid = result[0]
+            result = cursor.fetchone()
+            seid = result[0]
 
             query = "select secret from sessions where seid = '%s'" % seid
             cursor = g.conn.execute(query)
 
-            for result in cursor:
-                actual_secret = result[0]
+            result = cursor.fetchone()
+            actual_secret = result[0]
 
             if actual_secret == secret_code:
 
@@ -194,8 +198,11 @@ def main_teacher():
     today = date.today()
 
     if request.method == "POST":
+
         if "close" in request.form.keys():
+
             cid = request.form["close"]
+
             query = ("update sessions set expires = '%s' "
                      "where sessions.cid = '%s'"
                      % (now, cid))
@@ -206,7 +213,9 @@ def main_teacher():
             g.conn.execute(query)
 
         elif "open" in request.form.keys():
+
             cid = request.form["open"]
+
             query = "update courses set active = 1 where courses.cid = '%s'" \
                     % cid
             g.conn.execute(query)
@@ -248,6 +257,7 @@ def add_class():
         return render_template('add_class.html')
 
     elif request.method == "POST":
+
         classname = request.form['classname']
         query = "insert into courses (name, active) values('%s', 0)" % classname
         g.conn.execute(query)
@@ -257,8 +267,8 @@ def add_class():
         #TODO: ensure the class selected is correct (e.g. class name conflict)
         query = "select cid from courses where name = '%s'" % classname
         cursor = g.conn.execute(query)
-        for result in cursor:
-            cid = result[0]
+        result = cursor.fetchone()
+        cid = result[0]
 
         query = 'insert into teaches values(%s, %d)' \
                 % (flask.session['id'], cid)
@@ -271,15 +281,22 @@ def add_class():
             query = "select sid from students where uni = '%s'" % (line)
             cursor = g.conn.execute(query)
 
-            for result in cursor:
-                sid = result[0] 
+            if cursor.rowcount == 1:
+                # found a student with that sid
+                result = cursor.fetchone()
+                sid = result[0]
+
                 try:
                     query = 'insert into enrolled_in values(%d, %d)' \
                             % (sid, cid)
                     g.conn.execute(query)
                 except:
-                    #TODO: insert failed because sid nonexistent in students
+                    # insert failed because already in class??
                     pass
+            else:
+                # no student with that sid found
+                # notify teacher that their submission didn't work
+                pass
 
         return flask.redirect(flask.url_for('main_teacher'))
 
@@ -296,14 +313,21 @@ def view_class():
             query = "select sid from students where uni = '%s'" % uni
             cursor = g.conn.execute(query)
 
-            for result in cursor:
+            if cursor.rowcount == 1:
+                result = cursor.fetchone()
                 sid = result[0]
 
-            try:
-                query = 'insert into enrolled_in values (%s, %s)' % (sid, cid)
-                g.conn.execute(query)
-            except:
-                #TODO: insert failed because sid nonexistent in students
+                try:
+                    query = 'insert into enrolled_in values (%s, %s)' \
+                            % (sid, cid)
+                    g.conn.execute(query)
+                except:
+                    # execute failed because student already in enrolled_in??
+                    pass
+
+                    
+            else:
+                # no student with that sid found
                 pass
 
         elif 'remove_student' in request.form.keys():
@@ -312,25 +336,29 @@ def view_class():
             query = "select sid from students where uni = '%s'" % uni
             cursor = g.conn.execute(query)
 
-            for result in cursor:
+            if cursor.rowcount == 1:
+                result = cursor.fetchone()
                 sid = result[0]
 
-            try:
-                query = ('delete from enrolled_in '
-                         'where sid = %s '
-                         'and cid = %s'
-                         % (sid, cid))
-                g.conn.execute(query)
-                #TODO: delete all attendance_records of this class of student
-            except:
-                #TODO: delete failed because sid not in enrolled_in
+                try:
+                    query = ('delete from enrolled_in '
+                             'where sid = %s '
+                             'and cid = %s'
+                             % (sid, cid))
+                    g.conn.execute(query)
+                    #TODO: delete all AR's of this class of student
+                except:
+                    #TODO: delete failed because sid not in enrolled_in
+                    pass
+            else:
+                # failed because UNI not found in students
                 pass
 
         query = 'select name from courses where cid = %s' % cid
         cursor = g.conn.execute(query)
 
-        for result in cursor:
-            name = result[0]
+        result = cursor.fetchone()
+        cname = result[0]
 
         query = ('select name, family_name, email '
                  'from users, enrolled_in '
@@ -349,7 +377,7 @@ def view_class():
         return render_template(
                 'view_class.html',
                 cid=cid,
-                cname=name,
+                cname=cname,
                 **context)
 
     elif request.method == "GET":
