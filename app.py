@@ -350,6 +350,8 @@ def view_class():
                  % cid)
         cursor = g.conn.execute(query)
 
+        empty_class = True if cursor.rowcount == 0 else False
+
         students = []
         for result in cursor:
             students.append(result)
@@ -361,6 +363,7 @@ def view_class():
                 'view_class.html',
                 cid=cid,
                 cname=cname,
+                empty_class=empty_class,
                 **context)
 
     elif request.method == 'GET':

@@ -23,6 +23,7 @@
     </form>
     </th>
 
+    {% if not empty_class %}
     <th>
     Del Student from Class:<br>
     <form method="POST" action="/protected/view_class">
@@ -31,6 +32,7 @@
         <button name="cid" value={{cid}}>remove</button>
     </form>
     </th>
+    {% endif %}
 
     </tr>
     </thead>
