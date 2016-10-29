@@ -15,7 +15,7 @@ from sqlalchemy import *
 from flask import Flask, render_template, request, g
 from datetime import datetime, date
 
-from models import users_model
+from models import users_model, students_model
 
 tmpl_dir = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
@@ -126,23 +126,9 @@ def index():
 @app.route('/protected/main_student', methods=['GET', 'POST'])
 def main_student():
 
-        # find relevant classes to user
-        classes = []
-        query = ('select courses.cid, courses.name, courses.start_time, '
-                 'courses.end_time, courses.start_date, courses.end_date, '
-                 'courses.day, courses.active, enrolled_in.sid '
-                 'from courses, enrolled_in '
-                 'where courses.cid = enrolled_in.cid '
-                 "and enrolled_in.sid = '%s'"
-                 % flask.session['id'])
+        sm = students_model.Students(g.conn, flask.session['id'])
+        classes = sm.get_classes()
 
-        cursor = g.conn.execute(query)
-
-        # result references each of the fields below
-        for result in cursor:
-            classes.append(result)
-
-        cursor.close()
         context = dict(data=classes)
 
         # if in here, check if secret code matches
