@@ -249,14 +249,12 @@ def add_class():
 
     elif request.method == "POST":
         classname = request.form['classname']
-        # start_time = request.form['start_time']
-        # end_time = request.form['end_time']
-        # latest_cid = g.conn.execute("select max(cid) from courses;")[0] + 1
         query = "insert into courses (name, active) values('%s', 0)" % classname
         g.conn.execute(query)
 
-        # after we add course that generated a serial cid, we need to get
-        # the cid
+        # after we add course that generated a serial cid,
+        # we need to get the cid
+        #TODO: ensure the class selected is correct (e.g. class name conflict)
         query = "select cid from courses where name = '%s'" % classname
         cursor = g.conn.execute(query)
         for result in cursor:
@@ -266,14 +264,22 @@ def add_class():
                 % (flask.session['id'], cid)
         g.conn.execute(query)
 
+        # parse text area for all student UNI's
         for line in request.form['unis'].split('\n'):
             line = line.strip('\r')
+
             query = "select sid from students where uni = '%s'" % (line)
             cursor = g.conn.execute(query)
-            for sid in cursor:
-                q2 = 'insert into enrolled_in values(%d, %d)' \
-                     % (sid[0], cid)
-                g.conn.execute(q2)
+
+            for result in cursor:
+                sid = result[0] 
+                try:
+                    query = 'insert into enrolled_in values(%d, %d)' \
+                            % (sid, cid)
+                    g.conn.execute(query)
+                except:
+                    #TODO: insert failed because sid nonexistent in students
+                    pass
 
         return flask.redirect(flask.url_for('main_teacher'))
 
@@ -293,8 +299,12 @@ def view_class():
             for result in cursor:
                 sid = result[0]
 
-            query = 'insert into enrolled_in values (%s, %s)' % (sid, cid)
-            g.conn.execute(query)
+            try:
+                query = 'insert into enrolled_in values (%s, %s)' % (sid, cid)
+                g.conn.execute(query)
+            except:
+                #TODO: insert failed because sid nonexistent in students
+                pass
 
         query = 'select name from courses where cid = %s' % cid
         cursor = g.conn.execute(query)
