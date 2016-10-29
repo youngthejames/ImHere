@@ -110,8 +110,9 @@ def index():
             for result in cursor:
                 return flask.redirect(flask.url_for('main_teacher'))
 
-            # if not student or teacher, redirect to login
-            return flask.redirect(flask.url_for('login'))
+            # user has not registered for a student/teacher account
+            # reload login.html and inform them that they aren't registered
+            return render_template('login.html', not_registered=True)
 
     elif request.method == 'POST':
         return flask.redirect(flask.url_for('protected'))

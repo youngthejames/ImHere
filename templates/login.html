@@ -2,26 +2,21 @@
 
 <body>
 
-    <h1><center>ImHere</center></h1>
+    <h1><center>ImHere</center></h1><br>
 
     <form method="POST" action="/">
         <center>
-<!--
-        <input type="text" name="username" value="username"><br>
-        <input type="text" name="password" value="password"><br><br>
--->
-        <input type="submit" value="login"><br><br>
+        <input type="submit" value="Login"><br><br>
         </center>
     </form>
-    <center><a href="/protected/register">Register</a></center>
 
-<!--
-    <form method="POST" action="/register">
-        <center>
-        <input type="submit" value="register">
-        </center>
-    </form>
--->
+    {% if not_registered %}
+    <center>
+    <font color="red">*register for an account before logging in*</font>
+    </center>
+    {% endif %}
+
+    <center><h4><a href="/protected/register">Register</a></h4></center>
 
 </body>
 
