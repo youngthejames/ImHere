@@ -15,7 +15,7 @@ from sqlalchemy import *
 from flask import Flask, render_template, request, g
 from datetime import datetime, date
 
-from models import users_model, students_model, index_model, teachers_model
+from models import users_model, students_model, index_model, teachers_model, courses_model
 
 tmpl_dir = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
@@ -241,87 +241,31 @@ def remove_class():
 @app.route('/protected/view_class', methods=['POST', 'GET'])
 def view_class():
 
-    if request.method == 'POST':
+    if request.method == 'GET':
+        flask.redirect(flask.url_for('index'))
+
+    elif request.method == 'POST':
         cid = request.form['cid']
+        cm = courses_model.Courses(g.conn, cid)
 
         if 'add_student' in request.form.keys():
             uni = request.form['add_student']
-
-            query = "select sid from students where uni = '%s'" % uni
-            cursor = g.conn.execute(query)
-
-            if cursor.rowcount == 1:
-                result = cursor.fetchone()
-                sid = result[0]
-
-                try:
-                    query = 'insert into enrolled_in values (%s, %s)' \
-                            % (sid, cid)
-                    g.conn.execute(query)
-                except:
-                    # execute failed because student already in enrolled_in??
-                    pass
-
-                    
-            else:
-                # no student with that sid found
-                pass
-
+            cm.add_student(uni)
         elif 'remove_student' in request.form.keys():
             uni = request.form['remove_student']
+            cm.remove_student(uni)
 
-            query = "select sid from students where uni = '%s'" % uni
-            cursor = g.conn.execute(query)
-
-            if cursor.rowcount == 1:
-                result = cursor.fetchone()
-                sid = result[0]
-
-                try:
-                    query = ('delete from enrolled_in '
-                             'where sid = %s '
-                             'and cid = %s'
-                             % (sid, cid))
-                    g.conn.execute(query)
-                    #TODO: delete all AR's of this class of student
-                except:
-                    #TODO: delete failed because sid not in enrolled_in
-                    pass
-            else:
-                # failed because UNI not found in students
-                pass
-
-        query = 'select name from courses where cid = %s' % cid
-        cursor = g.conn.execute(query)
-
-        result = cursor.fetchone()
-        cname = result[0]
-
-        query = ('select name, family_name, email '
-                 'from users, enrolled_in '
-                 'where users.uid = enrolled_in.sid '
-                 'and enrolled_in.cid = %s'
-                 % cid)
-        cursor = g.conn.execute(query)
-
-        empty_class = True if cursor.rowcount == 0 else False
-
-        students = []
-        for result in cursor:
-            students.append(result)
-        cursor.close()
-
+        course_name = cm.get_course_name()
+        students = cm.get_students()
+        empty_class = True if len(students) == 0 else False
         context = dict(data=students)
 
         return render_template(
                 'view_class.html',
                 cid=cid,
-                cname=cname,
+                course_name=course_name,
                 empty_class=empty_class,
                 **context)
-
-    elif request.method == 'GET':
-        return flask.redirect(flask.url_for('index'))
 
 
 @app.route('/protected')
