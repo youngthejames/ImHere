@@ -1,5 +1,4 @@
 from model import Model
-from datetime import datetime, date
 
 
 class Courses(Model):
@@ -23,7 +22,7 @@ class Courses(Model):
         return self.deproxy(result)
 
     def add_student(self, uni):
-        query = "select sid from students where uni = '%s'" % uni 
+        query = "select sid from students where uni = '%s'" % uni
         result = self.db.execute(query)
 
         if result.rowcount == 1:
@@ -51,7 +50,7 @@ class Courses(Model):
                 query = 'delete from enrolled_in where sid = %s and cid = %s' \
                         % (sid, self.cid)
                 self.db.execute(query)
-                #TODO: delete all attendance records of student
+                # TODO: delete all attendance records of student
             except:
                 # failed because it was not in enrolled_in to begin with
                 pass

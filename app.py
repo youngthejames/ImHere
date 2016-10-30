@@ -88,7 +88,6 @@ def teardown_request(exception):
 def index():
 
     if request.method == 'GET':
-
         if 'credentials' not in flask.session:
             return render_template('login.html')
 
@@ -111,11 +110,9 @@ def index():
 
 @app.route('/protected/main_student', methods=['GET', 'POST'])
 def main_student():
-
     sm = students_model.Students(g.conn, flask.session['id'])
-    classes = sm.get_classes()
-
-    context = dict(data=classes)
+    courses = sm.get_courses()
+    context = dict(data=courses)
 
     if request.method == 'GET':
         return render_template('main_student.html', first=True, **context)
@@ -136,7 +133,6 @@ def main_student():
 
 @app.route('/protected/main_teacher', methods=['GET', 'POST'])
 def main_teacher():
-
     tm = teachers_model.Teachers(g.conn, flask.session['id'])
 
     if request.method == 'POST':
@@ -147,94 +143,48 @@ def main_teacher():
             cid = request.form["open"]
             tm.open_session(cid)
 
-    classes = tm.get_classes()
-    empty = True if len(classes) == 0 else False
-    context = dict(data=classes)
+    courses = tm.get_courses_with_session()
+    empty = True if len(courses) == 0 else False
+    context = dict(data=courses)
 
     return render_template('main_teacher.html', empty=empty, **context)
 
 
 @app.route('/protected/add_class', methods=['POST', 'GET'])
 def add_class():
+    tm = teachers_model.Teachers(g.conn, flask.session['id']) 
 
     if request.method == 'GET':
         return render_template('add_class.html')
 
     elif request.method == 'POST':
+        course_name = request.form['classname']
+        cid = tm.add_course(course_name)
 
-        classname = request.form['classname']
-        query = "insert into courses (name, active) values('%s', 0)" % classname
-        g.conn.execute(query)
-
-        # after we add course that generated a serial cid,
-        # we need to get the cid
-        #TODO: ensure the class selected is correct (e.g. class name conflict)
-        query = "select cid from courses where name = '%s'" % classname
-        cursor = g.conn.execute(query)
-        result = cursor.fetchone()
-        cid = result[0]
-
-        query = 'insert into teaches values(%s, %d)' \
-                % (flask.session['id'], cid)
-        g.conn.execute(query)
-
+        cm = courses_model.Courses(g.conn, cid)
         # parse text area for all student UNI's
-        for line in request.form['unis'].split('\n'):
-            line = line.strip('\r')
-
-            query = "select sid from students where uni = '%s'" % (line)
-            cursor = g.conn.execute(query)
-
-            if cursor.rowcount == 1:
-                # found a student with that sid
-                result = cursor.fetchone()
-                sid = result[0]
-
-                try:
-                    query = 'insert into enrolled_in values(%d, %d)' \
-                            % (sid, cid)
-                    g.conn.execute(query)
-                except:
-                    # insert failed because already in class??
-                    pass
-            else:
-                # no student with that sid found
-                # notify teacher that their submission didn't work
-                pass
+        for uni in request.form['unis'].split('\n'):
+            uni = uni.strip('\r')
+            cm.add_student(uni)
 
         return flask.redirect(flask.url_for('main_teacher'))
 
 
 @app.route('/protected/remove_class', methods=['POST', 'GET'])
 def remove_class():
+
+    tm = teachers_model.Teachers(g.conn, flask.session['id'])
     
+    # show potential courses to remove on get request
     if request.method == 'GET':
-        classes = []
-        query = ('select courses.cid, courses.name '
-                 'from courses, teaches '
-                 'where courses.cid = teaches.cid '
-                 'and teaches.tid = %s'
-                 % flask.session['id'])
-        cursor = g.conn.execute(query)
-
-        for result in cursor:
-            classes.append(result)
-
-        context = dict(data=classes)
-
+        courses = tm.get_courses()
+        context = dict(data=courses)
         return render_template('remove_class.html', **context)
 
+    # remove course by cid
     elif request.method == 'POST':
-
-        # cid to be removed
         cid = request.form['cid']
-
-        query = ('delete from teaches '
-                 'where cid = %s '
-                 'and tid = %s'
-                 % (cid, flask.session['id']))
-        g.conn.execute(query)
-
+        tm.remove_course(cid)
         return flask.redirect(flask.url_for('index'))
 
 

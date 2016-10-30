@@ -20,4 +20,3 @@ class Users(Model):
 
         result = self.db.execute(query)
         return self.deproxy(result)[0]['uid']
-

@@ -8,7 +8,7 @@ class Students(Model):
         Model.__init__(self, dbconn)
         self.sid = sid
 
-    def get_classes(self):
+    def get_courses(self):
         query = ('select courses.cid, courses.name, courses.start_time, '
                  'courses.end_time, courses.start_date, courses.end_date, '
                  'courses.day, courses.active, enrolled_in.sid '

@@ -11,8 +11,16 @@ class Teachers(Model):
         self.now = datetime.time(datetime.now())
         self.today = date.today()
 
-    # find relevant classes along with their sessions
-    def get_classes(self):
+    def get_courses(self):
+        query = ('select courses.cid, courses.name '
+                 'from courses, teaches '
+                 'where courses.cid = teaches.cid '
+                 'and teaches.tid = %s'
+                 % self.tid)
+        result = self.db.execute(query)
+        return self.deproxy(result)
+
+    def get_courses_with_session(self):
         query = ('select courses.cid, name, active, secret '
                  'from teaches inner join courses on '
                  '(courses.cid = teaches.cid and '
@@ -25,6 +33,25 @@ class Teachers(Model):
 
         result = self.db.execute(query)
         return self.deproxy(result)
+
+    def add_course(self, course_name):
+        query = ('insert into courses (name, active) '
+                 "values ('%s', 0) "
+                 'returning cid'
+                 % course_name)
+        result = self.db.execute(query)
+        cid = result.fetchone()[0]
+
+        query = 'insert into teaches values (%s, %d)' % (self.tid, cid)
+        self.db.execute(query)
+        return cid
+
+    def remove_course(self, cid):
+        query = ('delete from teaches '
+                 'where cid = %s '
+                 'and tid = %s'
+                 % (cid, self.tid))
+        self.db.execute(query)
 
     def close_session(self, cid):
         query = ("update sessions set expires = '%s' "
