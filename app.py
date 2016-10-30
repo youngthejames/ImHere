@@ -9,13 +9,11 @@ import oauth2client
 import apiclient
 import flask
 import sqlalchemy
-import random
 
 from sqlalchemy import *
 from flask import Flask, render_template, request, g
-from datetime import datetime, date
 
-from models import users_model, students_model, index_model, teachers_model, courses_model
+from models import users_model, index_model, teachers_model, students_model, courses_model
 
 tmpl_dir = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
@@ -67,7 +65,7 @@ def manage_session():
         userinfo_client = apiclient.discovery.build('oauth2', 'v2', http_auth)
         user = userinfo_client.userinfo().v2().me().get().execute()
 
-        #if 'columbia.edu' not in user['email']:
+        # if 'columbia.edu' not in user['email']:
         #    return flask.redirect(flask.url_for('bademail'))
 
         um = users_model.Users(g.conn)
@@ -94,7 +92,7 @@ def index():
         else:
             im = index_model.Index(g.conn, flask.session['id'])
             if im.is_student() and im.is_teacher():
-                #TODO: allow for switching between student/teacher pages
+                # TODO: allow for switching between student/teacher pages
                 # for now, just redirect to teacher
                 return flask.redirect(flask.url_for('main_teacher'))
             elif im.is_student():
@@ -127,7 +125,7 @@ def main_student():
                 valid = True
             else:
                 valid = False
-                
+
             return render_template('main_student.html', valid=valid, **context)
 
 
@@ -152,7 +150,7 @@ def main_teacher():
 
 @app.route('/protected/add_class', methods=['POST', 'GET'])
 def add_class():
-    tm = teachers_model.Teachers(g.conn, flask.session['id']) 
+    tm = teachers_model.Teachers(g.conn, flask.session['id'])
 
     if request.method == 'GET':
         return render_template('add_class.html')
@@ -162,7 +160,6 @@ def add_class():
         cid = tm.add_course(course_name)
 
         cm = courses_model.Courses(g.conn, cid)
-        # parse text area for all student UNI's
         for uni in request.form['unis'].split('\n'):
             uni = uni.strip('\r')
             cm.add_student(uni)
@@ -172,9 +169,8 @@ def add_class():
 
 @app.route('/protected/remove_class', methods=['POST', 'GET'])
 def remove_class():
-
     tm = teachers_model.Teachers(g.conn, flask.session['id'])
-    
+
     # show potential courses to remove on get request
     if request.method == 'GET':
         courses = tm.get_courses()
