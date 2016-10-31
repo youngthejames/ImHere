@@ -112,8 +112,10 @@ def main_student():
     courses = sm.get_courses()
     context = dict(data=courses)
 
+    mylist = [1,2,3,4]
+
     if request.method == 'GET':
-        return render_template('main_student.html', first=True, **context)
+        return render_template('main_student.html', first=True, mylist=mylist, **context)
 
     elif request.method == 'POST':
         if 'secret_code' in request.form.keys():
@@ -186,14 +188,22 @@ def remove_class():
 
 @app.route('/protected/view_class', methods=['POST', 'GET'])
 def view_class():
+    tm = teachers_model.Teachers(g.conn, flask.session['id'])
 
     if request.method == 'GET':
         flask.redirect(flask.url_for('index'))
 
     elif request.method == 'POST':
-        cid = request.form['cid']
-        cm = courses_model.Courses(g.conn, cid)
+        if 'close' in request.form.keys():
+            cid = request.form['close']
+            tm.close_session(cid)
+        elif 'open' in request.form.keys():
+            cid = request.form['open']
+            tm.open_session(cid)
+        else:
+            cid = request.form['cid']
 
+        cm = courses_model.Courses(g.conn, cid)
         if 'add_student' in request.form.keys():
             uni = request.form['add_student']
             cm.add_student(uni)
@@ -201,10 +211,12 @@ def view_class():
             uni = request.form['remove_student']
             cm.remove_student(uni)
 
+        courses = tm.get_courses_with_session()
+
         course_name = cm.get_course_name()
         students = cm.get_students()
         empty_class = True if len(students) == 0 else False
-        context = dict(data=students)
+        context = dict(data=students, courses=courses)
 
         return render_template(
                 'view_class.html',
