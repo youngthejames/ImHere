@@ -16,7 +16,11 @@
         <h4>Student Unis</h4>
         <textarea rows="6" cols="50" placeholder="Please enter one uni per line" name="unis"></textarea><br>
         <button>Create Class</button>
-    </form>
+    </form><br>
+
+    {% if invalid_uni %}
+    <font color="red">Invalid UNI's entered, please recreate the class</font> 
+    {% endif %}
 
 </center>
 

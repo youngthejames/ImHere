@@ -158,10 +158,22 @@ def add_class():
         return render_template('add_class.html')
 
     elif request.method == 'POST':
+
+        # first check that all unis are valid
+        um = users_model.Users(g.conn)
+        for uni in request.form['unis'].split('\n'):
+            uni = uni.strip('\r')
+            # always reads at least one empty line from form
+            if not uni:
+                continue
+            if not um.is_valid_uni(uni):
+                return render_template('add_class.html', invalid_uni=True)
+
+        # then create course and add students to course
         course_name = request.form['classname']
         cid = tm.add_course(course_name)
-
         cm = courses_model.Courses(g.conn, cid)
+
         for uni in request.form['unis'].split('\n'):
             uni = uni.strip('\r')
             cm.add_student(uni)
