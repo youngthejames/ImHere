@@ -21,14 +21,14 @@
                 </form>
 
                 Secret Code:<br>
-                {{n[3]}}<br><br>
+                {{n[3]}}<br>
 
             {% elif n[2] == 0 %}
 
                 <form method="POST" action="/protected/view_class">
                 <button name="open" value="{{n[0]}}">Open Attendance Window
                 </button>
-                </form><br><br>
+                </form><br>
 
             {% endif %}
 
@@ -61,7 +61,13 @@
 
     </tr>
     </thead>
-    </table><br>
+    </table>
+
+    {% for uni in invalid_unis %}
+        <font color="red">'{{uni}}' is an invalid uni</font>
+    {% endfor %}
+
+    <br><br><br>
 
     {% if data %}
     <table cellspacing="5">

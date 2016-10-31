@@ -32,12 +32,13 @@ class Courses(Model):
                 query = 'insert into enrolled_in values (%s, %s)' \
                         % (sid, self.cid)
                 self.db.execute(query)
+                return 0
             except:
                 # failed because already in enrolled_in
-                pass
+                return -2
         else:
-            # invalid uni, ignoring
-            pass
+            # invalid uni
+            return -1
 
     def remove_student(self, uni):
         query = "select sid from students where uni = '%s'" % uni
@@ -50,10 +51,11 @@ class Courses(Model):
                 query = 'delete from enrolled_in where sid = %s and cid = %s' \
                         % (sid, self.cid)
                 self.db.execute(query)
+                return 0
                 # TODO: delete all attendance records of student
             except:
                 # failed because it was not in enrolled_in to begin with
-                pass
+                return -2
         else:
-            # invalid uni, ignoring
-            pass
+            # invalid uni
+            return -1
