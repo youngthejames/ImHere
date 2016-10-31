@@ -204,28 +204,35 @@ def view_class():
             cid = request.form['cid']
 
         cm = courses_model.Courses(g.conn, cid)
-        invalid_unis = []
+        invalid, already_enrolled = False, False
+        res = 0
+        uni = ''
         if 'add_student' in request.form.keys():
             uni = request.form['add_student']
-            if cm.add_student(uni) == -1:
-                invalid_unis.append(uni)
+            res = cm.add_student(uni)
         elif 'remove_student' in request.form.keys():
             uni = request.form['remove_student']
-            if cm.remove_student(uni) == -1:
-                invalid_unis.append(uni)
+            res = cm.remove_student(uni)
+
+        if res == -1:
+            invalid = True
+        elif res == -2:
+            already_enrolled = True
 
         courses = tm.get_courses_with_session()
-
         course_name = cm.get_course_name()
         students = cm.get_students()
         empty_class = True if len(students) == 0 else False
-        context = dict(data=students, courses=courses, invalid_unis=invalid_unis)
+        context = dict(data=students, courses=courses)
 
         return render_template(
                 'view_class.html',
                 cid=cid,
                 course_name=course_name,
                 empty_class=empty_class,
+                uni=uni,
+                invalid=invalid,
+                already_enrolled=already_enrolled,
                 **context)
 
 

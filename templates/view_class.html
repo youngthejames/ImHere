@@ -63,9 +63,11 @@
     </thead>
     </table>
 
-    {% for uni in invalid_unis %}
+    {% if invalid %}
         <font color="red">'{{uni}}' is an invalid uni</font>
-    {% endfor %}
+    {% elif already_enrolled %}
+        <font color="red">'{{uni}}' is already in the class</font>
+    {% endif %}
 
     <br><br><br>
 
