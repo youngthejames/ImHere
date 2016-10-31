@@ -1,11 +1,15 @@
 from model import Model
+from datetime import datetime, date
+from random import randint
 
 
 class Courses(Model):
 
-    def __init__(self, dbconn, cid):
+    def __init__(self, dbconn, cid=-1):
         Model.__init__(self, dbconn)
         self.cid = cid
+        self.now = datetime.time(datetime.now())
+        self.today = date.today()
 
     def get_course_name(self):
         query = 'select name from courses where cid = %s' % self.cid
@@ -59,3 +63,43 @@ class Courses(Model):
         else:
             # invalid uni
             return -1
+
+    def get_active_session(self):
+        '''Return the seid of an active session if it exists,
+        otherwise return -1.
+        '''
+        query = ('select seid from sessions '
+                 'where cid = %s '
+                 "and expires > '%s' "
+                 "and day >= '%s'"
+                 % (self.cid, self.now, self.today))
+        result = self.db.execute(query)
+        return result.fetchone()[0] if result.rowcount == 1 else -1
+
+    def close_session(self, seid):
+        if seid == -1:
+            return
+
+        query = ('update sessions '
+                 "set expires = '%s' "
+                 'where seid = %s'
+                 % (self.now, seid))
+        self.db.execute(query)
+
+        query = 'update courses set active = 0 where cid = %s' % self.cid
+        self.db.execute(query)
+
+    def open_session(self):
+        '''Opens a session for this course
+        and returns the secret code for that session.
+        '''
+        # auto-generated secret code for now
+        randsecret = randint(1000, 9999)
+        query = ('insert into sessions (cid, secret, expires, day) '
+                 "values (%s, '%d', '%s', '%s')"
+                 % (self.cid, randsecret, '23:59:59', self.today))
+        self.db.execute(query)
+
+        query = 'update courses set active = 1 where cid = %s' % self.cid
+        self.db.execute(query)
+        return randsecret

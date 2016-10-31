@@ -10,30 +10,22 @@
 
     <h3>{{course_name}}</h3>
 
-    {% for n in courses %}
-        {% if n[1] == course_name %}
+    {% if secret %}
+        <form method="POST" action="/protected/view_class">
+        <button name="close" value="{{cid}}">Close Attendance Window
+        </button>
+        </form>
 
-            {% if n[2] == 1 %}
+        Secret Code:<br>
+        {{secret}}<br>
 
-                <form method="POST" action="/protected/view_class">
-                <button name="close" value="{{n[0]}}">Close Attendance Window
-                </button>
-                </form>
+    {% else %}
+        <form method="POST" action="/protected/view_class">
+        <button name="open" value="{{cid}}">Open Attendance Window
+        </button>
+        </form><br>
 
-                Secret Code:<br>
-                {{n[3]}}<br>
-
-            {% elif n[2] == 0 %}
-
-                <form method="POST" action="/protected/view_class">
-                <button name="open" value="{{n[0]}}">Open Attendance Window
-                </button>
-                </form><br>
-
-            {% endif %}
-
-        {% endif %}
-    {% endfor %}
+    {% endif %}
 
     <table cellspacing="35">
     <thead>

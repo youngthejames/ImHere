@@ -24,6 +24,7 @@ engine = create_engine(('postgres://'
                         'cwuepekp:SkVXF4KcwLJvTNKT41e7ruWQDcF3OSEU'
                         '@jumbo.db.elephantsql.com:5432'
                         '/cwuepekp'))
+view_class_cid = ''
 
 
 @app.before_request
@@ -112,8 +113,6 @@ def main_student():
     courses = sm.get_courses()
     context = dict(data=courses)
 
-    mylist = [1,2,3,4]
-
     if request.method == 'GET':
         return render_template('main_student.html', first=True, mylist=mylist, **context)
 
@@ -200,28 +199,33 @@ def remove_class():
 
 @app.route('/protected/view_class', methods=['POST', 'GET'])
 def view_class():
-    tm = teachers_model.Teachers(g.conn, flask.session['id'])
-
     if request.method == 'GET':
         flask.redirect(flask.url_for('index'))
 
     elif request.method == 'POST':
+        cm = courses_model.Courses(g.conn)
+        secret = None
+
         if 'close' in request.form.keys():
             cid = request.form['close']
-            tm.close_session(cid)
+            cm.cid = cid
+            cm.close_session(cm.get_active_session())
         elif 'open' in request.form.keys():
             cid = request.form['open']
-            tm.open_session(cid)
+            cm.cid = cid
+            secret = cm.open_session()
         else:
             cid = request.form['cid']
+            cm.cid = cid
 
-        cm = courses_model.Courses(g.conn, cid)
         invalid, already_enrolled = False, False
         res = 0
         uni = ''
         if 'add_student' in request.form.keys():
             uni = request.form['add_student']
             res = cm.add_student(uni)
+        # TODO: what happens when you try to remove a valid
+        # student that was not in the class to begin with
         elif 'remove_student' in request.form.keys():
             uni = request.form['remove_student']
             res = cm.remove_student(uni)
@@ -231,15 +235,19 @@ def view_class():
         elif res == -2:
             already_enrolled = True
 
-        courses = tm.get_courses_with_session()
         course_name = cm.get_course_name()
         students = cm.get_students()
         empty_class = True if len(students) == 0 else False
-        context = dict(data=students, courses=courses)
+        context = dict(data=students)
+
+        print uni
+        print invalid
+        print already_enrolled
 
         return render_template(
                 'view_class.html',
                 cid=cid,
+                secret=secret,
                 course_name=course_name,
                 empty_class=empty_class,
                 uni=uni,

@@ -43,12 +43,7 @@
             Secret Code:<br>
             {{n[3]}}<br><br>
 
-        {% endif %}
-    {% endfor %}
-
-
-    {% for n in data %}
-        {% if n[2] == 0 %}
+        {% elif n[2] == 0 %}
 
             <form method="POST" action="/protected/view_class">
             <button name="cid" value="{{n[0]}}" class="btn-link"><h4>{{n[1]}}</h4></button></form>
