@@ -112,8 +112,13 @@ def main_student():
     courses = sm.get_courses()
     context = dict(data=courses)
 
+    signed_in = True if sm.has_signed_in() else False
+
     if request.method == 'GET':
-        return render_template('main_student.html', first=True, **context)
+        return render_template(
+                'main_student.html',
+                signed_in=signed_in,
+                **context)
 
     elif request.method == 'POST':
         if 'secret_code' in request.form.keys():
@@ -126,7 +131,11 @@ def main_student():
             else:
                 valid = False
 
-            return render_template('main_student.html', valid=valid, **context)
+            return render_template(
+                    'main_student.html',
+                    submitted=True,
+                    valid=valid, 
+                    **context)
 
 
 @app.route('/protected/main_teacher', methods=['GET', 'POST'])
