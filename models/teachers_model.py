@@ -1,6 +1,5 @@
 from model import Model
 from datetime import datetime, date
-from random import randint
 
 
 class Teachers(Model):
@@ -51,24 +50,4 @@ class Teachers(Model):
                  'where cid = %s '
                  'and tid = %s'
                  % (cid, self.tid))
-        self.db.execute(query)
-
-    def close_session(self, cid):
-        query = ("update sessions set expires = '%s' "
-                 'where sessions.cid = %s'
-                 % (self.now, cid))
-        self.db.execute(query)
-
-        query = 'update courses set active = 0 where courses.cid = %s' % cid
-        self.db.execute(query)
-
-    def open_session(self, cid):
-        # auto-generated secret code for now
-        randsecret = randint(1000, 9999)
-        query = ('insert into sessions (cid, secret, expires, day) '
-                 "values (%s, '%d', '%s', '%s')"
-                 % (cid, randsecret, '23:59:59', self.today))
-        self.db.execute(query)
-
-        query = 'update courses set active = 1 where courses.cid = %s' % cid
         self.db.execute(query)

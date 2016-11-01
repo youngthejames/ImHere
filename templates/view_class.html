@@ -40,7 +40,7 @@
     </form>
     </th>
 
-    {% if not empty_class %}
+    {% if students %}
     <th>
     Del Student from Class:<br>
     <form method="POST" action="/protected/view_class">
@@ -55,23 +55,23 @@
     </thead>
     </table>
 
-    {% if invalid %}
+    {% if res == -1 %}
         <font color="red">'{{uni}}' is an invalid uni</font>
-    {% elif already_enrolled %}
+    {% elif res == -2 %}
         <font color="red">'{{uni}}' is already in the class</font>
     {% endif %}
 
     <br><br><br>
 
-    {% if data %}
+    {% if students %}
     <table cellspacing="5">
     <thead>
         <tr><th>Name</th><th>E-Mail</th></tr>
     </thead>
-    {% for n in data %}
+    {% for student in students %}
     <tr>
-        <td>{{n[0]}} {{n[1]}}</td>
-        <td>| {{n[2]}}</td>
+        <td>{{student[0]}} {{student[1]}}</td>
+        <td>| {{student[2]}}</td>
     </tr>
     {% endfor %}
     </table><br><br>

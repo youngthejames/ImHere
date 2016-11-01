@@ -135,12 +135,15 @@ def main_teacher():
     tm = teachers_model.Teachers(g.conn, flask.session['id'])
 
     if request.method == 'POST':
+        cm = courses_model.Courses(g.conn)
         if "close" in request.form.keys():
             cid = request.form["close"]
-            tm.close_session(cid)
+            cm.cid = cid
+            cm.close_session(cm.get_active_session())
         elif "open" in request.form.keys():
             cid = request.form["open"]
-            tm.open_session(cid)
+            cm.cid = cid
+            cm.open_session()
 
     courses = tm.get_courses_with_session()
     empty = True if len(courses) == 0 else False
@@ -218,9 +221,8 @@ def view_class():
             cid = request.form['cid']
             cm.cid = cid
 
-        invalid, already_enrolled = False, False
         res = 0
-        uni = ''
+        uni = None
         if 'add_student' in request.form.keys():
             uni = request.form['add_student']
             res = cm.add_student(uni)
@@ -230,29 +232,17 @@ def view_class():
             uni = request.form['remove_student']
             res = cm.remove_student(uni)
 
-        if res == -1:
-            invalid = True
-        elif res == -2:
-            already_enrolled = True
-
         course_name = cm.get_course_name()
         students = cm.get_students()
-        empty_class = True if len(students) == 0 else False
-        context = dict(data=students)
-
-        print uni
-        print invalid
-        print already_enrolled
+        context = dict(students=students)
 
         return render_template(
                 'view_class.html',
                 cid=cid,
                 secret=secret,
                 course_name=course_name,
-                empty_class=empty_class,
                 uni=uni,
-                invalid=invalid,
-                already_enrolled=already_enrolled,
+                res=res,
                 **context)
 
 
