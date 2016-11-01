@@ -24,7 +24,6 @@ engine = create_engine(('postgres://'
                         'cwuepekp:SkVXF4KcwLJvTNKT41e7ruWQDcF3OSEU'
                         '@jumbo.db.elephantsql.com:5432'
                         '/cwuepekp'))
-view_class_cid = ''
 
 
 @app.before_request
@@ -114,7 +113,7 @@ def main_student():
     context = dict(data=courses)
 
     if request.method == 'GET':
-        return render_template('main_student.html', first=True, mylist=mylist, **context)
+        return render_template('main_student.html', first=True, **context)
 
     elif request.method == 'POST':
         if 'secret_code' in request.form.keys():
@@ -160,7 +159,6 @@ def add_class():
         return render_template('add_class.html')
 
     elif request.method == 'POST':
-
         # first check that all unis are valid
         um = users_model.Users(g.conn)
         for uni in request.form['unis'].split('\n'):
@@ -260,7 +258,6 @@ def register():
                 name=flask.session['google_user']['name'])
 
     elif request.method == 'POST':
-
         if request.form['type'] == 'student':
             try:
                 query = '''
@@ -270,7 +267,6 @@ def register():
             except:
                 pass
             return flask.redirect(flask.url_for('main_student'))
-
         else:
             try:
                 query = '''

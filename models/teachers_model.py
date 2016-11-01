@@ -46,8 +46,5 @@ class Teachers(Model):
         return cid
 
     def remove_course(self, cid):
-        query = ('delete from teaches '
-                 'where cid = %s '
-                 'and tid = %s'
-                 % (cid, self.tid))
+        query = 'delete from courses where cid = %s' % cid
         self.db.execute(query)
