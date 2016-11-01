@@ -224,8 +224,6 @@ def view_class():
         if 'add_student' in request.form.keys():
             uni = request.form['add_student']
             res = cm.add_student(uni)
-        # TODO: what happens when you try to remove a valid
-        # student that was not in the class to begin with
         elif 'remove_student' in request.form.keys():
             uni = request.form['remove_student']
             res = cm.remove_student(uni)

@@ -55,11 +55,17 @@ class Courses(Model):
                 query = 'delete from enrolled_in where sid = %s and cid = %s' \
                         % (sid, self.cid)
                 self.db.execute(query)
+
+                query = ('delete from attendance_records using sessions '
+                         'where attendance_records.seid = sessions.seid '
+                         'and attendance_records.sid = %s '
+                         'and sessions.cid = %s'
+                         % (sid, self.cid))
+                self.db.execute(query)
                 return 0
-                # TODO: delete all attendance records of student
             except:
                 # failed because it was not in enrolled_in to begin with
-                return -2
+                return -3
         else:
             # invalid uni
             return -1
