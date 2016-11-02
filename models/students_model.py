@@ -8,6 +8,11 @@ class Students(Model):
         Model.__init__(self, dbconn)
         self.sid = sid
 
+    def get_uni(self):
+        query = 'select uni from students where sid = %s' % self.sid
+        result = self.db.execute(query)
+        return result.fetchone()[0]
+
     def get_courses(self):
         query = ('select courses.cid, courses.name, courses.start_time, '
                  'courses.end_time, courses.start_date, courses.end_date, '
@@ -60,3 +65,13 @@ class Students(Model):
         query = 'insert into attendance_records values (%s, %s)' \
                 % (self.sid, seid)
         self.db.execute(query)
+
+    def get_num_attendance_records(self, cid):
+        query = ('select * '
+                 'from attendance_records, sessions '
+                 'where attendance_records.seid = sessions.seid '
+                 'and sessions.cid = %s '
+                 'and attendance_records.sid = %s'
+                 % (cid, self.sid))
+        result = self.db.execute(query)
+        return result.rowcount

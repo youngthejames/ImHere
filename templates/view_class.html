@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>{{course_name}}</title>
+    <style>
+        .beta table, .beta td, .beta th {
+            border: 1px solid black;
+        }
+    </style>
 </head>
 <body>
 <center>
+
     <h2>ImHere</h2><br>
 
     <h3>{{course_name}}</h3>
@@ -63,17 +69,29 @@
         <font color="red">'{{uni}}' is not in the class to begin with</font>
     {% endif %}
 
-    <br><br><br>
+    <br><br>
 
     {% if students %}
-    <table cellspacing="5">
+        {% if secret %}
+        <font color="red">attendance may be inaccurate due to the open sign-in window</font>
+        {% endif %}
+    <table cellspacing="5" class="beta" style="border-collapse:collapse">
     <thead>
-        <tr><th>Name</th><th>E-Mail</th></tr>
+    <tr>
+        <th>Name</th>
+        <th>E-Mail</th>
+        <th>UNI</th>
+        <th>Attendance</th>
+    </tr>
     </thead>
+
+    <!-- students is a list == [<RowProxy>, UNI, num_attendance_records] -->
     {% for student in students %}
     <tr>
-        <td>{{student[0]}} {{student[1]}}</td>
-        <td>| {{student[2]}}</td>
+        <td align="center">{{student[0][1]}} {{student[0][2]}}</td>
+        <td align="center">{{student[0][3]}}</td>
+        <td align="center">{{student[1]}}</td>
+        <td align="center">{{student[2]}}/{{num_sessions}}</td>
     </tr>
     {% endfor %}
     </table><br><br>

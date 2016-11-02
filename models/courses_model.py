@@ -17,7 +17,7 @@ class Courses(Model):
         return result.fetchone()[0]
 
     def get_students(self):
-        query = ('select name, family_name, email '
+        query = ('select uid, name, family_name, email '
                  'from users, enrolled_in '
                  'where users.uid = enrolled_in.sid '
                  'and enrolled_in.cid = %s'
@@ -109,3 +109,8 @@ class Courses(Model):
         query = 'update courses set active = 1 where cid = %s' % self.cid
         self.db.execute(query)
         return randsecret
+
+    def get_num_sessions(self):
+        query = 'select * from sessions where cid = %s' % self.cid
+        result = self.db.execute(query)
+        return result.rowcount

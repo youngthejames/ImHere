@@ -238,14 +238,23 @@ def view_class():
             res = cm.remove_student(uni)
 
         course_name = cm.get_course_name()
+        num_sessions = cm.get_num_sessions()
         students = cm.get_students()
-        context = dict(students=students)
+        students_with_ar = []
+        for student in students:
+            sm = students_model.Students(g.conn, student[0])
+            student_uni = sm.get_uni()
+            num_ar = sm.get_num_attendance_records(cid)
+            students_with_ar.append([student, student_uni, num_ar])
+
+        context = dict(students=students_with_ar)
 
         return render_template(
                 'view_class.html',
                 cid=cid,
                 secret=secret,
                 course_name=course_name,
+                num_sessions=num_sessions,
                 uni=uni,
                 res=res,
                 **context)
