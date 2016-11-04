@@ -37,16 +37,18 @@ def before_request():
         g.conn = None
 
 
-# make sure user is authenticated w/ live session on every protected request
+# make sure user is authenticated w/ live session on every request
 @app.before_request
 def manage_session():
     # want to go through oauth flow for this route specifically
     # not get stuck in redirect loop
-    if(request.path == '/oauth2callback'):
+    if(request.path == '/oauth/callback'):
         return
-    # want to allow users to public pages without a session
-    if('protected' not in request.path):
+
+    # allow all users to visit the index page without a session
+    if(request.path == '/'):
         return
+
     # validate that user has valid session
     # add the google user info into session
     if 'credentials' not in flask.session:
@@ -86,26 +88,26 @@ def teardown_request(exception):
 def index():
 
     if request.method == 'GET':
-        if 'credentials' not in flask.session:
-            return render_template('login.html')
-        else:
-            im = index_model.Index(g.conn, flask.session['id'])
-            if im.is_student() and im.is_teacher():
-                # TODO: allow for switching between student/teacher pages
-                # for now, just redirect to teacher
-                return flask.redirect(flask.url_for('main_teacher'))
-            elif im.is_student():
-                return flask.redirect(flask.url_for('main_student'))
-            elif im.is_teacher():
-                return flask.redirect(flask.url_for('main_teacher'))
-            else:
-                return render_template('login.html', not_registered=True)
+        return render_template('login.html')
 
     elif request.method == 'POST':
-        return flask.redirect(flask.url_for('protected'))
+        return 'error #98245'
 
 
-@app.route('/protected/student/', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    
+    im = index_model.Index(g.conn, flask.session['id'])
+    # TODO: allow for student/teacher redirects
+    if im.is_student():
+        return flask.redirect(flask.url_for('main_student'))
+    elif im.is_teacher():
+        return flask.redirect(flask.url_for('main_teacher'))
+    else:
+        return render_template('login.html', not_registered=True)
+
+
+@app.route('/student/', methods=['GET', 'POST'])
 def main_student():
     sm = students_model.Students(g.conn, flask.session['id'])
     courses = sm.get_courses()
@@ -137,7 +139,7 @@ def main_student():
                     **context)
 
 
-@app.route('/protected/teacher/', methods=['GET', 'POST'])
+@app.route('/teacher/', methods=['GET', 'POST'])
 def main_teacher():
     tm = teachers_model.Teachers(g.conn, flask.session['id'])
 
@@ -159,7 +161,7 @@ def main_teacher():
     return render_template('main_teacher.html', empty=empty, **context)
 
 
-@app.route('/protected/teacher/add_class', methods=['POST', 'GET'])
+@app.route('/teacher/add_class', methods=['POST', 'GET'])
 def add_class():
     tm = teachers_model.Teachers(g.conn, flask.session['id'])
 
@@ -189,7 +191,7 @@ def add_class():
         return flask.redirect(flask.url_for('main_teacher'))
 
 
-@app.route('/protected/teacher/remove_class', methods=['POST', 'GET'])
+@app.route('/teacher/remove_class', methods=['POST', 'GET'])
 def remove_class():
     tm = teachers_model.Teachers(g.conn, flask.session['id'])
 
@@ -206,7 +208,7 @@ def remove_class():
         return flask.redirect(flask.url_for('index'))
 
 
-@app.route('/protected/teacher/view_class', methods=['POST', 'GET'])
+@app.route('/teacher/view_class', methods=['POST', 'GET'])
 def view_class():
     if request.method == 'GET':
         flask.redirect(flask.url_for('index'))
@@ -259,12 +261,7 @@ def view_class():
                 **context)
 
 
-@app.route('/protected')
-def protected():
-    return flask.redirect(flask.url_for('index'))
-
-
-@app.route('/protected/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
 
     if request.method == 'GET':

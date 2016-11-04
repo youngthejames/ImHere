@@ -17,7 +17,7 @@
     <h3>{{course_name}}</h3>
 
     {% if secret %}
-        <form method="POST" action="/protected/teacher/view_class">
+        <form method="POST" action="/teacher/view_class">
         <button name="close" value="{{cid}}">Close Attendance Window
         </button>
         </form>
@@ -26,7 +26,7 @@
         {{secret}}<br>
 
     {% else %}
-        <form method="POST" action="/protected/teacher/view_class">
+        <form method="POST" action="/teacher/view_class">
         <button name="open" value="{{cid}}">Open Attendance Window
         </button>
         </form><br>
@@ -39,7 +39,7 @@
 
     <th>
     Add Student to Class:<br>
-    <form method="POST" action="/protected/teacher/view_class">
+    <form method="POST" action="/teacher/view_class">
         <input type="text" required name="add_student" placeholder="uni">
         <br>
         <button name="cid" value={{cid}}>add</button>
@@ -49,7 +49,7 @@
     {% if students %}
     <th>
     Del Student from Class:<br>
-    <form method="POST" action="/protected/teacher/view_class">
+    <form method="POST" action="/teacher/view_class">
         <input type="text" required name="remove_student" placeholder="uni">
         <br>
         <button name="cid" value={{cid}}>remove</button>
@@ -99,7 +99,7 @@
 
 
 
-    <a href="/protected/teacher/">Home</a>
+    <a href="/teacher/">Home</a>
 </center>
 
 </body>
