@@ -37,16 +37,42 @@ def before_request():
         g.conn = None
 
 
+@app.before_request
+def teacher_session():
+    if '/teacher/' in request.path:
+        if 'credentials' not in flask.session:
+            return flask.redirect(flask.url_for('index'))
+
+        im = index_model.Index(g.conn, flask.session['id'])
+        if im.is_teacher():
+            return
+        else:
+            return flask.redirect(flask.url_for('register'))
+
+
+@app.before_request
+def student_session():
+    if '/student/' in request.path:
+        if 'credentials' not in flask.session:
+            return flask.redirect(flask.url_for('index'))
+
+        im = index_model.Index(g.conn, flask.session['id'])
+        if im.is_student():
+            return
+        else:
+            return flask.redirect(flask.url_for('register'))
+
+
 # make sure user is authenticated w/ live session on every request
 @app.before_request
 def manage_session():
     # want to go through oauth flow for this route specifically
     # not get stuck in redirect loop
-    if(request.path == '/oauth/callback'):
+    if request.path == '/oauth/callback':
         return
 
     # allow all users to visit the index page without a session
-    if(request.path == '/'):
+    if request.path == '/':
         return
 
     # validate that user has valid session
@@ -86,12 +112,7 @@ def teardown_request(exception):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-
-    if request.method == 'GET':
-        return render_template('login.html')
-
-    elif request.method == 'POST':
-        return 'error #98245'
+    return render_template('login.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -265,9 +286,14 @@ def view_class():
 def register():
 
     if request.method == 'GET':
+        im = index_model.Index(g.conn, flask.session['id'])
+        is_student = True if im.is_student() else False
+        is_teacher = True if im.is_teacher() else False
         return render_template(
                 'register.html',
-                name=flask.session['google_user']['name'])
+                name=flask.session['google_user']['name'],
+                is_student=is_student,
+                is_teacher=is_teacher)
 
     elif request.method == 'POST':
         if request.form['type'] == 'student':
@@ -287,8 +313,7 @@ def register():
                 g.conn.execute(query)
             except:
                 pass
-
-            return flask.redirect(flask.url_for('index'))
+            return flask.redirect(flask.url_for('main_teacher'))
 
 
 @app.route('/bademail')
