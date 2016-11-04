@@ -88,7 +88,6 @@ def index():
     if request.method == 'GET':
         if 'credentials' not in flask.session:
             return render_template('login.html')
-
         else:
             im = index_model.Index(g.conn, flask.session['id'])
             if im.is_student() and im.is_teacher():
@@ -106,7 +105,7 @@ def index():
         return flask.redirect(flask.url_for('protected'))
 
 
-@app.route('/protected/main_student', methods=['GET', 'POST'])
+@app.route('/protected/student/', methods=['GET', 'POST'])
 def main_student():
     sm = students_model.Students(g.conn, flask.session['id'])
     courses = sm.get_courses()
@@ -138,7 +137,7 @@ def main_student():
                     **context)
 
 
-@app.route('/protected/main_teacher', methods=['GET', 'POST'])
+@app.route('/protected/teacher/', methods=['GET', 'POST'])
 def main_teacher():
     tm = teachers_model.Teachers(g.conn, flask.session['id'])
 
@@ -160,7 +159,7 @@ def main_teacher():
     return render_template('main_teacher.html', empty=empty, **context)
 
 
-@app.route('/protected/add_class', methods=['POST', 'GET'])
+@app.route('/protected/teacher/add_class', methods=['POST', 'GET'])
 def add_class():
     tm = teachers_model.Teachers(g.conn, flask.session['id'])
 
@@ -190,7 +189,7 @@ def add_class():
         return flask.redirect(flask.url_for('main_teacher'))
 
 
-@app.route('/protected/remove_class', methods=['POST', 'GET'])
+@app.route('/protected/teacher/remove_class', methods=['POST', 'GET'])
 def remove_class():
     tm = teachers_model.Teachers(g.conn, flask.session['id'])
 
@@ -207,7 +206,7 @@ def remove_class():
         return flask.redirect(flask.url_for('index'))
 
 
-@app.route('/protected/view_class', methods=['POST', 'GET'])
+@app.route('/protected/teacher/view_class', methods=['POST', 'GET'])
 def view_class():
     if request.method == 'GET':
         flask.redirect(flask.url_for('index'))

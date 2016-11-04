@@ -12,16 +12,12 @@
             <h4>{{n[1]}}</h4>
 
             {% if valid %}
-
-            Successful sign-in!
-
+                Successful sign-in!
             {% elif signed_in %}
-
-            You have already signed into the session!
-
+                You have already signed into the session!
             {% else %}
 
-            <form action="/protected/main_student" method="post">
+            <form action="/protected/student/" method="post">
                 Sign in now!
                 <input type="text" name="secret_code" placeholder="Secret Code">
                 <input type="submit" value="Submit">
@@ -50,7 +46,6 @@
     {% endfor %}
 
     </center>
-
 
 </body>
 </html>
