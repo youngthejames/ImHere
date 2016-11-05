@@ -125,6 +125,7 @@ def switch_type():
         else:
             return flask.redirect(flask.url_for('register'))
 
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     return render_template('login.html')
@@ -132,7 +133,7 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    
+
     im = index_model.Index(g.conn, flask.session['id'])
     # TODO: allow for student/teacher redirects
     if im.is_student():
@@ -171,7 +172,7 @@ def main_student():
             return render_template(
                     'main_student.html',
                     submitted=True,
-                    valid=valid, 
+                    valid=valid,
                     **context)
 
 
@@ -241,7 +242,7 @@ def remove_class():
     elif request.method == 'POST':
         cid = request.form['cid']
         tm.remove_course(cid)
-        return flask.redirect(flask.url_for('index'))
+        return flask.redirect(flask.url_for('main_teacher'))
 
 
 @app.route('/teacher/view_class', methods=['POST', 'GET'])
