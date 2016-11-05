@@ -110,6 +110,21 @@ def teardown_request(exception):
         print e
 
 
+@app.route('/switch_type', methods=['POST'])
+def switch_type():
+    im = index_model.Index(g.conn, flask.session['id'])
+    if request.form['type'] == 'teacher':
+        if im.is_teacher():
+            return flask.redirect(flask.url_for('main_teacher'))
+        else:
+            return flask.redirect(flask.url_for('register'))
+
+    elif request.form['type'] == 'student':
+        if im.is_student():
+            return flask.redirect(flask.url_for('main_student'))
+        else:
+            return flask.redirect(flask.url_for('register'))
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     return render_template('login.html')

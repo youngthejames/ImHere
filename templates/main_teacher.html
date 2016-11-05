@@ -17,9 +17,14 @@
     }
     </style>
 </head>
+
 <body>
 
-<center>
+    <form action="/switch_type" method="POST">
+    <button name="type" value="student">Switch to student view</button>
+    </form><br>
+
+    <center>
     <h2>ImHere</h2>
 
     <a href="/teacher/add_class">Add a Class</a>
@@ -57,7 +62,6 @@
     {% endfor %}
 
 
-</center>
-
+    </center>
 </body>
 </html>
