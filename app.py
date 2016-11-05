@@ -72,7 +72,7 @@ def manage_session():
         return
 
     # allow all users to visit the index page without a session
-    if request.path == '/':
+    if request.path == '/' or request.path == '/oauth/logout':
         return
 
     # validate that user has valid session
@@ -331,11 +331,6 @@ def register():
             return flask.redirect(flask.url_for('main_teacher'))
 
 
-@app.route('/bademail')
-def bademail():
-    return 'only columbia.edu email address accepted'
-
-
 @app.route('/oauth/callback')
 def oauth2callback():
     flow = oauth2client.client.flow_from_clientsecrets(
@@ -356,7 +351,7 @@ def oauth2callback():
         return flask.redirect(redirect)
 
 
-@app.route('/oauth/logout')
+@app.route('/oauth/logout', methods=['POST', 'GET'])
 def logout():
     flask.session.clear()
     return flask.redirect(flask.url_for('index'))
