@@ -1,4 +1,4 @@
-ImHere
+# ImHere
 
 An attendance tracking application for the collegiate setting
 
@@ -13,11 +13,16 @@ Peter Hopper - pwh2126
 
 Developed using Python 2.7
 
-Run the application server using the following command
-"""
-		python app.py
-"""
 
-System dependencies listed in requirements.txt
-*** ADDITIONAL INSTALLS MAY BE REQUIRED ***
+## Install
+Install dependencies via [pip](https://packaging.python.org/installing/) with 
+```
+pip install -r requirements.txt
+```
+
+## Run
+```
+python run.py
+```
+
 
