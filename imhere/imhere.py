@@ -336,7 +336,7 @@ def oauth2callback():
         userinfo_client = apiclient.discovery.build('oauth2', 'v2', http_auth)
         user = userinfo_client.userinfo().v2().me().get().execute()
 
-        # if 'columbia.edu' not in user['email']:                                 
+        # if 'columbia.edu' not in user['email']:
         #    return flask.redirect(flask.url_for('bademail'))
 
         um = users_model.Users(g.conn)
