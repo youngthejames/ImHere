@@ -19,3 +19,9 @@ def test_get_create(db):
     # second call is to get that user
     uid2 = um.get_or_create_user(user)
     assert uid == uid2
+
+def test_is_valid_uni(db):
+
+    um = users_model.Users(db)
+
+    assert not um.is_valid_uni('thisisobviouslyfake')
