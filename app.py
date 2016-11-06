@@ -74,10 +74,7 @@ def manage_session():
         flask.session['redirect'] = request.path
         return flask.redirect(flask.url_for('oauth2callback'))
 
-    credentials = oauth2client.client.OAuth2Credentials.from_json(
-        flask.session['credentials'])
-
-    if credentials.access_token_expired:
+    if flask.session['access_token_expired']:
         return flask.redirect(flask.url_for('oauth2callback'))
 
 
@@ -297,6 +294,7 @@ def register():
                 insert into students (sid, uni) values({0}, '{1}')
                 '''.format(flask.session['id'], request.form['uni'])
                 g.conn.execute(query)
+                flask.session['is_student'] = True
             except:
                 pass
             return flask.redirect(flask.url_for('main_student'))
@@ -306,6 +304,7 @@ def register():
                 insert into teachers (tid) values({0})
                 '''.format(flask.session['id'])
                 g.conn.execute(query)
+                flask.session['is_teacher'] = True
             except:
                 pass
             return flask.redirect(flask.url_for('main_teacher'))
@@ -326,10 +325,9 @@ def oauth2callback():
         auth_code = flask.request.args.get('code')
         credentials = flow.step2_exchange(auth_code)
         flask.session['credentials'] = credentials.to_json()
+        flask.session['access_token_expired'] = credentials.access_token_expired
 
         # use token to get user profile from google oauth api
-        credentials = oauth2client.client.OAuth2Credentials.from_json(
-            flask.session['credentials'])
         http_auth = credentials.authorize(httplib2.Http())
         userinfo_client = apiclient.discovery.build('oauth2', 'v2', http_auth)
         user = userinfo_client.userinfo().v2().me().get().execute()
