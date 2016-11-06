@@ -132,7 +132,7 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    
+
     im = index_model.Index(g.conn, flask.session['id'])
     # TODO: allow for student/teacher redirects
     if im.is_student():
@@ -171,7 +171,7 @@ def main_student():
             return render_template(
                     'main_student.html',
                     submitted=True,
-                    valid=valid, 
+                    valid=valid,
                     **context)
 
 
@@ -378,6 +378,7 @@ if __name__ == '__main__':
 
         '''
         HOST, PORT = host, port
+        PORT = int(os.environ.get('PORT')) or PORT
         print 'running on %s:%d' % (HOST, PORT)
         app.secret_key = str(uuid.uuid4())
         app.run(host=HOST, port=PORT, debug=debug, threaded=threaded)
