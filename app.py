@@ -248,11 +248,10 @@ def remove_class():
 @app.route('/teacher/view_class', methods=['POST', 'GET'])
 def view_class():
     if request.method == 'GET':
-        flask.redirect(flask.url_for('index'))
+        flask.redirect(flask.url_for('main_teacher'))
 
     elif request.method == 'POST':
         cm = courses_model.Courses(g.conn)
-        secret = None
 
         if 'close' in request.form.keys():
             cid = request.form['close']
@@ -261,7 +260,7 @@ def view_class():
         elif 'open' in request.form.keys():
             cid = request.form['open']
             cm.cid = cid
-            secret = cm.open_session()
+            cm.open_session()
         else:
             cid = request.form['cid']
             cm.cid = cid
@@ -276,6 +275,7 @@ def view_class():
             res = cm.remove_student(uni)
 
         course_name = cm.get_course_name()
+        secret = cm.get_secret_code()
         num_sessions = cm.get_num_sessions()
         students = cm.get_students()
         students_with_ar = []

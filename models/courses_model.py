@@ -110,6 +110,17 @@ class Courses(Model):
         self.db.execute(query)
         return randsecret
 
+    def get_secret_code(self):
+        query = ('select secret '
+                 'from sessions, courses '
+                 'where sessions.cid = courses.cid '
+                 'and courses.cid = %s '
+                 'and courses.active = 1 '
+                 "and expires > '%s'"
+                 % (self.cid, self.now))
+        result = self.db.execute(query)
+        return result.fetchone()[0] if result.rowcount == 1 else None
+
     def get_num_sessions(self):
         query = 'select * from sessions where cid = %s' % self.cid
         result = self.db.execute(query)
