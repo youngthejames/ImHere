@@ -74,7 +74,9 @@ def manage_session():
         flask.session['redirect'] = request.path
         return flask.redirect(flask.url_for('oauth2callback'))
 
-    if flask.session['access_token_expired']:
+    credentials = oauth2client.client.OAuth2Credentials.from_json(
+        flask.session['credentials'])
+    if credentials.access_token_expired:
         return flask.redirect(flask.url_for('oauth2callback'))
 
 
@@ -328,7 +330,6 @@ def oauth2callback():
         auth_code = flask.request.args.get('code')
         credentials = flow.step2_exchange(auth_code)
         flask.session['credentials'] = credentials.to_json()
-        flask.session['access_token_expired'] = credentials.access_token_expired
 
         # use token to get user profile from google oauth api
         http_auth = credentials.authorize(httplib2.Http())
