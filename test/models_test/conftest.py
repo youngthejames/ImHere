@@ -1,14 +1,15 @@
 import pytest
 import sqlalchemy
 
+import test.db_util
+
 @pytest.fixture(scope="module")
 def db():
-    db = sqlalchemy.create_engine(('postgres://'
-                            'cwuepekp:SkVXF4KcwLJvTNKT41e7ruWQDcF3OSEU'
-                            '@jumbo.db.elephantsql.com:5432'
-                            '/cwuepekp'),
-                            pool_size=1)
-    connection = db.connect()
-    yield connection
+    test_db = test.db_util.create_test_db()
 
-    connection.close()
+    conn = test_db[0].connect()
+    yield conn
+
+    conn.close()
+
+    test.db_util.destroy_test_db(test_db[1])
