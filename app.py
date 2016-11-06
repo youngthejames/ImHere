@@ -276,28 +276,31 @@ def view_class():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-
     if request.method == 'GET':
-        im = index_model.Index(g.conn, flask.session['id'])
-        is_student = True if im.is_student() else False
-        is_teacher = True if im.is_teacher() else False
         return render_template(
                 'register.html',
                 name=flask.session['google_user']['name'],
-                is_student=is_student,
-                is_teacher=is_teacher)
+                is_student=flask.session['is_student'],
+                is_teacher=flask.session['is_teacher'])
 
     elif request.method == 'POST':
         if request.form['type'] == 'student':
-            try:
+            # check that uni doesn't already exist
+            # if it doesn't, continue student creation
+            um = users_model.Users(g.conn)
+            if not um.is_valid_uni(request.form['uni']):
                 query = '''
                 insert into students (sid, uni) values({0}, '{1}')
                 '''.format(flask.session['id'], request.form['uni'])
                 g.conn.execute(query)
                 flask.session['is_student'] = True
-            except:
-                pass
-            return flask.redirect(flask.url_for('main_student'))
+                return flask.redirect(flask.url_for('main_student'))
+            else:
+                return render_template(
+                        'register.html',
+                        name=flask.session['google_user']['name'],
+                        invalid_uni=True)
+
         else:
             try:
                 query = '''
