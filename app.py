@@ -378,7 +378,7 @@ if __name__ == '__main__':
 
         '''
         HOST, PORT = host, port
-        PORT = int(os.environ.get('PORT')) or PORT
+        PORT = int(os.environ.get('PORT') or PORT)
         print 'running on %s:%d' % (HOST, PORT)
         app.secret_key = str(uuid.uuid4())
         app.run(host=HOST, port=PORT, debug=debug, threaded=threaded)
