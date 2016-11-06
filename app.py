@@ -125,6 +125,7 @@ def switch_type():
         else:
             return flask.redirect(flask.url_for('register'))
 
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     return render_template('login.html')
@@ -241,7 +242,7 @@ def remove_class():
     elif request.method == 'POST':
         cid = request.form['cid']
         tm.remove_course(cid)
-        return flask.redirect(flask.url_for('index'))
+        return flask.redirect(flask.url_for('main_teacher'))
 
 
 @app.route('/teacher/view_class', methods=['POST', 'GET'])
