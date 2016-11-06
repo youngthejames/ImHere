@@ -23,7 +23,8 @@ app = Flask(__name__, template_folder=tmpl_dir)
 engine = create_engine(('postgres://'
                         'cwuepekp:SkVXF4KcwLJvTNKT41e7ruWQDcF3OSEU'
                         '@jumbo.db.elephantsql.com:5432'
-                        '/cwuepekp'))
+                        '/cwuepekp'),
+                        pool_size=5)
 
 
 @app.before_request
@@ -42,11 +43,7 @@ def teacher_session():
     if '/teacher/' in request.path:
         if 'credentials' not in flask.session:
             return flask.redirect(flask.url_for('index'))
-
-        im = index_model.Index(g.conn, flask.session['id'])
-        if im.is_teacher():
-            return
-        else:
+        elif not flask.session['is_teacher']:
             return flask.redirect(flask.url_for('register'))
 
 
@@ -55,11 +52,7 @@ def student_session():
     if '/student/' in request.path:
         if 'credentials' not in flask.session:
             return flask.redirect(flask.url_for('index'))
-
-        im = index_model.Index(g.conn, flask.session['id'])
-        if im.is_student():
-            return
-        else:
+        elif not flask.session['is_student']:
             return flask.redirect(flask.url_for('register'))
 
 
@@ -86,20 +79,6 @@ def manage_session():
 
     if credentials.access_token_expired:
         return flask.redirect(flask.url_for('oauth2callback'))
-
-    else:
-        # use token to get user profile from google oauth api
-        http_auth = credentials.authorize(httplib2.Http())
-        userinfo_client = apiclient.discovery.build('oauth2', 'v2', http_auth)
-        user = userinfo_client.userinfo().v2().me().get().execute()
-
-        # if 'columbia.edu' not in user['email']:
-        #    return flask.redirect(flask.url_for('bademail'))
-
-        um = users_model.Users(g.conn)
-
-        flask.session['google_user'] = user
-        flask.session['id'] = um.get_or_create_user(user)
 
 
 @app.teardown_request
@@ -347,6 +326,27 @@ def oauth2callback():
         auth_code = flask.request.args.get('code')
         credentials = flow.step2_exchange(auth_code)
         flask.session['credentials'] = credentials.to_json()
+
+        # use token to get user profile from google oauth api
+        credentials = oauth2client.client.OAuth2Credentials.from_json(
+            flask.session['credentials'])
+        http_auth = credentials.authorize(httplib2.Http())
+        userinfo_client = apiclient.discovery.build('oauth2', 'v2', http_auth)
+        user = userinfo_client.userinfo().v2().me().get().execute()
+
+        # if 'columbia.edu' not in user['email']:                                 
+        #    return flask.redirect(flask.url_for('bademail'))
+
+        um = users_model.Users(g.conn)
+
+        flask.session['google_user'] = user
+        flask.session['id'] = um.get_or_create_user(user)
+
+        # now add is_student and is_teacher to flask.session
+        im = index_model.Index(g.conn, flask.session['id'])
+        flask.session['is_student'] = True if im.is_student() else False
+        flask.session['is_teacher'] = True if im.is_teacher() else False
+
         redirect = flask.session['redirect']
         flask.session.pop('redirect', None)
         return flask.redirect(redirect)
