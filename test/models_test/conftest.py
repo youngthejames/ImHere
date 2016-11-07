@@ -3,7 +3,7 @@ import sqlalchemy
 
 import test.db_util
 
-@pytest.fixture(scope="module")
+@pytest.yield_fixture(scope="module")
 def db():
     test_db = test.db_util.create_test_db()
 

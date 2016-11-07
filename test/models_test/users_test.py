@@ -1,4 +1,3 @@
-
 from models import users_model
 
 def test_get_create(db):
@@ -37,7 +36,5 @@ def test_is_valid_uni(db):
     um = users_model.Users(db)
 
     assert not um.is_valid_uni('thisisobviouslyfake')
-
     assert um.is_valid_uni('ds9876')
-
     assert not um.is_valid_uni('lj1337')
