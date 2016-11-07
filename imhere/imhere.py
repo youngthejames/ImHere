@@ -3,22 +3,22 @@
 import os
 import httplib2
 import uuid
-import json
 
 import oauth2client
 import apiclient
 import flask
-import sqlalchemy
 
 from sqlalchemy import *
 from flask import Flask, render_template, request, g
 
-from ..models import users_model, index_model, teachers_model, students_model, courses_model
+from models import users_model, index_model, teachers_model, students_model, \
+    courses_model
 
 tmpl_dir = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
     'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
+
 
 @app.before_request
 def before_request():

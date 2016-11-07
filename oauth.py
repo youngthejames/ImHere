@@ -1,8 +1,5 @@
-import json
-
 import flask
 import httplib2
-import apiclient
 
 from oauth2client import client
 from apiclient.discovery import build
