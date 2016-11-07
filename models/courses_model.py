@@ -51,7 +51,13 @@ class Courses(Model):
         if result.rowcount == 1:
             # found a student with uni, attempt to remove from enrolled_in
             sid = result.fetchone()[0]
-            try:
+
+            query = ('select * from enrolled_in '
+                     'where sid = %s and cid = %s'
+                     % (sid, self.cid))
+            result = self.db.execute(query)
+
+            if result.rowcount == 1:
                 query = 'delete from enrolled_in where sid = %s and cid = %s' \
                         % (sid, self.cid)
                 self.db.execute(query)
@@ -63,7 +69,7 @@ class Courses(Model):
                          % (sid, self.cid))
                 self.db.execute(query)
                 return 0
-            except:
+            else:
                 # failed because it was not in enrolled_in to begin with
                 return -3
         else:
@@ -119,7 +125,7 @@ class Courses(Model):
                  "and expires > '%s'"
                  % (self.cid, self.now))
         result = self.db.execute(query)
-        return result.fetchone()[0] if result.rowcount == 1 else None
+        return int(result.fetchone()[0]) if result.rowcount == 1 else None
 
     def get_num_sessions(self):
         query = 'select * from sessions where cid = %s' % self.cid
