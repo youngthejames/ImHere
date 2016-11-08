@@ -22,6 +22,7 @@ class Users(Model):
         return self.deproxy(result)[0]['uid']
 
     def is_valid_uni(self, uni):
+        uni = self.escape_string(uni)
         query = "select sid from students where uni = '%s'" % uni
         result = self.db.execute(query)
         return True if result.rowcount == 1 else False

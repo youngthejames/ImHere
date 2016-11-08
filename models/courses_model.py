@@ -26,6 +26,7 @@ class Courses(Model):
         return self.deproxy(result)
 
     def add_student(self, uni):
+        uni = self.escape_string(uni)
         query = "select sid from students where uni = '%s'" % uni
         result = self.db.execute(query)
 
@@ -45,6 +46,7 @@ class Courses(Model):
             return -1
 
     def remove_student(self, uni):
+        uni = self.escape_string(uni)
         query = "select sid from students where uni = '%s'" % uni
         result = self.db.execute(query)
 
@@ -80,6 +82,7 @@ class Courses(Model):
         '''Return the seid of an active session if it exists,
         otherwise return -1.
         '''
+        self.cid = self.escape_string(self.cid)
         query = ('select seid from sessions '
                  'where cid = %s '
                  "and expires > '%s' "
@@ -98,6 +101,7 @@ class Courses(Model):
                  % (self.now, seid))
         self.db.execute(query)
 
+        self.cid = self.escape_string(self.cid)
         query = 'update courses set active = 0 where cid = %s' % self.cid
         self.db.execute(query)
 
@@ -107,6 +111,7 @@ class Courses(Model):
         '''
         # auto-generated secret code for now
         randsecret = randint(1000, 9999)
+        self.cid = self.escape_string(self.cid)
         query = ('insert into sessions (cid, secret, expires, day) '
                  "values (%s, '%d', '%s', '%s')"
                  % (self.cid, randsecret, '23:59:59', self.today))
@@ -122,8 +127,9 @@ class Courses(Model):
                  'where sessions.cid = courses.cid '
                  'and courses.cid = %s '
                  'and courses.active = 1 '
-                 "and expires > '%s'"
-                 % (self.cid, self.now))
+                 "and sessions.expires > '%s' "
+                 "and sessions.day >= '%s'"
+                 % (self.cid, self.now, self.today))
         result = self.db.execute(query)
         return int(result.fetchone()[0]) if result.rowcount == 1 else None
 
