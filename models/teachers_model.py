@@ -34,6 +34,7 @@ class Teachers(Model):
         return self.deproxy(result)
 
     def add_course(self, course_name):
+        course_name = self.escape_string(course_name)
         query = ('insert into courses (name, active) '
                  "values ('%s', 0) "
                  'returning cid'

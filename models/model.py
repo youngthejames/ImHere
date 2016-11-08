@@ -11,3 +11,9 @@ class Model:
             result.append(row)
 
         return result
+
+    def escape_string(self, input):
+        if type(input) is str or type(input) is unicode:
+            return input.replace("'", "''")
+        else:
+            return input
