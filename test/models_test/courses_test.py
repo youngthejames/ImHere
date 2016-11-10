@@ -34,8 +34,8 @@ def test_add_student(db):
 
     # check for a valid add_student call
     add_student_result = cm.add_student('jp9122')  # adding Jaina Proudmoore
-    assert add_student_result == 0 
-    
+    assert add_student_result == 0
+
     # check length after
     student_list = cm.get_students()
     assert len(student_list) == 3
@@ -166,3 +166,12 @@ def test_get_num_sessions(db):
     cm = courses_model.Courses(db, 4)  # art history, has 2 sessions
     num_sessions = cm.get_num_sessions()
     assert num_sessions == 2
+
+def test_sql_injection(db):
+    cm = courses_model.Courses(db, 1)
+
+    assert cm.add_student("' or 1=1;") == -1
+    assert cm.add_student("'little bobby tables'") == -1
+
+    assert cm.remove_student("' or 1=1;") == -1
+    assert cm.remove_student("'little bobby tables'") == -1
