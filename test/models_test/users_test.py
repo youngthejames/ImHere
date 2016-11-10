@@ -38,3 +38,9 @@ def test_is_valid_uni(db):
     assert not um.is_valid_uni('thisisobviouslyfake')
     assert um.is_valid_uni('ds9876')
     assert not um.is_valid_uni('lj1337')
+
+def test_sql_injection(db):
+    um = users_model.Users(db)
+
+    assert um.is_valid_uni("' or 1=1;") == False
+    assert um.is_valid_uni("'little bobby tables'") == False
