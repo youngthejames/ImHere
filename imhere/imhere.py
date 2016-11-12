@@ -58,7 +58,7 @@ def manage_session():
         return
 
     # allow all users to visit the index page without a session
-    if request.path == '/' or request.path == '/oauth/logout':
+    if request.path == '/' or request.path == '/oauth/logout' or '/static/' in request.path:
         return
 
     # validate that user has valid session
@@ -67,8 +67,7 @@ def manage_session():
         flask.session['redirect'] = request.path
         return flask.redirect(flask.url_for('oauth2callback'))
 
-    # fuck this shit
-    # this is making it impossible to test
+    #TODO: add token expired checking
     # credentials = oauth2client.client.OAuth2Credentials.from_json(
     #     flask.session['credentials'])
     # if credentials.access_token_expired:
