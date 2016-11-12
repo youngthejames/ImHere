@@ -1,7 +1,6 @@
 import pytest
-import sqlalchemy
-
 import test.db_util
+
 
 @pytest.yield_fixture(scope="module")
 def db():

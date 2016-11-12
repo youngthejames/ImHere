@@ -3,6 +3,7 @@ import pytest
 
 from models import model
 
+
 def test_deproxy(db):
     model_obj = model.Model(db)
 
@@ -15,6 +16,7 @@ def test_deproxy(db):
     assert type(deproxy_list) is list
     assert type(deproxy_list[0]) is sqlalchemy.engine.result.RowProxy
     assert len(deproxy_list) == 1
+
 
 def test_escape_string(db):
     model_obj = model.Model(db)

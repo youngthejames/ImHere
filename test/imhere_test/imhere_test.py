@@ -1,4 +1,3 @@
-import flask
 import pytest
 import uuid
 
@@ -28,12 +27,14 @@ def db():
 
     test.db_util.destroy_test_db(test_db[1])
 
+
 def login(sess, user, userid):
     sess['credentials'] = 'blah'
     sess['google_user'] = user
     sess['id'] = userid
     sess['is_student'] = False
     sess['is_teacher'] = False
+
 
 def test_index(db):
     with imhere.app.test_client() as c:

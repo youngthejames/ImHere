@@ -1,5 +1,5 @@
-import sqlalchemy
 from models import courses_model
+
 
 def test_get_course_name(db):
     cm = courses_model.Courses(db, 4)  # art history
@@ -24,6 +24,7 @@ def test_get_students(db):
     assert 'Grommash' in student_list[1].items()[1]
     assert 'Hellscream' in student_list[1].items()[2]
     assert 'gh1234@columbia.edu' in student_list[1].items()[3]
+
 
 def test_add_student(db):
     cm = courses_model.Courses(db, 4)  # art history
@@ -166,6 +167,7 @@ def test_get_num_sessions(db):
     cm = courses_model.Courses(db, 4)  # art history, has 2 sessions
     num_sessions = cm.get_num_sessions()
     assert num_sessions == 2
+
 
 def test_sql_injection(db):
     cm = courses_model.Courses(db, 1)

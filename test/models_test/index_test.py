@@ -16,6 +16,7 @@ fake_teacher = {
     'tid': '-443',
 }
 
+
 def test_is_student(db):
     im = index_model.Index(db, real_student['sid'])
     assert im.is_student() is True

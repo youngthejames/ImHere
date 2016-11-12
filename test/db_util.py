@@ -1,14 +1,14 @@
-#CREATE USER tester with password 'mattsbigpassw0rrd';
+# CREATE USER tester with password 'mattsbigpassw0rrd';
 import uuid
-
 import sqlalchemy
 
-'''
-create a temporary database with complete schema and randomized name
-returns the database connection and name
-'''
+
 def create_test_db():
-    db = sqlalchemy.create_engine('postgres://tester:mattsbigpassw0rrd@45.55.87.0:5432/postgres')
+    '''create a temporary database with complete schema and randomized name
+    returns the database connection and name
+    '''
+    db = sqlalchemy.create_engine(
+            'postgres://tester:mattsbigpassw0rrd@45.55.87.0:5432/postgres')
     conn = db.connect()
     conn.execute('commit')
 
@@ -19,8 +19,10 @@ def create_test_db():
 
     conn.close()
 
-    conn_string = 'postgres://tester:mattsbigpassw0rrd@45.55.87.0:5432/{0}'.format(db_name)
-    db = sqlalchemy.create_engine(conn_string, poolclass=sqlalchemy.pool.NullPool)
+    c_string = 'postgres://tester:mattsbigpassw0rrd@45.55.87.0:5432/{0}'
+    conn_string = c_string.format(db_name)
+    db = sqlalchemy.create_engine(conn_string,
+                                  poolclass=sqlalchemy.pool.NullPool)
     conn = db.connect()
 
     # create the schema
@@ -37,7 +39,8 @@ def create_test_db():
 
     return (db, db_name)
 
-# scqalchemy sucks and can only execute one command at a time
+
+# sqalchemy sucks and can only execute one command at a time
 # this puts it in a format that will work with it....
 def _read_sql_file(file):
 
@@ -57,11 +60,11 @@ def _read_sql_file(file):
     return queries
 
 
-'''
-deletes a test db
-'''
 def destroy_test_db(db_name):
-    db = sqlalchemy.create_engine('postgres://tester:mattsbigpassw0rrd@45.55.87.0:5432/postgres')
+    '''deletes a test db
+    '''
+    db = sqlalchemy.create_engine(
+        'postgres://tester:mattsbigpassw0rrd@45.55.87.0:5432/postgres')
     conn = db.connect()
     conn.execute('commit')
 

@@ -24,6 +24,9 @@ insert into courses (name, active) values ('Writing', 0); /* cid=2 */
 insert into courses (name, active) values ('German 3', 0); /* cid=3 */
 insert into courses (name, active) values ('Art History', 0); /* cid=4 */
 
+/* insert teaches here */
+insert into teaches (tid, cid) values (4, 4); /* douglas teaches art history */
+
 /* Dave and Grommash enrolled in Art History */
 insert into enrolled_in (sid, cid) values (3, 4);
 insert into enrolled_in (sid, cid) values (5, 4);
@@ -31,6 +34,8 @@ insert into enrolled_in (sid, cid) values (5, 4);
 /* add session for art history */
 insert into sessions (cid, secret, expires, day) values (4, '7878', '23:59:59', '2016-11-01'); /* seid = 1 */
 insert into sessions (cid, secret, expires, day) values (4, '0000', '23:59:59', '2020-01-01'); /* seid = 2 */
+/* update art history for the active session we just inserted */
+update courses set active = 1 where cid = 4;
 
 /* add attendance records */
 /* add Dave into old and new sessions */
