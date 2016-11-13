@@ -28,8 +28,6 @@ def test_get_courses(db):
     assert art['cid'] == 4
     assert art['name'] == 'Art History'
 
-    dave_courses = dave.get_courses()
-
     jaina = students_model.Students(db, 6)
 
     jaina_courses = jaina.get_courses()
