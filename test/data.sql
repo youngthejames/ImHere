@@ -17,15 +17,26 @@ insert into students (sid, uni) values (5, 'gh1234');
 insert into users (name, family_name, email) values ('Jaina', 'Proudmoore', 'jp9122@columbia.edu');
 insert into students (sid, uni) values (6, 'jp9122');
 
+/* teacher 2 uid 7 */
+insert into users (name, family_name, email) values ('New', 'Teacher', 'newt@cs.columbia.edu');
+insert into teachers (tid) values (7);
+
+/* student 4, uid 8 */
+insert into users (name, family_name, email) values ('Sylvanas', 'Windrunner', 'sw1234@columbia.edu');
+insert into students (sid, uni) values (8, 'sw1234');
+
 
 /* insert courses here */
 insert into courses (name, active) values ('Running', 0); /* cid=1 */
 insert into courses (name, active) values ('Writing', 0); /* cid=2 */
 insert into courses (name, active) values ('German 3', 0); /* cid=3 */
 insert into courses (name, active) values ('Art History', 0); /* cid=4 */
+insert into courses (name, active) values ('Newts big blunder', 0); /* cid=5 , newt will delete during tests*/
 
 /* insert teaches here */
 insert into teaches (tid, cid) values (4, 4); /* douglas teaches art history */
+insert into teaches (tid, cid) values (7, 2); /* newt teaches writing */
+insert into teaches (tid, cid) values (7, 5); /* newt teaches his blunder */
 
 /* Dave and Grommash enrolled in Art History */
 insert into enrolled_in (sid, cid) values (3, 4);
@@ -41,4 +52,3 @@ update courses set active = 1 where cid = 4;
 /* add Dave into old and new sessions */
 insert into attendance_records (sid, seid) values (3, 1);
 insert into attendance_records (sid, seid) values (3, 2);
-

@@ -12,6 +12,14 @@ teacher_user = {
 }
 teacher_user_id = 4
 
+newt = {
+    'family_name': 'Teacher',
+    'name': 'New Teacher',
+    'email': 'newt@cs.columbia.edu',
+    'given_name': 'New'
+}
+newt_id = 7
+
 
 @pytest.yield_fixture(scope="module")
 def db():
@@ -81,3 +89,99 @@ def test_teacher(db):
         c.get('/oauth/logout')
         res = c.get('/teacher/')
         assert 302 == res.status_code
+
+def test_teacher_session_manage(db):
+
+    with imhere.app.test_client() as c:
+
+        with c.session_transaction() as sess:
+            login(sess, newt, newt_id)
+            sess['is_teacher'] = True
+
+        res = c.get('/teacher/')
+        assert 'Writing' in res.data
+        assert 'Open Attendance Window' in res.data
+        assert 'Secret Code' not in res.data
+
+        payload = {'open': 2}
+        res = c.post('/teacher/', data=payload)
+        assert 'Close Attendance Window' in res.data
+        assert 'Secret Code' in res.data
+
+        payload = {'close': 2}
+        res = c.post('/teacher/', data=payload)
+        assert 'Open Attendance Window' in res.data
+        assert 'Secret Code' not in res.data
+
+def test_teacher_add_class(db):
+
+    with imhere.app.test_client() as c:
+
+        # first lets test this page is properly gated
+        res = c.get('/teacher/add_class')
+        assert 302 == res.status_code
+
+        with c.session_transaction() as sess:
+            login(sess, newt, newt_id)
+
+        res = c.get('/teacher/add_class')
+        assert 302 == res.status_code
+
+        with c.session_transaction() as sess:
+            sess['is_teacher'] = True
+
+        res = c.get('/teacher/add_class')
+        assert 'Create a Class' in res.data
+        assert 'Student Unis' in res.data
+        assert 200 == res.status_code
+
+        payload = {'unis': [''], 'classname': 'newts variety hour'}
+        res = c.post('/teacher/add_class', data=payload, follow_redirects=True)
+        assert 'newts variety hour' in res.data
+        assert 'Add a Class' in res.data
+        assert 200 == res.status_code
+
+        payload = {'unis': ['fake'], 'classname': 'newts big class'}
+        res = c.post('/teacher/add_class', data=payload)
+        assert "Invalid UNI's entered, please recreate the class" in res.data
+
+        payload = {'unis': ['sw1234'], 'classname': 'newts big class'}
+        res = c.post('/teacher/add_class', data=payload, follow_redirects=True)
+        assert 'newts big class' in res.data
+        assert 'Add a Class' in res.data
+        assert 200 == res.status_code
+
+        # was sylvanas added to this class?
+        query = "SELECT courses.cid, courses.name FROM courses JOIN enrolled_in ON courses.cid = enrolled_in.cid WHERE enrolled_in.sid = 8 AND courses.name = 'newts big class'"
+        res = db.execute(query)
+        assert res.rowcount == 1
+
+def test_teacher_remove_class(db):
+
+    with imhere.app.test_client() as c:
+
+        # first check page is auth protected
+
+        res = c.get('/teacher/remove_class')
+        assert 302 == res.status_code
+
+        with c.session_transaction() as sess:
+            login(sess, newt, newt_id)
+
+        res = c.get('/teacher/remove_class')
+        assert 302 == res.status_code
+
+        with c.session_transaction() as sess:
+            sess['is_teacher'] = True
+
+        res = c.get('/teacher/remove_class')
+        assert 'Class List' in res.data
+        assert 'Remove Class' in res.data
+        assert 'Newts big blunder' in res.data
+        assert 200 == res.status_code
+
+        payload = {'cid': 5}
+        res = c.post('/teacher/remove_class', data=payload, follow_redirects=True)
+        assert 'Add a Class' in res.data
+        assert 'Newts big blunder' not in res.data
+        assert 200 == res.status_code

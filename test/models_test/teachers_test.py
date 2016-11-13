@@ -50,7 +50,14 @@ def test_add_course(db):
     assert len(douglas.get_courses()) == 1
 
     cid = douglas.add_course('Mining')
-    assert cid == 5  # next available cid
+
+    query = 'SELECT MAX(cid) from courses'
+    res = db.execute(query)
+    blah = []
+    for b in res:
+        blah.append(b)
+    assert cid == blah[0]['max']
+    # assert cid == 5  # next available cid
 
     assert len(douglas.get_courses()) == 2
 
@@ -61,7 +68,13 @@ def test_remove_course(db):
     assert len(douglas.get_courses()) == 2
 
     # remove mining class
-    mining_cid = 5
+    query = 'SELECT MAX(cid) from courses'
+    res = db.execute(query)
+    blah = []
+    for b in res:
+        blah.append(b)
+    mining_cid = blah[0]['max']
+    
     douglas.remove_course(mining_cid)
     assert len(douglas.get_courses()) == 1
 
