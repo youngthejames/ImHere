@@ -25,6 +25,9 @@ insert into teachers (tid) values (7);
 insert into users (name, family_name, email) values ('Sylvanas', 'Windrunner', 'sw1234@columbia.edu');
 insert into students (sid, uni) values (8, 'sw1234');
 
+/* uid 9 */
+insert into users (name, family_name, email) values ('Unregistered', 'User', 'uu0000@columbia.edu');
+
 
 /* insert courses here */
 insert into courses (name, active) values ('Running', 0); /* cid=1 */

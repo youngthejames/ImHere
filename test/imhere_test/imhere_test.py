@@ -20,7 +20,6 @@ newt = {
 }
 newt_id = 7
 
-
 @pytest.yield_fixture(scope="module")
 def db():
     test_db = test.db_util.create_test_db()
@@ -35,14 +34,12 @@ def db():
 
     test.db_util.destroy_test_db(test_db[1])
 
-
 def login(sess, user, userid):
     sess['credentials'] = 'blah'
     sess['google_user'] = user
     sess['id'] = userid
     sess['is_student'] = False
     sess['is_teacher'] = False
-
 
 def test_index(db):
     with imhere.app.test_client() as c:
@@ -51,7 +48,6 @@ def test_index(db):
         assert 'Login' in res.data
         assert 'Register' in res.data
         assert 200 == res.status_code
-
 
 def test_teacher(db):
 
@@ -185,3 +181,55 @@ def test_teacher_remove_class(db):
         assert 'Add a Class' in res.data
         assert 'Newts big blunder' not in res.data
         assert 200 == res.status_code
+
+def test_teacher_view_class(db):
+    pass
+
+def test_register(db):
+    unreg = {
+        'family_name': 'User',
+        'name': 'Unregistered User',
+        'email': 'uu0000@columbia.edu',
+        'given_name': 'Unregistered'
+    }
+    unreg_id = 9
+
+    # should be gated by sso
+    with imhere.app.test_client() as c:
+        res = c.get('/register')
+        assert 302 == res.status_code
+
+        with c.session_transaction() as sess:
+            login(sess, unreg, unreg_id)
+
+        res = c.get('/register')
+        assert 'Registration' in res.data
+        assert 'I am a' in res.data
+        assert 200 == res.status_code
+
+        # give bad uni
+        payload = {'type': 'student', 'uni': 'ds9876'}
+        res = c.post('/register', data=payload)
+        assert 'UNI already in use' in res.data
+        with c.session_transaction() as sess:
+            assert sess['is_student'] == False
+
+        payload = {'type': 'student', 'uni': 'uu0000'}
+        res = c.post('/register', data=payload, follow_redirects=True)
+        assert 'Registration' not in res.data
+        assert 200 == res.status_code
+        with c.session_transaction() as sess:
+            assert sess['is_student'] == True
+
+        res = c.get('/register')
+        assert 'You are already registered as a student' in res.data
+
+        payload = {'type': 'teacher'}
+        res = c.post('/register', data=payload, follow_redirects=True)
+        assert 'Registration' not in res.data
+        assert 'Add a Class' in res.data
+        with c.session_transaction() as sess:
+            assert sess['is_teacher'] == True
+
+        res = c.get('/register')
+        assert 'You are already registered as a student AND as a teacher' in res.data
