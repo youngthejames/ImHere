@@ -3,6 +3,8 @@ import uuid
 
 import imhere
 import test.db_util
+from models import courses_model
+
 
 teacher_user = {
     'family_name': 'Teacher',
@@ -285,3 +287,23 @@ def test_main_student(db):
 
         res = c.get('/student/')
         assert 'Student View' in res.data
+        cm_big = courses_model.Courses(db, 7)
+        cm_big.add_student('uu0000')
+        res = c.get('/student/')
+        assert "newts big class" in res.data
+        assert "No sign-in window" in res.data
+        serket = cm_big.open_session()
+        res = c.get('/student/')
+        assert "Sign in now!" in res.data
+        res = c.post('/student/')
+        assert "Student View" in res.data
+        payload = {'secret_code': 0000}
+        res = c.post('/student/', data=payload)
+        assert "Invalid Secret Code" in res.data
+        payload = {'secret_code': serket}
+        res = c.post('/student/', data=payload)
+        assert "Successful sign-in!" in res.data
+        payload = {'secret_code': serket}
+        res = c.post('/student/', data=payload)
+        assert "Successful sign-in!" not in res.data
+

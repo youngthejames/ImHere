@@ -146,6 +146,10 @@ def main_student():
                     submitted=True,
                     valid=valid,
                     **context)
+        else:
+            return render_template('main_student.html',
+                signed_in=signed_in,
+                **context)
 
 
 @app.route('/teacher/', methods=['GET', 'POST'])
