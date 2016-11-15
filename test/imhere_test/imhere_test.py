@@ -183,16 +183,55 @@ def test_teacher_remove_class(db):
         assert 200 == res.status_code
 
 def test_teacher_view_class(db):
-    pass
 
-def test_register(db):
-    unreg = {
+    with imhere.app.test_client() as c:
+
+        with c.session_transaction() as sess:
+            login(sess, newt, newt_id)
+            sess['is_teacher'] = True
+
+        query = "select cid from courses where name = 'newts big class'"
+        cursor = db.execute(query)
+        for item in cursor:
+            cid = item[0]
+        #test basic display
+        payload = {'cid': cid}
+        res = c.post('/teacher/view_class', data=payload)
+        assert 'newts big class' in res.data
+        assert 'sw1234' in res.data
+        #test removing students
+        payload = {'cid': cid, 'remove_student': 'sw1234'}
+        res = c.post('/teacher/view_class', data=payload)
+        assert 'sw1234' not in res.data
+        res = c.post('/teacher/view_class', data=payload)
+        #assert 'sw1234 is not in the class to begin with' in res.data
+        #test adding students
+        payload = {'cid': cid, 'add_student': 'sw1234'}
+        res = c.post('/teacher/view_class', data=payload)
+        assert 'sw1234' in res.data
+        #test error message
+        payload = {'cid': cid, 'add_student': 'sw1234'}
+        res = c.post('/teacher/view_class', data=payload)
+        #assert 'sw1234 is already in the class' in res.data
+        payload = {'cid': cid, 'open': cid}
+        res = c.post('/teacher/view_class', data=payload)
+        assert 'Secret Code' in res.data
+        payload = {'cid': cid, 'close': cid}
+        res = c.post('/teacher/view_class', data=payload)
+        assert 'Secret Code' not in res.data
+
+
+unreg = {
         'family_name': 'User',
         'name': 'Unregistered User',
         'email': 'uu0000@columbia.edu',
         'given_name': 'Unregistered'
     }
-    unreg_id = 9
+unreg_id = 9
+
+
+def test_register(db):
+
 
     # should be gated by sso
     with imhere.app.test_client() as c:
@@ -233,3 +272,16 @@ def test_register(db):
 
         res = c.get('/register')
         assert 'You are already registered as a student AND as a teacher' in res.data
+
+def test_main_student(db):
+    with imhere.app.test_client() as c:
+        res = c.get('/student/')
+        assert 302 == res.status_code
+
+        with c.session_transaction() as sess:
+            login(sess, unreg, unreg_id)
+            sess['is_teacher'] = False
+            sess['is_student'] = True
+
+        res = c.get('/student/')
+        assert 'Student View' in res.data
