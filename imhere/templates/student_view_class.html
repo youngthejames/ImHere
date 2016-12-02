@@ -24,8 +24,16 @@
           <td>{{rec['day']}}</td>
           {% if rec['sid'] != None %}
           <td>Present</td>
+          {% elif rec['message'] != None%}
+          <td>Pending: {{rec['message']}}</td>
           {% else %}
           <td>Not Present</td>
+          <td>
+            <form action="/student/request/{{rec['seid']}}" method="POST">
+              <input type="text" name="message" placeholder="Tell us why you missed">
+              <button type="submit">Submit</button>
+            </form>
+          </td>
           {% endif %}
         </tr>
         {% endfor %}

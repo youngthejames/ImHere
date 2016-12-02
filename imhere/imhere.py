@@ -151,7 +151,7 @@ def main_student():
                 signed_in=signed_in,
                 **context)
 
-@app.route('/student/view_class/<cid>')
+@app.route('/student/view_class/<cid>', methods=['GET'])
 def student_view_class(cid):
     cm = courses_model.Courses(g.conn, cid)
     sm = students_model.Students(g.conn, flask.session['id'])
@@ -164,9 +164,23 @@ def student_view_class(cid):
         if rec['sid'] is not None:
             present += 1
 
+    flask.session['redirect'] = '/student/view_class/%s' % cid
+
     return render_template('student_view_class.html',
         course_name=course_name, attendance_record=attendance_record,
         present=present, total=total)
+
+@app.route('/student/request/<seid>', methods=['POST'])
+def student_change_request(seid):
+    sm = students_model.Students(g.conn, flask.session['id'])
+
+    message = request.form['message'] or ''
+
+    sm.create_change_request(seid, message)
+
+    redirect = flask.session.pop('redirect', None)
+
+    return flask.redirect(redirect or '/student/')
 
 @app.route('/teacher/', methods=['GET', 'POST'])
 def main_teacher():

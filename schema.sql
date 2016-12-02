@@ -341,6 +341,15 @@ ALTER TABLE ONLY teaches
     ADD CONSTRAINT teaches_tid_fkey FOREIGN KEY (tid) REFERENCES teachers(tid) ON DELETE CASCADE;
 
 
+CREATE TABLE change_requests (
+  sid integer NOT NULL,
+  seid integer NOT NULL,
+  message text
+);
+ALTER TABLE change_requests ADD CONSTRAINT change_requests_sid_fkey FOREIGN KEY (sid) REFERENCES students(sid) ON DELETE CASCADE;
+ALTER TABLE change_requests ADD CONSTRAINT change_requests_seid_fkey FOREIGN KEY (seid) REFERENCES sessions(seid) ON DELETE CASCADE;
+ALTER TABLE change_requests ADD CONSTRAINT change_requests_pkey PRIMARY KEY (sid, seid);
+
 --
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --

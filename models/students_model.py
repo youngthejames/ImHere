@@ -78,10 +78,21 @@ class Students(Model):
 
     def get_attendance_record(self, cid):
         query = '''
-            SELECT s.day, s.seid, a.sid
-            FROM sessions s LEFT OUTER JOIN attendance_records a ON s.seid = a.seid
-            WHERE s.cid = %s AND (a.sid = %s OR a.sid IS NULL);
+            SELECT sa.day, sa.seid, sa.sid, c.message
+            FROM (
+              SELECT s.day, s.seid, a.sid
+              FROM sessions s LEFT OUTER JOIN attendance_records a ON s.seid = a.seid
+              WHERE s.cid = %s AND (a.sid = %s OR a.sid IS NULL)) sa
+            LEFT OUTER JOIN change_requests c ON sa.seid = c.seid
         ''' % (cid, self.sid)
 
         result = self.db.execute(query)
         return self.deproxy(result)
+
+    def create_change_request(self, seid, message):
+        message = self.escape_string(message)
+        query = '''
+            INSERT INTO change_requests VALUES (%s, %s, '%s')
+        ''' % (self.sid, seid, message)
+
+        self.db.execute(query)
