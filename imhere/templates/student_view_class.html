@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{course_name}}</title>
+    <style>
+        .beta table, .beta td, .beta th {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+
+    <h2>ImHere</h2><br>
+
+    <h3>{{course_name}}</h3>
+    <p>{{present}}/{{total}} Sessions Attended</p>
+
+    <table>
+        {% for rec in attendance_record %}
+        <tr>
+          <td>{{rec['day']}}</td>
+          {% if rec['sid'] != None %}
+          <td>Present</td>
+          {% else %}
+          <td>Not Present</td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="/student/">home</a>
+
+    </center>
+</body>
+</html>

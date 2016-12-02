@@ -75,3 +75,13 @@ class Students(Model):
                  % (cid, self.sid))
         result = self.db.execute(query)
         return result.rowcount
+
+    def get_attendance_record(self, cid):
+        query = '''
+            SELECT s.day, s.seid, a.sid
+            FROM sessions s LEFT OUTER JOIN attendance_records a ON s.seid = a.seid
+            WHERE s.cid = %s AND (a.sid = %s OR a.sid IS NULL);
+        ''' % (cid, self.sid)
+
+        result = self.db.execute(query)
+        return self.deproxy(result)

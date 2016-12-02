@@ -9,11 +9,11 @@
     <form action="/switch_type" method="POST">
     <button name="type" value="teacher">Switch to teacher view</button>
     </form>
-    
+
     <form action="/oauth/logout" method="POST">
     <button name="logout">Logout</button>
     </form><br>
-    
+
     <center>
     <h2>ImHere</h2><br>
 
@@ -21,7 +21,7 @@
     {% for n in data %}
         {% if n[7] == 1 %}
 
-            <h4>{{n[1]}}</h4>
+            <h4><a href="/student/view_class/{{n[0]}}">{{n[1]}}</a></h4>
 
             {% if valid %}
                 Successful sign-in!
@@ -50,7 +50,7 @@
     {% for n in data %}
         {% if n[7] == 0 %}
 
-            <h4>{{n[1]}}</h4>
+            <h4><a href="/student/view_class/{{n[0]}}">{{n[1]}}</a></h4>
             No sign-in window available!
             <br>
 
