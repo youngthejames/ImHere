@@ -138,6 +138,16 @@ class Courses(Model):
         result = self.db.execute(query)
         return result.rowcount
 
+
+    def get_teachers(self):
+        query = '''
+            SELECT u.uid, u.name, u.family_name, u.email
+            FROM users u, teachers t, teaches te
+            WHERE u.uid = t.tid AND t.tid = te.tid AND te.cid = %s
+        ''' % (self.cid)
+        result = self.db.execute(query)
+        return self.deproxy(result)
+
     def add_teacher(self, email):
         email = self.escape_string(email)
         # check teacher exists as a user, if not, error
@@ -153,10 +163,12 @@ class Courses(Model):
         insert_teacher = '''
             INSERT INTO teachers (tid) VALUES (%s) ON CONFLICT DO NOTHING
         ''' % (tid)
+        self.db.execute(insert_teacher)
 
         # add teaches entry
         insert_teaches = '''
             INSERT INTO TEACHES (tid, cid) VALUES (%s, %s)
         ''' % (tid, self.cid)
+        self.db.execute(insert_teaches)
 
         return True, ''

@@ -181,6 +181,10 @@ def test_sql_injection(db):
 def test_add_teacher(db):
     cm = courses_model.Courses(db, 6) # test_add_teacher course
 
+    teachers = cm.get_teachers()
+    assert len(teachers) == 1
+    assert teachers[0]['email'] == 'add@teacher.com'
+
     # insert a fake user
     result = cm.add_teacher('fake@email.com')
     assert result[0] == False
@@ -193,3 +197,6 @@ def test_add_teacher(db):
     #insert a user that is a teacher
     result = cm.add_teacher('isa@teacher.com')
     assert result[0] == True
+
+    teachers = cm.get_teachers()
+    assert len(teachers) == 3
