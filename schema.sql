@@ -349,6 +349,7 @@ CREATE TABLE change_requests (
 ALTER TABLE change_requests ADD CONSTRAINT change_requests_sid_fkey FOREIGN KEY (sid) REFERENCES students(sid) ON DELETE CASCADE;
 ALTER TABLE change_requests ADD CONSTRAINT change_requests_seid_fkey FOREIGN KEY (seid) REFERENCES sessions(seid) ON DELETE CASCADE;
 ALTER TABLE change_requests ADD CONSTRAINT change_requests_pkey PRIMARY KEY (sid, seid);
+alter table change_requests add column status int default 0;
 
 --
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
