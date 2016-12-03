@@ -34,6 +34,25 @@
 
     {% endif %}
 
+    <!-- teachers section -->
+    <h2>Teachers</h2>
+    <form method = "POST" action="/teacher/view_class">
+      <input type="email" name="email" placeholder="Teacher's email" required></input>
+      <input type="hidden" name="cid" value="{{cid}}"></input>
+      <button name="add_teacher" value="{{cid}}">Add Teacher</button>
+    </form>
+    {% if res[0] == False %}
+      <font color="red">{{res[1]}}</font>
+    {% endif %}
+    <table>
+      {% for teacher in teachers %}
+      <tr>
+        <td>{{teacher['name']}} {{teacher['family_name']}}</td>
+        <td>{{teacher['email']}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+
     <table cellspacing="35">
     <thead>
     <tr>
@@ -72,6 +91,7 @@
 
     <br><br>
 
+    <!-- students section -->
     {% if students %}
         {% if secret %}
         <font color="red">attendance may be inaccurate due to the open sign-in window</font>
@@ -97,6 +117,7 @@
     {% endfor %}
     </table><br><br>
     {% endif %}
+    <!-- end students section -->
 
 
 

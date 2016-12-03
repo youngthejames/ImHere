@@ -160,15 +160,21 @@ class Courses(Model):
         tid = user.fetchone()['uid']
 
         # check teacher exists as a teacher, if not, create
-        insert_teacher = '''
-            INSERT INTO teachers (tid) VALUES (%s) ON CONFLICT DO NOTHING
-        ''' % (tid)
-        self.db.execute(insert_teacher)
+        try:
+            insert_teacher = '''
+                INSERT INTO teachers (tid) VALUES (%s)
+            ''' % (tid)
+            self.db.execute(insert_teacher)
+        except:
+            pass
 
         # add teaches entry
-        insert_teaches = '''
-            INSERT INTO TEACHES (tid, cid) VALUES (%s, %s)
-        ''' % (tid, self.cid)
-        self.db.execute(insert_teaches)
+        try:
+            insert_teaches = '''
+                INSERT INTO TEACHES (tid, cid) VALUES (%s, %s)
+            ''' % (tid, self.cid)
+            self.db.execute(insert_teaches)
+        except:
+            return False, '%s is already a teacher in this class' % (email)
 
         return True, ''

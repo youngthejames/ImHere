@@ -280,6 +280,9 @@ def view_class():
             uni = request.form['remove_student']
             res = cm.remove_student(uni)
 
+        if 'add_teacher' in request.form.keys():
+            res = cm.add_teacher(request.form['email'])
+
         course_name = cm.get_course_name()
         secret = cm.get_secret_code()
         num_sessions = cm.get_num_sessions()
@@ -291,6 +294,8 @@ def view_class():
             num_ar = sm.get_num_attendance_records(cid)
             students_with_ar.append([student, student_uni, num_ar])
 
+        teachers = cm.get_teachers()
+
         context = dict(students=students_with_ar)
 
         return render_template(
@@ -301,6 +306,7 @@ def view_class():
                 num_sessions=num_sessions,
                 uni=uni,
                 res=res,
+                teachers=teachers,
                 **context)
 
 
