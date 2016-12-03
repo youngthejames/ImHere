@@ -28,6 +28,15 @@ insert into students (sid, uni) values (8, 'sw1234');
 /* uid 9 */
 insert into users (name, family_name, email) values ('Unregistered', 'User', 'uu0000@columbia.edu');
 
+/* uid 10, 11 */
+insert into users (name, family_name, email) values ('nota', 'teacher', 'nota@teacher.com');
+/* 11 is a teacher */
+insert into users (name, family_name, email) values ('isa', 'teacher', 'isa@teacher.com');
+insert into teachers (tid) values (11);
+/* 12 is a teacher, teaches the class to test adding teachers */
+insert into users (name, family_name, email) values ('add_teacher', 'teacher', 'add@teacher.com');
+insert into teachers (tid) values (12);
+
 
 /* insert courses here */
 insert into courses (name, active) values ('Running', 0); /* cid=1 */
@@ -35,11 +44,14 @@ insert into courses (name, active) values ('Writing', 0); /* cid=2 */
 insert into courses (name, active) values ('German 3', 0); /* cid=3 */
 insert into courses (name, active) values ('Art History', 0); /* cid=4 */
 insert into courses (name, active) values ('Newts big blunder', 0); /* cid=5 , newt will delete during tests*/
+insert into courses (name, active) values ('test_add_teacher', 0); /* cid=6 */
 
 /* insert teaches here */
 insert into teaches (tid, cid) values (4, 4); /* douglas teaches art history */
 insert into teaches (tid, cid) values (7, 2); /* newt teaches writing */
 insert into teaches (tid, cid) values (7, 5); /* newt teaches his blunder */
+
+insert into teaches (tid, cid) values (12, 6);
 
 /* Dave and Grommash enrolled in Art History */
 insert into enrolled_in (sid, cid) values (3, 4);

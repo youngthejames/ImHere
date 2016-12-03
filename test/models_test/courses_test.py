@@ -177,3 +177,19 @@ def test_sql_injection(db):
 
     assert cm.remove_student("' or 1=1;") == -1
     assert cm.remove_student("'little bobby tables'") == -1
+
+def test_add_teacher(db):
+    cm = courses_model.Courses(db, 6) # test_add_teacher course
+
+    # insert a fake user
+    result = cm.add_teacher('fake@email.com')
+    assert result[0] == False
+    assert 'User fake@email.com not found' in result[1]
+
+    # insert a user that isn't a teacher
+    result = cm.add_teacher('nota@teacher.com')
+    assert result[0] == True
+
+    #insert a user that is a teacher
+    result = cm.add_teacher('isa@teacher.com')
+    assert result[0] == True

@@ -287,7 +287,7 @@ def test_main_student(db):
 
         res = c.get('/student/')
         assert 'Student View' in res.data
-        cm_big = courses_model.Courses(db, 7)
+        cm_big = courses_model.Courses(db, 8)
         cm_big.add_student('uu0000')
         res = c.get('/student/')
         assert "newts big class" in res.data
@@ -306,4 +306,3 @@ def test_main_student(db):
         payload = {'secret_code': serket}
         res = c.post('/student/', data=payload)
         assert "Successful sign-in!" not in res.data
-

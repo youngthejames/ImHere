@@ -137,3 +137,26 @@ class Courses(Model):
         query = 'select * from sessions where cid = %s' % self.cid
         result = self.db.execute(query)
         return result.rowcount
+
+    def add_teacher(self, email):
+        email = self.escape_string(email)
+        # check teacher exists as a user, if not, error
+        getuser = '''
+            SELECT uid FROM users where users.email = '%s'
+        ''' % (email)
+        user = self.db.execute(getuser)
+        if user.rowcount < 1:
+            return False, 'User %s not found' % (email)
+        tid = user.fetchone()['uid']
+
+        # check teacher exists as a teacher, if not, create
+        insert_teacher = '''
+            INSERT INTO teachers (tid) VALUES (%s) ON CONFLICT DO NOTHING
+        ''' % (tid)
+
+        # add teaches entry
+        insert_teaches = '''
+            INSERT INTO TEACHES (tid, cid) VALUES (%s, %s)
+        ''' % (tid, self.cid)
+
+        return True, ''
