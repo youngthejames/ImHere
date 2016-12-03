@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<center>
+{% if not data %}
+<h1>You have no pending change requests</h1>
+{% endif %}
+
+{%for n in data %}
+<p>Class: {{n[0]}}</p>
+    <p>Date: {{n[1]}}</p>
+    <p>Student: {{n[2]}}</p>
+    <p>Message: {{n[3]}}</p>
+    <br>
+    <form method="post", action="/teacher/view_requests">
+        <button name="approve" value="{{n[2]}} {{n[4]}}">Approve</button>
+        <button name="deny" value="{{n[2]}} {{n[4]}}">Deny</button>
+
+    </form>
+
+
+{% endfor %}
+
+<a href="/teacher/">Home</a>
+</center>
+</body>
+</html>

@@ -50,3 +50,18 @@ class Teachers(Model):
         cid = self.escape_string(cid)
         query = 'delete from courses where cid = %s' % cid
         self.db.execute(query)
+
+    def get_change_requests(self):
+        query = ('select courses.name,  sessions.day, students.uni, change_requests.message, sessions.seid '
+                'from teaches inner join courses on '
+                '(courses.cid = teaches.cid and '
+                'teaches.tid = %s) '
+                'left outer join sessions on '
+                '(courses.cid = sessions.cid) '
+                'inner join change_requests on '
+                '(sessions.seid = change_requests.seid) '
+                'inner join students on '
+                '(change_requests.sid = students.sid)'
+                 % (self.tid))
+        result = self.db.execute(query)
+        return self.deproxy(result)

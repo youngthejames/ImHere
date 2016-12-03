@@ -304,6 +304,16 @@ def view_class():
                 **context)
 
 
+@app.route('/teacher/view_requests/', methods=['GET', 'POST'])
+def view_requests():
+    if request.method == 'GET':
+        tm = teachers_model.Teachers(g.conn, flask.session['id'])
+        results = tm.get_change_requests()
+        context = dict(data=results)
+        return render_template('view_requests.html', **context)
+
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'GET':
