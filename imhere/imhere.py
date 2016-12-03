@@ -306,12 +306,27 @@ def view_class():
 
 @app.route('/teacher/view_requests/', methods=['GET', 'POST'])
 def view_requests():
+    tm = teachers_model.Teachers(g.conn, flask.session['id'])
     if request.method == 'GET':
-        tm = teachers_model.Teachers(g.conn, flask.session['id'])
         results = tm.get_change_requests()
         context = dict(data=results)
         return render_template('view_requests.html', **context)
-
+    elif request.method == 'POST':
+        if 'approve' in request.form.keys():
+            iden = request.form['approve'].split()
+            seid = int(iden[0])
+            sid = int(iden[1])
+            sm = students_model.Students(g.conn, sid)
+            sm.insert_attendance_record(seid)
+            tm.update_change_request(1, seid, sid)
+        elif 'deny' in request.form.keys():
+            iden = request.form['deny'].split()
+            seid = int(iden[0])
+            sid = int(iden[1])
+            tm.update_change_request(-1, seid, sid)
+        results = tm.get_change_requests()
+        context = dict(data=results)
+        return render_template('view_requests.html', **context)
 
 
 @app.route('/register', methods=['GET', 'POST'])

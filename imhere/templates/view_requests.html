@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{{data|length}} Requests Pending</title>
 </head>
 <body>
 <center>
@@ -16,9 +16,9 @@
     <p>Student: {{n[2]}}</p>
     <p>Message: {{n[3]}}</p>
     <br>
-    <form method="post", action="/teacher/view_requests">
-        <button name="approve" value="{{n[2]}} {{n[4]}}">Approve</button>
-        <button name="deny" value="{{n[2]}} {{n[4]}}">Deny</button>
+    <form method="POST", action="/teacher/view_requests/">
+        <button name="approve" value="{{n[4]}} {{n[5]}}">Approve</button>
+        <button name="deny" value="{{n[4]}} {{n[5]}}">Deny</button>
 
     </form>
 

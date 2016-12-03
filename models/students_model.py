@@ -78,7 +78,7 @@ class Students(Model):
 
     def get_attendance_record(self, cid):
         query = '''
-            SELECT sa.day, sa.seid, sa.sid, c.message
+            SELECT sa.day, sa.seid, sa.sid, c.message, c.status
             FROM (
               SELECT s.day, s.seid, a.sid
               FROM sessions s LEFT OUTER JOIN attendance_records a ON s.seid = a.seid
