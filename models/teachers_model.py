@@ -52,7 +52,7 @@ class Teachers(Model):
         self.db.execute(query)
 
     def get_change_requests(self):
-        query = ('select courses.name,  sessions.day, students.uni, change_requests.message, sessions.seid '
+        query = ('select courses.name,  sessions.day, students.uni, change_requests.message, sessions.seid, change_requests.sid '
                 'from teaches inner join courses on '
                 '(courses.cid = teaches.cid and '
                 'teaches.tid = %s) '
@@ -61,7 +61,12 @@ class Teachers(Model):
                 'inner join change_requests on '
                 '(sessions.seid = change_requests.seid) '
                 'inner join students on '
-                '(change_requests.sid = students.sid)'
+                '(change_requests.sid = students.sid) '
+                'where change_requests.status = 0'
                  % (self.tid))
         result = self.db.execute(query)
         return self.deproxy(result)
+
+    def update_change_request(self, status, seid, sid):
+        query = ('update change_requests set status = %d where seid = %d and sid = %d' % (status, seid, sid))
+        self.db.execute(query)

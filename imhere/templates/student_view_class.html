@@ -25,7 +25,13 @@
           {% if rec['sid'] != None %}
           <td>Present</td>
           {% elif rec['message'] != None%}
-          <td>Pending: {{rec['message']}}</td>
+                {% if rec['status'] == 0 %}
+                <td>Pending: {{rec['message']}}</td>
+                {% elif rec['status'] == 1 %}
+                <td>Request Approved</td>
+                {% elif rec['status'] == -1 %}
+                <td>Request Denied</td>
+                {% endif %}
           {% else %}
           <td>Not Present</td>
           <td>
@@ -39,7 +45,7 @@
         {% endfor %}
     </table>
 
-    <a href="/student/">home</a>
+    <a href="/student/">Home</a>
 
     </center>
 </body>
