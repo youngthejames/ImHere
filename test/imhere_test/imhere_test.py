@@ -285,9 +285,11 @@ def test_main_student(db):
             sess['is_teacher'] = False
             sess['is_student'] = True
 
+        cid = db.execute("select cid from courses where name = 'newts big class'").fetchone()['cid']
+
         res = c.get('/student/')
         assert 'Student View' in res.data
-        cm_big = courses_model.Courses(db, 8)
+        cm_big = courses_model.Courses(db, cid)
         cm_big.add_student('uu0000')
         res = c.get('/student/')
         assert "newts big class" in res.data
