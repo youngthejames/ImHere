@@ -184,3 +184,18 @@ class Courses(Model):
             DELETE FROM teaches WHERE tid = %s and cid = %s
         ''' % (tid, self.cid)
         self.db.execute(delteacher)
+
+    def get_sessions(self):
+        # get seid, date, attendance for that day, and total enrollment in that class
+        # for each session
+        query = '''
+            SELECT s.seid, s.day, COALESCE(ar.attendance, 0) AS attendance,
+              COALESCE((SELECT count(*) FROM enrolled_in e WHERE e.cid = %s), 0) AS enrollment
+            FROM sessions s LEFT OUTER JOIN (
+              SELECT seid, count(sid) AS attendance
+              FROM attendance_records
+              GROUP BY seid) ar ON ar.seid = s.seid
+            WHERE s.cid = %s
+        ''' % (self.cid, self.cid)
+        result = self.db.execute(query)
+        return self.deproxy(result)

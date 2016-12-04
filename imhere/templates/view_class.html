@@ -127,7 +127,20 @@
     {% endif %}
     <!-- end students section -->
 
-
+    <!-- sessions -->
+    <h3>Sessions</h3>
+    <table>
+      <tr>
+        <th>Date</th>
+        <th>Attendance</th>
+      </tr>
+    {% for session in sessions %}
+      <tr>
+        <td>{{session['day']}}</td>
+        <td>{{session['attendance']}} / {{session['enrollment']}}</td>
+      </tr>
+    {% endfor %}
+    </table>
 
     <a href="/teacher/">Home</a>
     </center>

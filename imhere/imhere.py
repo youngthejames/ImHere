@@ -299,6 +299,8 @@ def view_class():
 
         teachers = cm.get_teachers()
 
+        sessions = cm.get_sessions()
+
         context = dict(students=students_with_ar)
 
         return render_template(
@@ -311,6 +313,7 @@ def view_class():
                 res=res,
                 teachers=teachers,
                 userid=flask.session['id'],
+                sessions=sessions,
                 **context)
 
 

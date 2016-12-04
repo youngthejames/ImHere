@@ -1,4 +1,5 @@
 from models import courses_model
+from models import students_model
 
 
 def test_get_course_name(db):
@@ -204,3 +205,26 @@ def test_add_teacher(db):
     cm.remove_teacher(11)
     teachers = cm.get_teachers()
     assert len(teachers) == 2
+
+def test_sessions(db):
+
+    cid = 7
+    student = 15
+
+    cm = courses_model.Courses(db, cid)
+    sm = students_model.Students(db, student)
+
+    sessions = cm.get_sessions()
+    assert len(sessions) == 0
+
+    secret = cm.open_session()
+    seid = cm.get_active_session()
+
+    sessions = cm.get_sessions()
+    assert len(sessions) == 1
+    assert sessions[0]['enrollment'] == 1
+    assert sessions[0]['attendance'] == 0
+
+    sm.insert_attendance_record(seid)
+    sessions = cm.get_sessions()
+    assert sessions[0]['attendance'] == 1
