@@ -37,6 +37,10 @@ insert into teachers (tid) values (11);
 insert into users (name, family_name, email) values ('add_teacher', 'teacher', 'add@teacher.com');
 insert into teachers (tid) values (12);
 
+/* uid 13 */
+insert into users (name, family_name, email) values ('ui_add_teacher', 'test', 'new@teacher.ui.com');
+insert into teachers (tid) values (13);
+
 
 /* insert courses here */
 insert into courses (name, active) values ('Running', 0); /* cid=1 */

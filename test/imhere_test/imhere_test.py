@@ -308,3 +308,35 @@ def test_main_student(db):
         payload = {'secret_code': serket}
         res = c.post('/student/', data=payload)
         assert "Successful sign-in!" not in res.data
+
+def test_add_teacher(db):
+    with imhere.app.test_client() as c:
+
+        teacher = {
+                'family_name': 'teacher',
+                'name': 'add_teacher teacher',
+                'email': 'add@teacher.com',
+                'given_name': 'add_teacher'
+            }
+        teacher_id = 12
+
+        course = 6
+
+        with c.session_transaction() as sess:
+            login(sess, teacher, teacher_id)
+            sess['is_teacher'] = True
+            sess['is_student'] = False
+
+        payload = {'add_teacher': 6, 'cid': 6, 'email': 'fake@teacher.com'}
+        res = c.post('/teacher/view_class', data=payload)
+        assert 'User fake@teacher.com not found' in res.data
+
+        payload = {'add_teacher': 6, 'cid': 6, 'email': 'new@teacher.ui.com'}
+        res = c.post('/teacher/view_class', data=payload)
+        assert 'new@teacher.ui.com' in res.data
+        assert 'ui_add_teacher' in res.data
+
+        payload = {'remove_teacher': 13, 'cid': 6}
+        res = c.post('/teacher/view_class', data=payload)
+        assert 'new@teacher.ui.com' not in res.data
+        assert 'ui_add_teacher' not in res.data
