@@ -178,3 +178,9 @@ class Courses(Model):
             return False, '%s is already a teacher in this class' % (email)
 
         return True, ''
+
+    def remove_teacher(self, tid):
+        delteacher = '''
+            DELETE FROM teaches WHERE tid = %s and cid = %s
+        ''' % (tid, self.cid)
+        self.db.execute(delteacher)

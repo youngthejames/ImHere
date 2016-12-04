@@ -283,6 +283,9 @@ def view_class():
         if 'add_teacher' in request.form.keys():
             res = cm.add_teacher(request.form['email'])
 
+        if 'remove_teacher' in request.form.keys():
+            cm.remove_teacher(request.form['remove_teacher'])
+
         course_name = cm.get_course_name()
         secret = cm.get_secret_code()
         num_sessions = cm.get_num_sessions()
@@ -307,6 +310,7 @@ def view_class():
                 uni=uni,
                 res=res,
                 teachers=teachers,
+                userid=flask.session['id'],
                 **context)
 
 

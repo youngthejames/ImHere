@@ -49,6 +49,14 @@
       <tr>
         <td>{{teacher['name']}} {{teacher['family_name']}}</td>
         <td>{{teacher['email']}}</td>
+        {% if teacher['uid'] != userid %}
+        <td> <!-- allow teacher to delete other teachers, not themselves -->
+          <form method="POST" action="/teacher/view_class">
+            <button name="remove_teacher" value="{{teacher['uid']}}">Remove</button>
+            <input type="hidden" name="cid" value="{{cid}}"></input>
+          </form>
+        </td>
+        {% endif %}
       </tr>
       {% endfor %}
     </table>

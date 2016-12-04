@@ -200,3 +200,7 @@ def test_add_teacher(db):
 
     teachers = cm.get_teachers()
     assert len(teachers) == 3
+
+    cm.remove_teacher(11)
+    teachers = cm.get_teachers()
+    assert len(teachers) == 2
