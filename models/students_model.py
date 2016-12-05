@@ -78,13 +78,13 @@ class Students(Model):
 
     def get_attendance_record(self, cid):
         query = '''
-            SELECT sa.day, sa.seid, sa.sid, c.message, c.status
-            FROM (
-              SELECT s.day, s.seid, a.sid
-              FROM sessions s LEFT OUTER JOIN attendance_records a ON s.seid = a.seid
-              WHERE s.cid = %s AND (a.sid = %s OR a.sid IS NULL)) sa
-            LEFT OUTER JOIN change_requests c ON sa.seid = c.seid
-        ''' % (cid, self.sid)
+            SELECT s.seid, s.day, a.sid, c.message, c.status, c.sid as csid
+            FROM (SELECT * FROM sessions s2 WHERE s2.cid = {0}) s
+              LEFT OUTER JOIN
+                (select * from attendance_records a3 where a3.sid = {1}) a ON s.seid = a.seid
+              LEFT OUTER JOIN
+                (select * from change_requests c3 where c3.sid = {1}) c ON s.seid = c.seid
+        '''.format(cid, self.sid)
 
         result = self.db.execute(query)
         return self.deproxy(result)
