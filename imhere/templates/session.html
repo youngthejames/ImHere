@@ -9,6 +9,10 @@
 
 <h1>{{session['name']}} {{session['day']}}</h1>
 
+<form action="/teacher/sessions/{{session['seid']}}" method="POST">
+  <button name="action" value="delete_session">Delete Session</button>
+</form>
+
 <h3>Attendance</h3>
 <p>{{session['attendance']}} / {{session['enrollment']}}</p>
 <table>

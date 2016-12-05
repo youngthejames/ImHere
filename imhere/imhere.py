@@ -356,7 +356,7 @@ def update_session(seid):
     tm = teachers_model.Teachers(g.conn, flask.session['id'])
 
     action = request.form['action']
-    sid = request.form['sid']
+    sid = request.form['sid'] if 'sid' in request.form.keys() else None
 
     stm = students_model.Students(g.conn, sid)
 
@@ -374,6 +374,10 @@ def update_session(seid):
     elif action == 'deny':
         status = 0
         tm.update_change_request(int(status), int(seid), int(sid))
+
+    elif action == 'delete_session':
+        sm.delete_session()
+        return flask.redirect('/teacher/')
 
     session = sm.get_session()[0]
     attendance = sm.get_attendance_record()

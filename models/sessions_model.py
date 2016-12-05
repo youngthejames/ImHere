@@ -45,3 +45,7 @@ class Sessions(Model):
         ''' % (sid, self.seid)
 
         self.db.execute(query)
+
+    def delete_session(self):
+        query = 'DELETE FROM sessions WHERE seid = %s' % (self.seid)
+        self.db.execute(query)
