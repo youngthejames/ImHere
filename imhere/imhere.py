@@ -12,7 +12,7 @@ from sqlalchemy import *
 from flask import Flask, render_template, request, g
 
 from models import users_model, index_model, teachers_model, students_model, \
-    courses_model
+    courses_model, sessions_model
 
 tmpl_dir = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
@@ -340,6 +340,15 @@ def view_requests():
         results = tm.get_change_requests()
         context = dict(data=results)
         return render_template('view_requests.html', **context)
+
+@app.route('/teacher/sessions/<seid>', methods=['GET'])
+def view_session(seid):
+    sm = sessions_model.Sessions(g.conn, seid)
+    session = sm.get_session()[0]
+    attendance = sm.get_attendance_record()
+
+    return render_template('session.html',
+        session=session, attendance=attendance)
 
 
 @app.route('/register', methods=['GET', 'POST'])

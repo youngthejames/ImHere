@@ -136,7 +136,9 @@
       </tr>
     {% for session in sessions %}
       <tr>
-        <td>{{session['day']}}</td>
+        <td><a href="/teacher/sessions/{{session['seid']}}">
+          {{session['day']}}
+        </a></td>
         <td>{{session['attendance']}} / {{session['enrollment']}}</td>
       </tr>
     {% endfor %}

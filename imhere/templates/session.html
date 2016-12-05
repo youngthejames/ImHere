@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Session {{session['seid']}}</title>
+</head>
+<body>
+<center>
+
+<h1>{{session['name']}} {{session['day']}}</h1>
+
+<h3>Attendance</h3>
+<p>{{session['attendance']}} / {{session['enrollment']}}</p>
+<table>
+{% for rec in attendance %}
+<tr>
+  <td>{{rec['name']}}</td>
+  <td>{{rec['email']}}</td>
+  {% if rec['present'] != None %}
+    <td>Present</td>
+    <td><button>Mark Absent</button></td>
+  {% elif rec['status'] == 0 %}
+    <td>Pending: {{rec['message']}}</td>
+    <td><button>Approve</button><button>Deny</button></td>
+  {% else %}
+    <td>Absent</td>
+    <td><button>Mark Present</button></td>
+  {% endif %}
+
+</tr>
+{% endfor %}
+</table>
+
+</center>
+</body>
+</html>
