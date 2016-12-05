@@ -23,7 +23,7 @@ class Sessions(Model):
 
     def get_attendance_record(self):
         query = '''
-            SELECT se.sid, a.sid as present, c.message, c.status, u.name, u.email
+            SELECT se.sid, a.sid as present, c.message, c.status, u.name, u.email, u.uid
             FROM
               (SELECT e.sid
                 FROM sessions s, enrolled_in e
@@ -38,3 +38,10 @@ class Sessions(Model):
 
         result = self.db.execute(query)
         return self.deproxy(result)
+
+    def remove_attendance_record(self, sid):
+        query = '''
+            DELETE FROM attendance_records WHERE sid=%s and seid=%s
+        ''' % (sid, self.seid)
+
+        self.db.execute(query)

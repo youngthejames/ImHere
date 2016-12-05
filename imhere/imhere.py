@@ -350,6 +350,47 @@ def view_session(seid):
     return render_template('session.html',
         session=session, attendance=attendance)
 
+@app.route('/teacher/sessions/<seid>', methods=['POST'])
+def update_session(seid):
+    sm = sessions_model.Sessions(g.conn, seid)
+    tm = teachers_model.Teachers(g.conn, flask.session['id'])
+
+    action = request.form['action']
+    sid = request.form['sid']
+
+    stm = students_model.Students(g.conn, sid)
+
+    if action == 'mark_present':
+        stm.insert_attendance_record(seid)
+
+    elif action == 'mark_absent':
+        sm.remove_attendance_record(sid)
+
+    elif action == 'approve':
+        status = 1
+        tm.update_change_request(int(status), int(seid), int(sid))
+        stm.insert_attendance_record(seid)
+
+    elif action == 'deny':
+        status = 0
+        tm.update_change_request(int(status), int(seid), int(sid))
+
+    session = sm.get_session()[0]
+    attendance = sm.get_attendance_record()
+
+    return render_template('session.html',
+        session=session, attendance=attendance)
+
+
+    # mark present
+
+    # mark absent
+
+    # update change request
+        # approve or deny
+        # status = 1 -> approve
+            # create attendance record
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
