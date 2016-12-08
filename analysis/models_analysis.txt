@@ -1,0 +1,220 @@
+************* Module models.courses_model
+C:  1, 0: Missing module docstring (missing-docstring)
+W:  1, 0: Relative import 'model', should be 'models.model' (relative-import)
+C:  6, 0: Missing class docstring (missing-docstring)
+C: 14, 4: Missing method docstring (missing-docstring)
+C: 19, 4: Missing method docstring (missing-docstring)
+C: 28, 4: Missing method docstring (missing-docstring)
+W: 41,12: No exception type(s) specified (bare-except)
+C: 48, 4: Missing method docstring (missing-docstring)
+C: 94, 4: Missing method docstring (missing-docstring)
+C:124, 4: Missing method docstring (missing-docstring)
+C:136, 4: Missing method docstring (missing-docstring)
+C:142, 4: Missing method docstring (missing-docstring)
+C:151, 4: Missing method docstring (missing-docstring)
+W:168, 8: No exception type(s) specified (bare-except)
+W:177, 8: No exception type(s) specified (bare-except)
+C:182, 4: Missing method docstring (missing-docstring)
+C:188, 4: Missing method docstring (missing-docstring)
+C:  2, 0: standard import "from datetime import datetime, date" comes before "from model import Model" (wrong-import-order)
+C:  3, 0: standard import "from random import randint" comes before "from model import Model" (wrong-import-order)
+************* Module models.index_model
+C:  1, 0: Missing module docstring (missing-docstring)
+W:  1, 0: Relative import 'model', should be 'models.model' (relative-import)
+C:  4, 0: Missing class docstring (missing-docstring)
+C: 10, 4: Missing method docstring (missing-docstring)
+C: 15, 4: Missing method docstring (missing-docstring)
+************* Module models.model
+C:  1, 0: Missing module docstring (missing-docstring)
+C:  4, 8: Invalid attribute name "db" (invalid-name)
+C:  1, 0: Missing class docstring (missing-docstring)
+C:  1, 0: Old-style class defined. (old-style-class)
+C:  7, 4: Missing method docstring (missing-docstring)
+R:  7, 4: Method could be a function (no-self-use)
+W: 15,28: Redefining built-in 'input' (redefined-builtin)
+C: 15, 4: Missing method docstring (missing-docstring)
+C: 16,11: Using type() instead of isinstance() for a typecheck. (unidiomatic-typecheck)
+C: 16,33: Using type() instead of isinstance() for a typecheck. (unidiomatic-typecheck)
+R: 15, 4: Method could be a function (no-self-use)
+************* Module models.sessions_model
+C:  1, 0: Missing module docstring (missing-docstring)
+W:  1, 0: Relative import 'model', should be 'models.model' (relative-import)
+C:  3, 0: Missing class docstring (missing-docstring)
+C:  9, 4: Missing method docstring (missing-docstring)
+C: 24, 4: Missing method docstring (missing-docstring)
+C: 42, 4: Missing method docstring (missing-docstring)
+C: 49, 4: Missing method docstring (missing-docstring)
+************* Module models.students_model
+C:  1, 0: Missing module docstring (missing-docstring)
+W:  1, 0: Relative import 'model', should be 'models.model' (relative-import)
+C:  5, 0: Missing class docstring (missing-docstring)
+C: 11, 4: Missing method docstring (missing-docstring)
+C: 16, 4: Missing method docstring (missing-docstring)
+C: 28, 4: Missing method docstring (missing-docstring)
+W: 44, 8: No exception type(s) specified (bare-except)
+C: 49, 4: Missing method docstring (missing-docstring)
+C: 64, 4: Missing method docstring (missing-docstring)
+C: 69, 4: Missing method docstring (missing-docstring)
+C: 79, 4: Missing method docstring (missing-docstring)
+C: 92, 4: Missing method docstring (missing-docstring)
+C:  2, 0: standard import "from datetime import datetime, date" comes before "from model import Model" (wrong-import-order)
+************* Module models.teachers_model
+C: 55, 0: Line too long (129/100) (line-too-long)
+C: 56, 0: Wrong continued indentation (add 1 space).
+                'from teaches inner join courses on '
+                ^| (bad-continuation)
+C: 71, 0: Line too long (109/100) (line-too-long)
+C:  1, 0: Missing module docstring (missing-docstring)
+W:  1, 0: Relative import 'model', should be 'models.model' (relative-import)
+C:  5, 0: Missing class docstring (missing-docstring)
+C: 13, 4: Missing method docstring (missing-docstring)
+C: 22, 4: Missing method docstring (missing-docstring)
+C: 36, 4: Missing method docstring (missing-docstring)
+C: 49, 4: Missing method docstring (missing-docstring)
+C: 54, 4: Missing method docstring (missing-docstring)
+C: 70, 4: Missing method docstring (missing-docstring)
+C:  2, 0: standard import "from datetime import datetime, date" comes before "from model import Model" (wrong-import-order)
+************* Module models.users_model
+C:  1, 0: Missing module docstring (missing-docstring)
+W:  1, 0: Relative import 'model', should be 'models.model' (relative-import)
+C:  4, 0: Missing class docstring (missing-docstring)
+C:  6, 4: Missing method docstring (missing-docstring)
+W: 14, 8: No exception type(s) specified (bare-except)
+C: 24, 4: Missing method docstring (missing-docstring)
+
+
+Report
+======
+247 statements analysed.
+
+Statistics by type
+------------------
+
++---------+-------+-----------+-----------+------------+---------+
+|type     |number |old number |difference |%documented |%badname |
++=========+=======+===========+===========+============+=========+
+|module   |8      |8          |=          |12.50       |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|class    |7      |7          |=          |0.00        |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|method   |43     |43         |=          |18.60       |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|function |0      |0          |=          |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+
+
+
+External dependencies
+---------------------
+::
+
+    models 
+      \-model (models.teachers_model,models.students_model,models.users_model,models.courses_model,models.sessions_model,models.index_model)
+
+
+
+Raw metrics
+-----------
+
++----------+-------+------+---------+-----------+
+|type      |number |%     |previous |difference |
++==========+=======+======+=========+===========+
+|code      |347    |68.31 |347      |=          |
++----------+-------+------+---------+-----------+
+|docstring |64     |12.60 |64       |=          |
++----------+-------+------+---------+-----------+
+|comment   |13     |2.56  |13       |=          |
++----------+-------+------+---------+-----------+
+|empty     |84     |16.54 |84       |=          |
++----------+-------+------+---------+-----------+
+
+
+
+Duplication
+-----------
+
++-------------------------+------+---------+-----------+
+|                         |now   |previous |difference |
++=========================+======+=========+===========+
+|nb duplicated lines      |0     |0        |=          |
++-------------------------+------+---------+-----------+
+|percent duplicated lines |0.000 |0.000    |=          |
++-------------------------+------+---------+-----------+
+
+
+
+Messages by category
+--------------------
+
++-----------+-------+---------+-----------+
+|type       |number |previous |difference |
++===========+=======+=========+===========+
+|convention |60     |60       |=          |
++-----------+-------+---------+-----------+
+|refactor   |2      |2        |=          |
++-----------+-------+---------+-----------+
+|warning    |12     |12       |=          |
++-----------+-------+---------+-----------+
+|error      |0      |0        |=          |
++-----------+-------+---------+-----------+
+
+
+
+% errors / warnings by module
+-----------------------------
+
++----------------------+------+--------+---------+-----------+
+|module                |error |warning |refactor |convention |
++======================+======+========+=========+===========+
+|models.courses_model  |0.00  |33.33   |0.00     |25.00      |
++----------------------+------+--------+---------+-----------+
+|models.students_model |0.00  |16.67   |0.00     |18.33      |
++----------------------+------+--------+---------+-----------+
+|models.users_model    |0.00  |16.67   |0.00     |6.67       |
++----------------------+------+--------+---------+-----------+
+|models.model          |0.00  |8.33    |100.00   |13.33      |
++----------------------+------+--------+---------+-----------+
+|models.teachers_model |0.00  |8.33    |0.00     |20.00      |
++----------------------+------+--------+---------+-----------+
+|models.sessions_model |0.00  |8.33    |0.00     |10.00      |
++----------------------+------+--------+---------+-----------+
+|models.index_model    |0.00  |8.33    |0.00     |6.67       |
++----------------------+------+--------+---------+-----------+
+
+
+
+Messages
+--------
+
++----------------------+------------+
+|message id            |occurrences |
++======================+============+
+|missing-docstring     |49          |
++----------------------+------------+
+|relative-import       |6           |
++----------------------+------------+
+|bare-except           |5           |
++----------------------+------------+
+|wrong-import-order    |4           |
++----------------------+------------+
+|unidiomatic-typecheck |2           |
++----------------------+------------+
+|no-self-use           |2           |
++----------------------+------------+
+|line-too-long         |2           |
++----------------------+------------+
+|redefined-builtin     |1           |
++----------------------+------------+
+|old-style-class       |1           |
++----------------------+------------+
+|invalid-name          |1           |
++----------------------+------------+
+|bad-continuation      |1           |
++----------------------+------------+
+
+
+
+Global evaluation
+-----------------
+Your code has been rated at 7.00/10 (previous run: 7.00/10, +0.00)
+

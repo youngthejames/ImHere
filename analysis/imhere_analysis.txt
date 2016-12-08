@@ -1,0 +1,407 @@
+************* Module imhere
+C:  1, 0: Missing module docstring (missing-docstring)
+************* Module imhere.imhere
+W: 70, 0: TODO: add token expired checking (fixme)
+W:110, 0: TODO: allow for student/teacher redirects (fixme)
+C:129, 0: Wrong hanging indentation (remove 4 spaces).
+                'main_student.html',
+            |   ^ (bad-continuation)
+C:130, 0: Wrong hanging indentation (remove 4 spaces).
+                signed_in=signed_in,
+            |   ^ (bad-continuation)
+C:131, 0: Wrong hanging indentation (remove 4 spaces).
+                **context)
+            |   ^ (bad-continuation)
+C:145, 0: Wrong hanging indentation (remove 4 spaces).
+                    'main_student.html',
+                |   ^ (bad-continuation)
+C:146, 0: Wrong hanging indentation (remove 4 spaces).
+                    submitted=True,
+                |   ^ (bad-continuation)
+C:147, 0: Wrong hanging indentation (remove 4 spaces).
+                    valid=valid,
+                |   ^ (bad-continuation)
+C:148, 0: Wrong hanging indentation (remove 4 spaces).
+                    **context)
+                |   ^ (bad-continuation)
+C:151, 0: Wrong continued indentation (add 19 spaces).
+                signed_in=signed_in,
+                ^                  | (bad-continuation)
+C:152, 0: Wrong continued indentation (add 19 spaces).
+                **context)
+                ^                  | (bad-continuation)
+C:170, 0: Wrong continued indentation (add 19 spaces).
+        course_name=course_name, attendance_record=attendance_record,
+        ^                  | (bad-continuation)
+C:171, 0: Wrong continued indentation (add 19 spaces).
+        present=present, total=total)
+        ^                  | (bad-continuation)
+C:307, 0: Wrong hanging indentation (remove 4 spaces).
+                'view_class.html',
+            |   ^ (bad-continuation)
+C:308, 0: Wrong hanging indentation (remove 4 spaces).
+                cid=cid,
+            |   ^ (bad-continuation)
+C:309, 0: Wrong hanging indentation (remove 4 spaces).
+                secret=secret,
+            |   ^ (bad-continuation)
+C:310, 0: Wrong hanging indentation (remove 4 spaces).
+                course_name=course_name,
+            |   ^ (bad-continuation)
+C:311, 0: Wrong hanging indentation (remove 4 spaces).
+                num_sessions=num_sessions,
+            |   ^ (bad-continuation)
+C:312, 0: Wrong hanging indentation (remove 4 spaces).
+                uni=uni,
+            |   ^ (bad-continuation)
+C:313, 0: Wrong hanging indentation (remove 4 spaces).
+                res=res,
+            |   ^ (bad-continuation)
+C:314, 0: Wrong hanging indentation (remove 4 spaces).
+                teachers=teachers,
+            |   ^ (bad-continuation)
+C:315, 0: Wrong hanging indentation (remove 4 spaces).
+                userid=flask.session['id'],
+            |   ^ (bad-continuation)
+C:316, 0: Wrong hanging indentation (remove 4 spaces).
+                sessions=sessions,
+            |   ^ (bad-continuation)
+C:317, 0: Wrong hanging indentation (remove 4 spaces).
+                **context)
+            |   ^ (bad-continuation)
+C:351, 0: Wrong continued indentation (add 19 spaces).
+        session=session, attendance=attendance)
+        ^                  | (bad-continuation)
+C:386, 0: Wrong continued indentation (add 19 spaces).
+        session=session, attendance=attendance)
+        ^                  | (bad-continuation)
+C:403, 0: Wrong hanging indentation (remove 4 spaces).
+                'register.html',
+            |   ^ (bad-continuation)
+C:404, 0: Wrong hanging indentation (remove 4 spaces).
+                name=flask.session['google_user']['name'],
+            |   ^ (bad-continuation)
+C:405, 0: Wrong hanging indentation (remove 4 spaces).
+                is_student=flask.session['is_student'],
+            |   ^ (bad-continuation)
+C:406, 0: Wrong hanging indentation (remove 4 spaces).
+                is_teacher=flask.session['is_teacher'])
+            |   ^ (bad-continuation)
+C:422, 0: Wrong hanging indentation (remove 4 spaces).
+                        'register.html',
+                    |   ^ (bad-continuation)
+C:423, 0: Wrong hanging indentation (remove 4 spaces).
+                        name=flask.session['google_user']['name'],
+                    |   ^ (bad-continuation)
+C:424, 0: Wrong hanging indentation (remove 4 spaces).
+                        invalid_uni=True)
+                    |   ^ (bad-continuation)
+C:  1, 0: Missing module docstring (missing-docstring)
+W: 11, 0: Wildcard import sqlalchemy (wildcard-import)
+C: 17, 0: Invalid constant name "tmpl_dir" (invalid-name)
+C: 20, 0: Invalid constant name "app" (invalid-name)
+C: 24, 0: Missing function docstring (missing-docstring)
+W: 27, 4: No exception type(s) specified (bare-except)
+C: 35, 0: Missing function docstring (missing-docstring)
+C: 44, 0: Missing function docstring (missing-docstring)
+C: 54, 0: Missing function docstring (missing-docstring)
+C: 78, 0: Missing function docstring (missing-docstring)
+W: 81,11: Catching too general exception Exception (broad-except)
+C: 81,24: Invalid variable name "e" (invalid-name)
+W: 78,21: Unused argument 'exception' (unused-argument)
+C: 86, 0: Missing function docstring (missing-docstring)
+C: 87, 4: Invalid variable name "im" (invalid-name)
+C:102, 0: Missing function docstring (missing-docstring)
+C:107, 0: Missing function docstring (missing-docstring)
+C:109, 4: Invalid variable name "im" (invalid-name)
+C:120, 0: Missing function docstring (missing-docstring)
+C:121, 4: Invalid variable name "sm" (invalid-name)
+C:155, 0: Missing function docstring (missing-docstring)
+C:156, 4: Invalid variable name "cm" (invalid-name)
+C:157, 4: Invalid variable name "sm" (invalid-name)
+C:174, 0: Missing function docstring (missing-docstring)
+C:175, 4: Invalid variable name "sm" (invalid-name)
+C:186, 0: Missing function docstring (missing-docstring)
+C:187, 4: Invalid variable name "tm" (invalid-name)
+C:190, 8: Invalid variable name "cm" (invalid-name)
+C:208, 0: Missing function docstring (missing-docstring)
+C:209, 4: Invalid variable name "tm" (invalid-name)
+C:216, 8: Invalid variable name "um" (invalid-name)
+C:228, 8: Invalid variable name "cm" (invalid-name)
+C:238, 0: Missing function docstring (missing-docstring)
+C:239, 4: Invalid variable name "tm" (invalid-name)
+C:255, 0: Missing function docstring (missing-docstring)
+R:255, 0: Too many local variables (16/15) (too-many-locals)
+C:260, 8: Invalid variable name "cm" (invalid-name)
+C:295,12: Invalid variable name "sm" (invalid-name)
+C:321, 0: Missing function docstring (missing-docstring)
+C:322, 4: Invalid variable name "tm" (invalid-name)
+C:332,12: Invalid variable name "sm" (invalid-name)
+C:345, 0: Missing function docstring (missing-docstring)
+C:346, 4: Invalid variable name "sm" (invalid-name)
+C:354, 0: Missing function docstring (missing-docstring)
+C:355, 4: Invalid variable name "sm" (invalid-name)
+C:356, 4: Invalid variable name "tm" (invalid-name)
+C:400, 0: Missing function docstring (missing-docstring)
+C:412,12: Invalid variable name "um" (invalid-name)
+W:433,12: No exception type(s) specified (bare-except)
+C:439, 0: Missing function docstring (missing-docstring)
+E:457,15: Instance of 'Resource' has no 'userinfo' member (no-member)
+C:462, 8: Invalid variable name "um" (invalid-name)
+C:468, 8: Invalid variable name "im" (invalid-name)
+C:478, 0: Missing function docstring (missing-docstring)
+C:503, 8: Invalid variable name "HOST" (invalid-name)
+C:503,14: Invalid variable name "PORT" (invalid-name)
+C:504, 8: Invalid variable name "PORT" (invalid-name)
+E:509, 4: No value for argument 'debug' in function call (no-value-for-parameter)
+E:509, 4: No value for argument 'threaded' in function call (no-value-for-parameter)
+E:509, 4: No value for argument 'host' in function call (no-value-for-parameter)
+E:509, 4: No value for argument 'port' in function call (no-value-for-parameter)
+W: 11, 0: Unused import text from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import intersect_all from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import DateTime from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import ForeignKeyConstraint from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import BIGINT from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import VARBINARY from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import tuple_ from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import type_coerce from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import NUMERIC from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import TEXT from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import outerjoin from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import over from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import UniqueConstraint from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import insert from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import DATETIME from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import desc from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import BINARY from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import SmallInteger from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import Numeric from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import subquery from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import INT from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import Index from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import exists from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import UnicodeText from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import table from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import extract from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import String from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import except_all from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import collate from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import intersect from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import between from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import INTEGER from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import ColumnDefault from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import ThreadLocalMetaData from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import funcfilter from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import inspect from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import PickleType from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import DDL from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import NVARCHAR from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import NCHAR from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import or_ from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import BigInteger from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import column from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import TIMESTAMP from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import distinct from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import BLOB from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import Unicode from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import TIME from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import PrimaryKeyConstraint from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import REAL from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import Binary from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import CHAR from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import and_ from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import except_ from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import select from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import PassiveDefault from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import create_engine from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import Enum from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import literal from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import bindparam from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import Date from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import Integer from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import outparam from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import Constraint from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import Column from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import DECIMAL from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import Interval from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import func from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import Time from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import true from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import case from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import join from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import Text from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import asc from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import cast from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import BOOLEAN from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import modifier from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import delete from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import Float from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import false from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import CLOB from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import not_ from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import DATE from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import null from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import union_all from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import VARCHAR from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import ForeignKey from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import DefaultClause from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import TypeDecorator from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import LargeBinary from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import FetchedValue from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import MetaData from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import SMALLINT from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import update from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import CheckConstraint from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import union from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import literal_column from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import Sequence from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import FLOAT from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import alias from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import Boolean from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import Table from wildcard import (unused-wildcard-import)
+W: 11, 0: Unused import engine_from_config from wildcard import (unused-wildcard-import)
+C:  5, 0: standard import "import uuid" comes before "import httplib2" (wrong-import-order)
+C: 12, 0: Imports from package flask are not grouped (ungrouped-imports)
+
+
+Report
+======
+286 statements analysed.
+
+Statistics by type
+------------------
+
++---------+-------+-----------+-----------+------------+---------+
+|type     |number |old number |difference |%documented |%badname |
++=========+=======+===========+===========+============+=========+
+|module   |2      |2          |=          |0.00        |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|class    |0      |0          |=          |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|method   |0      |0          |=          |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|function |22     |22         |=          |4.55        |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+
+
+
+External dependencies
+---------------------
+::
+
+    apiclient (imhere.imhere)
+    click (imhere.imhere)
+    flask (imhere.imhere)
+    httplib2 (imhere.imhere)
+    models 
+      \-courses_model (imhere.imhere)
+      \-index_model (imhere.imhere)
+      \-sessions_model (imhere.imhere)
+      \-students_model (imhere.imhere)
+      \-teachers_model (imhere.imhere)
+      \-users_model (imhere.imhere)
+    oauth2client (imhere.imhere)
+
+
+
+Raw metrics
+-----------
+
++----------+-------+------+---------+-----------+
+|type      |number |%     |previous |difference |
++==========+=======+======+=========+===========+
+|code      |358    |69.65 |358      |=          |
++----------+-------+------+---------+-----------+
+|docstring |20     |3.89  |20       |=          |
++----------+-------+------+---------+-----------+
+|comment   |30     |5.84  |30       |=          |
++----------+-------+------+---------+-----------+
+|empty     |106    |20.62 |106      |=          |
++----------+-------+------+---------+-----------+
+
+
+
+Duplication
+-----------
+
++-------------------------+------+---------+-----------+
+|                         |now   |previous |difference |
++=========================+======+=========+===========+
+|nb duplicated lines      |0     |0        |=          |
++-------------------------+------+---------+-----------+
+|percent duplicated lines |0.000 |0.000    |=          |
++-------------------------+------+---------+-----------+
+
+
+
+Messages by category
+--------------------
+
++-----------+-------+---------+-----------+
+|type       |number |previous |difference |
++===========+=======+=========+===========+
+|convention |84     |84       |=          |
++-----------+-------+---------+-----------+
+|refactor   |1      |1        |=          |
++-----------+-------+---------+-----------+
+|warning    |110    |110      |=          |
++-----------+-------+---------+-----------+
+|error      |5      |5        |=          |
++-----------+-------+---------+-----------+
+
+
+
+% errors / warnings by module
+-----------------------------
+
++--------------+-------+--------+---------+-----------+
+|module        |error  |warning |refactor |convention |
++==============+=======+========+=========+===========+
+|imhere.imhere |100.00 |100.00  |100.00   |98.81      |
++--------------+-------+--------+---------+-----------+
+|imhere        |0.00   |0.00    |0.00     |1.19       |
++--------------+-------+--------+---------+-----------+
+
+
+
+Messages
+--------
+
++-----------------------+------------+
+|message id             |occurrences |
++=======================+============+
+|unused-wildcard-import |103         |
++-----------------------+------------+
+|bad-continuation       |31          |
++-----------------------+------------+
+|invalid-name           |28          |
++-----------------------+------------+
+|missing-docstring      |23          |
++-----------------------+------------+
+|no-value-for-parameter |4           |
++-----------------------+------------+
+|fixme                  |2           |
++-----------------------+------------+
+|bare-except            |2           |
++-----------------------+------------+
+|wrong-import-order     |1           |
++-----------------------+------------+
+|wildcard-import        |1           |
++-----------------------+------------+
+|unused-argument        |1           |
++-----------------------+------------+
+|ungrouped-imports      |1           |
++-----------------------+------------+
+|too-many-locals        |1           |
++-----------------------+------------+
+|no-member              |1           |
++-----------------------+------------+
+|broad-except           |1           |
++-----------------------+------------+
+
+
+
+Global evaluation
+-----------------
+Your code has been rated at 2.31/10 (previous run: 2.31/10, +0.00)
+

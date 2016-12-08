@@ -1,0 +1,400 @@
+************* Module test.db_util
+C: 11, 0: Wrong hanging indentation (remove 4 spaces).
+            'postgres://tester:mattsbigpassw0rrd@45.55.87.0:5432/postgres')
+        |   ^ (bad-continuation)
+C:  1, 0: Missing module docstring (missing-docstring)
+C: 10, 4: Invalid variable name "db" (invalid-name)
+C: 17, 4: Invalid variable name "q" (invalid-name)
+C: 24, 4: Invalid variable name "db" (invalid-name)
+C: 30, 8: Invalid variable name "q" (invalid-name)
+C: 35, 8: Invalid variable name "q" (invalid-name)
+W: 45,19: Redefining built-in 'file' (redefined-builtin)
+C: 50,28: Invalid variable name "f" (invalid-name)
+C: 66, 4: Invalid variable name "db" (invalid-name)
+C: 71, 4: Invalid variable name "q" (invalid-name)
+************* Module test.imhere_test.imhere_test
+C:153, 0: Line too long (176/100) (line-too-long)
+C:227, 0: Wrong hanging indentation (remove 4 spaces).
+        'family_name': 'User',
+    |   ^ (bad-continuation)
+C:228, 0: Wrong hanging indentation (remove 4 spaces).
+        'name': 'Unregistered User',
+    |   ^ (bad-continuation)
+C:229, 0: Wrong hanging indentation (remove 4 spaces).
+        'email': 'uu0000@columbia.edu',
+    |   ^ (bad-continuation)
+C:230, 0: Wrong hanging indentation (remove 4 spaces).
+        'given_name': 'Unregistered'
+    |   ^ (bad-continuation)
+C:316, 0: Wrong hanging indentation (remove 4 spaces).
+                'family_name': 'teacher',
+            |   ^ (bad-continuation)
+C:317, 0: Wrong hanging indentation (remove 4 spaces).
+                'name': 'add_teacher teacher',
+            |   ^ (bad-continuation)
+C:318, 0: Wrong hanging indentation (remove 4 spaces).
+                'email': 'add@teacher.com',
+            |   ^ (bad-continuation)
+C:319, 0: Wrong hanging indentation (remove 4 spaces).
+                'given_name': 'add_teacher'
+            |   ^ (bad-continuation)
+C:  1, 0: Missing module docstring (missing-docstring)
+E:  1, 0: Unable to import 'pytest' (import-error)
+C:  9, 0: Invalid constant name "teacher_user" (invalid-name)
+C: 15, 0: Invalid constant name "teacher_user_id" (invalid-name)
+C: 17, 0: Invalid constant name "newt" (invalid-name)
+C: 23, 0: Invalid constant name "newt_id" (invalid-name)
+C: 26, 0: Invalid function name "db" (invalid-name)
+C: 26, 0: Missing function docstring (missing-docstring)
+C: 39, 0: Missing function docstring (missing-docstring)
+W: 46,15: Redefining name 'db' from outer scope (line 26) (redefined-outer-name)
+C: 46, 0: Invalid argument name "db" (invalid-name)
+C: 46, 0: Missing function docstring (missing-docstring)
+C: 47,37: Invalid variable name "c" (invalid-name)
+C: 52,15: Comparison should be res.status_code == 200 (misplaced-comparison-constant)
+W: 46,15: Unused argument 'db' (unused-argument)
+W: 54,17: Redefining name 'db' from outer scope (line 26) (redefined-outer-name)
+C: 54, 0: Invalid argument name "db" (invalid-name)
+C: 54, 0: Missing function docstring (missing-docstring)
+C: 56,37: Invalid variable name "c" (invalid-name)
+C: 60,15: Comparison should be res.status_code == 302 (misplaced-comparison-constant)
+C: 66,15: Comparison should be res.status_code == 200 (misplaced-comparison-constant)
+C: 74,15: Comparison should be res.status_code == 302 (misplaced-comparison-constant)
+C: 84,15: Comparison should be res.status_code == 200 (misplaced-comparison-constant)
+C: 89,15: Comparison should be res.status_code == 302 (misplaced-comparison-constant)
+W: 54,17: Unused argument 'db' (unused-argument)
+W: 91,32: Redefining name 'db' from outer scope (line 26) (redefined-outer-name)
+C: 91, 0: Invalid argument name "db" (invalid-name)
+C: 91, 0: Missing function docstring (missing-docstring)
+C: 93,37: Invalid variable name "c" (invalid-name)
+W: 91,32: Unused argument 'db' (unused-argument)
+W:114,27: Redefining name 'db' from outer scope (line 26) (redefined-outer-name)
+C:114, 0: Invalid argument name "db" (invalid-name)
+C:114, 0: Missing function docstring (missing-docstring)
+C:116,37: Invalid variable name "c" (invalid-name)
+C:120,15: Comparison should be res.status_code == 302 (misplaced-comparison-constant)
+C:126,15: Comparison should be res.status_code == 302 (misplaced-comparison-constant)
+C:134,15: Comparison should be res.status_code == 200 (misplaced-comparison-constant)
+C:140,15: Comparison should be res.status_code == 200 (misplaced-comparison-constant)
+C:150,15: Comparison should be res.status_code == 200 (misplaced-comparison-constant)
+W:157,30: Redefining name 'db' from outer scope (line 26) (redefined-outer-name)
+C:157, 0: Invalid argument name "db" (invalid-name)
+C:157, 0: Missing function docstring (missing-docstring)
+C:159,37: Invalid variable name "c" (invalid-name)
+C:164,15: Comparison should be res.status_code == 302 (misplaced-comparison-constant)
+C:170,15: Comparison should be res.status_code == 302 (misplaced-comparison-constant)
+C:179,15: Comparison should be res.status_code == 200 (misplaced-comparison-constant)
+C:185,15: Comparison should be res.status_code == 200 (misplaced-comparison-constant)
+W:157,30: Unused argument 'db' (unused-argument)
+W:187,28: Redefining name 'db' from outer scope (line 26) (redefined-outer-name)
+C:187, 0: Invalid argument name "db" (invalid-name)
+C:187, 0: Missing function docstring (missing-docstring)
+C:189,37: Invalid variable name "c" (invalid-name)
+C:226, 0: Invalid constant name "unreg" (invalid-name)
+C:232, 0: Invalid constant name "unreg_id" (invalid-name)
+W:235,18: Redefining name 'db' from outer scope (line 26) (redefined-outer-name)
+C:235, 0: Invalid argument name "db" (invalid-name)
+C:235, 0: Missing function docstring (missing-docstring)
+C:239,37: Invalid variable name "c" (invalid-name)
+C:241,15: Comparison should be res.status_code == 302 (misplaced-comparison-constant)
+C:249,15: Comparison should be res.status_code == 200 (misplaced-comparison-constant)
+C:256,19: Comparison to False should be 'not expr' or 'expr is False' (singleton-comparison)
+C:261,15: Comparison should be res.status_code == 200 (misplaced-comparison-constant)
+C:263,19: Comparison to True should be just 'expr' or 'expr is True' (singleton-comparison)
+C:273,19: Comparison to True should be just 'expr' or 'expr is True' (singleton-comparison)
+W:235,18: Unused argument 'db' (unused-argument)
+W:278,22: Redefining name 'db' from outer scope (line 26) (redefined-outer-name)
+C:278, 0: Invalid argument name "db" (invalid-name)
+C:278, 0: Missing function docstring (missing-docstring)
+C:279,37: Invalid variable name "c" (invalid-name)
+C:281,15: Comparison should be res.status_code == 302 (misplaced-comparison-constant)
+W:312,21: Redefining name 'db' from outer scope (line 26) (redefined-outer-name)
+C:312, 0: Invalid argument name "db" (invalid-name)
+C:312, 0: Missing function docstring (missing-docstring)
+C:313,37: Invalid variable name "c" (invalid-name)
+W:312,21: Unused argument 'db' (unused-argument)
+W:323, 8: Unused variable 'course' (unused-variable)
+C:  2, 0: standard import "import uuid" comes before "import pytest" (wrong-import-order)
+************* Module test.models_test.conftest
+C:  1, 0: Missing module docstring (missing-docstring)
+E:  1, 0: Unable to import 'pytest' (import-error)
+C:  6, 0: Invalid function name "db" (invalid-name)
+C:  6, 0: Missing function docstring (missing-docstring)
+************* Module test.models_test.courses_test
+C:  1, 0: Missing module docstring (missing-docstring)
+C:  5, 0: Invalid argument name "db" (invalid-name)
+C:  5, 0: Missing function docstring (missing-docstring)
+C:  6, 4: Invalid variable name "cm" (invalid-name)
+C: 12, 0: Invalid argument name "db" (invalid-name)
+C: 12, 0: Missing function docstring (missing-docstring)
+C: 13, 4: Invalid variable name "cm" (invalid-name)
+C: 16,11: Using type() instead of isinstance() for a typecheck. (unidiomatic-typecheck)
+C: 30, 0: Invalid argument name "db" (invalid-name)
+C: 30, 0: Missing function docstring (missing-docstring)
+C: 31, 4: Invalid variable name "cm" (invalid-name)
+C: 62, 0: Invalid argument name "db" (invalid-name)
+C: 62, 0: Missing function docstring (missing-docstring)
+C: 63, 4: Invalid variable name "cm" (invalid-name)
+C:109, 0: Invalid argument name "db" (invalid-name)
+C:109, 0: Missing function docstring (missing-docstring)
+C:110, 4: Invalid variable name "cm" (invalid-name)
+C:114, 4: Invalid variable name "cm" (invalid-name)
+C:119, 0: Invalid argument name "db" (invalid-name)
+C:119, 0: Missing function docstring (missing-docstring)
+C:120, 4: Invalid variable name "cm" (invalid-name)
+C:132, 0: Invalid argument name "db" (invalid-name)
+C:132, 0: Missing function docstring (missing-docstring)
+C:133, 4: Invalid variable name "cm" (invalid-name)
+C:144, 0: Invalid argument name "db" (invalid-name)
+C:144, 0: Missing function docstring (missing-docstring)
+C:145, 4: Invalid variable name "cm" (invalid-name)
+C:163, 0: Invalid argument name "db" (invalid-name)
+C:163, 0: Missing function docstring (missing-docstring)
+C:164, 4: Invalid variable name "cm" (invalid-name)
+C:168, 4: Invalid variable name "cm" (invalid-name)
+C:173, 0: Invalid argument name "db" (invalid-name)
+C:173, 0: Missing function docstring (missing-docstring)
+C:174, 4: Invalid variable name "cm" (invalid-name)
+C:182, 0: Invalid argument name "db" (invalid-name)
+C:182, 0: Missing function docstring (missing-docstring)
+C:183, 4: Invalid variable name "cm" (invalid-name)
+C:191,11: Comparison to False should be 'not expr' or 'expr is False' (singleton-comparison)
+C:196,11: Comparison to True should be just 'expr' or 'expr is True' (singleton-comparison)
+C:200,11: Comparison to True should be just 'expr' or 'expr is True' (singleton-comparison)
+C:209, 0: Invalid argument name "db" (invalid-name)
+C:209, 0: Missing function docstring (missing-docstring)
+C:214, 4: Invalid variable name "cm" (invalid-name)
+C:215, 4: Invalid variable name "sm" (invalid-name)
+W:220, 4: Unused variable 'secret' (unused-variable)
+************* Module test.models_test.index_test
+C:  1, 0: Missing module docstring (missing-docstring)
+C:  3, 0: Invalid constant name "real_student" (invalid-name)
+C:  7, 0: Invalid constant name "fake_student" (invalid-name)
+C: 12, 0: Invalid constant name "real_teacher" (invalid-name)
+C: 15, 0: Invalid constant name "fake_teacher" (invalid-name)
+C: 20, 0: Invalid argument name "db" (invalid-name)
+C: 20, 0: Missing function docstring (missing-docstring)
+C: 21, 4: Invalid variable name "im" (invalid-name)
+C: 24, 4: Invalid variable name "im" (invalid-name)
+C: 27, 4: Invalid variable name "im" (invalid-name)
+C: 31, 0: Invalid argument name "db" (invalid-name)
+C: 31, 0: Missing function docstring (missing-docstring)
+C: 33, 4: Invalid variable name "im" (invalid-name)
+C: 36, 4: Invalid variable name "im" (invalid-name)
+C: 39, 4: Invalid variable name "im" (invalid-name)
+************* Module test.models_test.model_test
+C:  1, 0: Missing module docstring (missing-docstring)
+E:  2, 0: Unable to import 'pytest' (import-error)
+C:  7, 0: Invalid argument name "db" (invalid-name)
+C:  7, 0: Missing function docstring (missing-docstring)
+C: 16,11: Using type() instead of isinstance() for a typecheck. (unidiomatic-typecheck)
+C: 17,11: Using type() instead of isinstance() for a typecheck. (unidiomatic-typecheck)
+C: 21, 0: Invalid argument name "db" (invalid-name)
+C: 21, 0: Missing function docstring (missing-docstring)
+W: 31, 4: No exception type(s) specified (bare-except)
+W: 36, 4: No exception type(s) specified (bare-except)
+************* Module test.models_test.students_test
+C:  1, 0: Missing module docstring (missing-docstring)
+C:  5, 0: Invalid argument name "db" (invalid-name)
+C:  5, 0: Missing function docstring (missing-docstring)
+C:  6, 4: Invalid variable name "sm" (invalid-name)
+C: 10, 0: Invalid argument name "db" (invalid-name)
+C: 10, 0: Missing function docstring (missing-docstring)
+C: 37, 0: Invalid argument name "db" (invalid-name)
+C: 37, 0: Missing function docstring (missing-docstring)
+C: 49, 0: Invalid argument name "db" (invalid-name)
+C: 49, 0: Missing function docstring (missing-docstring)
+C: 57, 0: Invalid argument name "db" (invalid-name)
+C: 57, 0: Missing function docstring (missing-docstring)
+C: 67, 0: Invalid argument name "db" (invalid-name)
+C: 67, 0: Missing function docstring (missing-docstring)
+************* Module test.models_test.teachers_test
+C: 77, 0: Trailing whitespace (trailing-whitespace)
+C:  1, 0: Missing module docstring (missing-docstring)
+C:  5, 0: Invalid argument name "db" (invalid-name)
+C:  5, 0: Missing function docstring (missing-docstring)
+C: 11,11: Using type() instead of isinstance() for a typecheck. (unidiomatic-typecheck)
+C: 15,11: Using type() instead of isinstance() for a typecheck. (unidiomatic-typecheck)
+C: 24, 0: Invalid argument name "db" (invalid-name)
+C: 24, 0: Missing function docstring (missing-docstring)
+C: 30,11: Using type() instead of isinstance() for a typecheck. (unidiomatic-typecheck)
+C: 34,11: Using type() instead of isinstance() for a typecheck. (unidiomatic-typecheck)
+C: 47, 0: Invalid argument name "db" (invalid-name)
+C: 47, 0: Missing function docstring (missing-docstring)
+C: 57, 8: Invalid variable name "b" (invalid-name)
+C: 65, 0: Invalid argument name "db" (invalid-name)
+C: 65, 0: Missing function docstring (missing-docstring)
+C: 74, 8: Invalid variable name "b" (invalid-name)
+************* Module test.models_test.users_test
+C:  1, 0: Missing module docstring (missing-docstring)
+C:  4, 0: Invalid argument name "db" (invalid-name)
+C:  4, 0: Missing function docstring (missing-docstring)
+C: 11, 4: Invalid variable name "um" (invalid-name)
+C: 16,11: Using type() instead of isinstance() for a typecheck. (unidiomatic-typecheck)
+C: 31,11: Using type() instead of isinstance() for a typecheck. (unidiomatic-typecheck)
+C: 35, 0: Invalid argument name "db" (invalid-name)
+C: 35, 0: Missing function docstring (missing-docstring)
+C: 37, 4: Invalid variable name "um" (invalid-name)
+C: 44, 0: Invalid argument name "db" (invalid-name)
+C: 44, 0: Missing function docstring (missing-docstring)
+C: 45, 4: Invalid variable name "um" (invalid-name)
+C: 47,11: Comparison to False should be 'not expr' or 'expr is False' (singleton-comparison)
+C: 48,11: Comparison to False should be 'not expr' or 'expr is False' (singleton-comparison)
+
+
+Report
+======
+584 statements analysed.
+
+Statistics by type
+------------------
+
++---------+-------+-----------+-----------+------------+---------+
+|type     |number |old number |difference |%documented |%badname |
++=========+=======+===========+===========+============+=========+
+|module   |12     |NC         |NC         |25.00       |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|class    |0      |NC         |NC         |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|method   |0      |NC         |NC         |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|function |44     |NC         |NC         |6.82        |4.55     |
++---------+-------+-----------+-----------+------------+---------+
+
+
+
+External dependencies
+---------------------
+::
+
+    imhere (test.imhere_test.imhere_test)
+    models 
+      \-courses_model (test.imhere_test.imhere_test,test.models_test.students_test,test.models_test.courses_test)
+      \-index_model (test.models_test.index_test)
+      \-model (test.models_test.model_test)
+      \-students_model (test.models_test.students_test,test.models_test.courses_test)
+      \-teachers_model (test.models_test.teachers_test)
+      \-users_model (test.models_test.users_test)
+    sqlalchemy (test.models_test.teachers_test,test.db_util,test.models_test.model_test)
+    test 
+      \-db_util (test.imhere_test.imhere_test,test.models_test.conftest)
+
+
+
+Raw metrics
+-----------
+
++----------+-------+------+---------+-----------+
+|type      |number |%     |previous |difference |
++==========+=======+======+=========+===========+
+|code      |608    |63.33 |NC       |NC         |
++----------+-------+------+---------+-----------+
+|docstring |36     |3.75  |NC       |NC         |
++----------+-------+------+---------+-----------+
+|comment   |59     |6.15  |NC       |NC         |
++----------+-------+------+---------+-----------+
+|empty     |257    |26.77 |NC       |NC         |
++----------+-------+------+---------+-----------+
+
+
+
+Duplication
+-----------
+
++-------------------------+------+---------+-----------+
+|                         |now   |previous |difference |
++=========================+======+=========+===========+
+|nb duplicated lines      |0     |NC       |NC         |
++-------------------------+------+---------+-----------+
+|percent duplicated lines |0.000 |NC       |NC         |
++-------------------------+------+---------+-----------+
+
+
+
+Messages by category
+--------------------
+
++-----------+-------+---------+-----------+
+|type       |number |previous |difference |
++===========+=======+=========+===========+
+|convention |192    |NC       |NC         |
++-----------+-------+---------+-----------+
+|refactor   |0      |NC       |NC         |
++-----------+-------+---------+-----------+
+|warning    |20     |NC       |NC         |
++-----------+-------+---------+-----------+
+|error      |3      |NC       |NC         |
++-----------+-------+---------+-----------+
+
+
+
+% errors / warnings by module
+-----------------------------
+
++-------------------------------+------+--------+---------+-----------+
+|module                         |error |warning |refactor |convention |
++===============================+======+========+=========+===========+
+|test.imhere_test.imhere_test   |33.33 |80.00   |0.00     |35.94      |
++-------------------------------+------+--------+---------+-----------+
+|test.models_test.model_test    |33.33 |10.00   |0.00     |3.65       |
++-------------------------------+------+--------+---------+-----------+
+|test.models_test.conftest      |33.33 |0.00    |0.00     |1.56       |
++-------------------------------+------+--------+---------+-----------+
+|test.models_test.courses_test  |0.00  |5.00    |0.00     |22.92      |
++-------------------------------+------+--------+---------+-----------+
+|test.db_util                   |0.00  |5.00    |0.00     |5.21       |
++-------------------------------+------+--------+---------+-----------+
+|test.models_test.teachers_test |0.00  |0.00    |0.00     |8.33       |
++-------------------------------+------+--------+---------+-----------+
+|test.models_test.index_test    |0.00  |0.00    |0.00     |7.81       |
++-------------------------------+------+--------+---------+-----------+
+|test.models_test.users_test    |0.00  |0.00    |0.00     |7.29       |
++-------------------------------+------+--------+---------+-----------+
+|test.models_test.students_test |0.00  |0.00    |0.00     |7.29       |
++-------------------------------+------+--------+---------+-----------+
+
+
+
+Messages
+--------
+
++------------------------------+------------+
+|message id                    |occurrences |
++==============================+============+
+|invalid-name                  |94          |
++------------------------------+------------+
+|missing-docstring             |50          |
++------------------------------+------------+
+|misplaced-comparison-constant |19          |
++------------------------------+------------+
+|unidiomatic-typecheck         |9           |
++------------------------------+------------+
+|redefined-outer-name          |9           |
++------------------------------+------------+
+|bad-continuation              |9           |
++------------------------------+------------+
+|singleton-comparison          |8           |
++------------------------------+------------+
+|unused-argument               |6           |
++------------------------------+------------+
+|import-error                  |3           |
++------------------------------+------------+
+|unused-variable               |2           |
++------------------------------+------------+
+|bare-except                   |2           |
++------------------------------+------------+
+|wrong-import-order            |1           |
++------------------------------+------------+
+|trailing-whitespace           |1           |
++------------------------------+------------+
+|redefined-builtin             |1           |
++------------------------------+------------+
+|line-too-long                 |1           |
++------------------------------+------------+
+
+
+
+Global evaluation
+-----------------
+Your code has been rated at 6.11/10
+
