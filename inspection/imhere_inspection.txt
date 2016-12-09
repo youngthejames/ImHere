@@ -1,0 +1,54 @@
+This code inspection includes the following files:
+ImHere/imhere/imhere.py - main flask route handler
+
+Reader: Mat Mallett
+Recorder: James Young
+
+Format for comments
+line # : comment
+
+overall:
+	route structure is a mess
+	need comments on each route
+	should be reasonably obvious from route what page you are on
+	POSTs should be used more for forms
+	need more comments
+	coding conventions: 2 lines between methods, 1 line between blocks
+	split GET and POST methods
+
+11 : sqlalchemy import *, only import what we need
+
+14 : potentially break up long import
+
+24 : program does not handle failed connection to database, keeps running
+
+70 : add rationale for commenting out token code
+
+78 : do we need the exception?
+
+85 : GET instead of a POST
+
+101, 106 : restrict to just a GET
+
+110 : TODO is done
+
+119 : trailing slash on route, mixed GET and POST in method
+
+185 : trailing slash on teacher, mixed GET and POST, potential refactor
+
+254 : can refactor operations into seperate functions to break up huge route logic
+
+320 : trailing slash on view_requests, clean up common code
+
+389 : comments migrated down file somehow
+
+399 : all SQL should be in model files, exception handling not consistent
+
+438 : more comments about how it works and different routes
+
+477 : logout does not need to be POST
+
+483 : main is no longer used, we run through run.py
+
+
+

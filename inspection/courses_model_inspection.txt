@@ -1,0 +1,42 @@
+This code inspection includes the following files:
+ImHere/models/courses_model.py - function handler for courses
+
+Reader: Peter Hopper
+Recorder: James Young
+
+Format for comments
+line # : comment
+
+overall:
+	comments very sparse
+	coding convention: 2 lines between methods, 1 line between blocks
+	SQL standards: ALL CAPS for SQL commands
+	reusing variables may cause confusion
+
+8 : default cid of -1, check this behavior
+
+17 : prefer to access column by name rather than index
+
+28 : unclear return values
+
+82 : should be a comment not documentation string
+
+95 : why pass -1 just to return?, no indication of failure
+
+109 : should be a comment not a documentation string
+
+117 : inserting string value time rather than retrieving current time or likeness
+
+129 : may not be necessary, also should be a boolean not an integer
+
+134 : return with some error code
+
+137 : use count * and return count
+
+143 : single quotes to construct SQL query
+
+169 : actually check if the teacher exists
+
+177 : catch specific errors and handle them
+
+183 : triple quotes not needed
