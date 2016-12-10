@@ -9,6 +9,7 @@ Login:
 
 Populate a Class:
 	- from teacher view, and only teacher view, create a class and add your student account to the class
+	- check that the class is now visible from both views
 
 Check-in:
 	- from teacher view, open a check-in window
@@ -19,6 +20,7 @@ Check-in:
 Teacher Correct Record:
 	- from teacher view, remove your student from the session
 	- re-add your student to the session
+	- check that this has been accomplished
 
 Student Attendence Check:
 	- from student view, check that you checked-in to the session and you can see it
@@ -26,6 +28,7 @@ Student Attendence Check:
 Student Request Change:
 	- from teacher view, remove student from session
 	- from student view, submit request for attendence change
+	- request should be visible from both views
 
 Teacher Handle Change Request:
 	- from teacher view, view the request and accept it

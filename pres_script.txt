@@ -1,0 +1,34 @@
+This is our presentation plan for our showcase demo on 12/12/16:
+
+We have already created 2 accounts that are currently in the database for the presentation.
+jty2106@columbia.edu is listed as both a student and a teacher.
+
+Make sure James is logged into his email on the computer and not in Incognito mode.
+
+From the Home page, click on the Register button to show how one would create a user account for
+the application. We already have James' account in the database for example purposes.
+
+Go back and Login as James to demonstrate the Google SSO utility that we implemented.
+The email is jty2106@columbia.edu
+*** May want to open a seperate tab for each view
+
+Create a class and add 'jty2106' to the class.
+Show that the class is now visible from both views.
+
+Open a check-in window from the teacher view and show the random code generated.
+See that the class from the Student view now has check-in available, then check-in.
+Close the check-in window from the Teacher view and see that it is no longer available
+to the student.
+
+Show that the student can see his attendence record for all sessions in a class.
+
+Demonstrate the Teacher's ability to edit the record by removing the student from a given session.
+
+Show that the student can now see they were removed from a session and submit a change request.
+The request is now visible to the student as 'pending'.
+The change request is now visible from the teacher view and can be accepted or denied.
+Accept it, and see from the student view that the error has been corrected.
+
+Finally, show that a teacher has the ability to delete a session completely.
+
+END DEMO
