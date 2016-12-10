@@ -1,0 +1,36 @@
+Conduct the following operations from the vantage-point of the user and observe behavior:
+
+Account Creation:
+	- create an account as a student
+	- create an account as a teacher (can use the same email for convenience)
+
+Login:
+	- logout and log back in, from both accounts, to check consistency of data presence in database
+
+Populate a Class:
+	- from teacher view, and only teacher view, create a class and add your student account to the class
+
+Check-in:
+	- from teacher view, open a check-in window
+	- switch to student view and check into class
+	- switch to teacher view and close check-in window
+	- switch to student view and make sure you can't check-in
+
+Teacher Correct Record:
+	- from teacher view, remove your student from the session
+	- re-add your student to the session
+
+Student Attendence Check:
+	- from student view, check that you checked-in to the session and you can see it
+
+Student Request Change:
+	- from teacher view, remove student from session
+	- from student view, submit request for attendence change
+
+Teacher Handle Change Request:
+	- from teacher view, view the request and accept it
+	- check that the request edits the session information
+
+Teacher Delete Session:
+	- from teacher view, delete the session
+	- check that the session no longer exists
