@@ -8,3 +8,4 @@ requests
 requests_oauth
 httplib2
 pytest
+pytest-cov
