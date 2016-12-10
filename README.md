@@ -30,5 +30,5 @@ python run.py
 pytest test
 ```
 
-Continuous Integration by Jenkins,
+Continuous Integration by Jenkins
 
