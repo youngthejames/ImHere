@@ -1,0 +1,46 @@
+============================= test session starts ==============================
+platform darwin -- Python 2.7.12, pytest-3.0.5, py-1.4.31, pluggy-0.4.0
+rootdir: /Users/james/Adv_SE_4156/ImHere, inifile: 
+plugins: cov-2.4.0
+collected 38 items
+
+test/imhere_test/imhere_test.py .........
+test/models_test/courses_test.py ............
+test/models_test/index_test.py ..
+test/models_test/model_test.py ..
+test/models_test/students_test.py ......
+test/models_test/teachers_test.py ....
+test/models_test/users_test.py ...
+
+---------- coverage: platform darwin, python 2.7.12-final-0 ----------
+Name                                 Stmts   Miss  Cover
+--------------------------------------------------------
+imhere/__init__.py                       1      0   100%
+imhere/imhere.py                       289    119    59%
+models/__init__.py                       0      0   100%
+models/courses_model.py                104      3    97%
+models/index_model.py                   13      0   100%
+models/model.py                         12      0   100%
+models/sessions_model.py                19     12    37%
+models/students_model.py                48      6    88%
+models/teachers_model.py                35      5    86%
+models/users_model.py                   16      0   100%
+oauth.py                                30     30     0%
+run.py                                  11     11     0%
+test/__init__.py                         0      0   100%
+test/db_util.py                         42      0   100%
+test/imhere_test/__init__.py             0      0   100%
+test/imhere_test/imhere_test.py        229      0   100%
+test/models_test/__init__.py             0      0   100%
+test/models_test/conftest.py             8      0   100%
+test/models_test/courses_test.py       137      0   100%
+test/models_test/index_test.py          19      0   100%
+test/models_test/model_test.py          24      4    83%
+test/models_test/students_test.py       52      0   100%
+test/models_test/teachers_test.py       51      0   100%
+test/models_test/users_test.py          22      0   100%
+--------------------------------------------------------
+TOTAL                                 1162    190    84%
+
+
+========================== 38 passed in 53.22 seconds ==========================
