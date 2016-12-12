@@ -43,17 +43,19 @@
                 You have already signed into the session!
             {% else %}
 
-            <form action="/student/" method="post">
-                Sign in now!
-                <input type="text" name="secret_code" placeholder="Secret Code">
-                <input type="submit" value="Submit">
-            </form><br>
+              <form action="/student/" method="POST">
+                  Sign in now!
+                  <div class="input-field col s12">
+                    <input type="text" style="width:200px" name="secret_code" class="validate" placeholder="Secret Code">
+                    <input type="submit" value="Submit">
+                  </div>
+              </form><br>
 
-                {% if submitted %}
-                    {% if not valid %}
-                    <font color="red">Invalid Secret Code</font>
-                    {% endif %}
+              {% if submitted %}
+                {% if not valid %}
+                <font color="red">Invalid Secret Code</font>
                 {% endif %}
+              {% endif %}
 
             {% endif %}
 

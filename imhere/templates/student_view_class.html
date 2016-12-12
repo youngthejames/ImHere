@@ -1,52 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>{{course_name}}</title>
-    <style>
-        .beta table, .beta td, .beta th {
-            border: 1px solid black;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>{{course_name}}</title>
+  <style>
+      .beta table, .beta td, .beta th {
+          border: 1px solid black;
+      }
+  </style>
+
+  <!--Import Google Icon Font-->
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link rel="stylesheet"
+        type="text/css"
+        href="{{ url_for('static', filename='css/materialize.min.css') }}"
+        media="screen,projection"/>
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 
 <body>
-    <center>
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo center">ImHere - {{course_name}}</a>
+      <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <li><a class="waves-effect waves-light btn" href="/student/">Home</a></li>
+      </ul>
+    </div>
+  </nav>
 
-    <h2>ImHere</h2><br>
+  <center>
+  <h5>{{present}}/{{total}} Sessions Attended</h5>
 
-    <h3>{{course_name}}</h3>
-    <p>{{present}}/{{total}} Sessions Attended</p>
-
-    <table>
-        {% for rec in attendance_record %}
-        <tr>
-          <td>{{rec['day']}}</td>
-          {% if rec['sid'] != None %}
-          <td>Present</td>
-          {% elif rec['message'] != None%}
-                {% if rec['status'] == 0 %}
-                <td>Pending: {{rec['message']}}</td>
-                {% elif rec['status'] == 1 %}
-                <td>Request Approved</td>
-                {% elif rec['status'] == -1 %}
-                <td>Request Denied</td>
-                {% endif %}
-          {% else %}
-          <td>Not Present</td>
-          <td>
-            <form action="/student/request/{{rec['seid']}}" method="POST">
-              <input type="text" name="message" placeholder="Tell us why you missed">
-              <button type="submit">Submit</button>
-            </form>
-          </td>
-          {% endif %}
-        </tr>
-        {% endfor %}
-    </table>
-
-    <a href="/student/">Home</a>
-
-    </center>
+  <table style="margin: 0px auto;">
+    {% for rec in attendance_record %}
+    <tr>
+      <td>{{rec['day']}}</td>
+      {% if rec['sid'] != None %}
+        <td>Present</td>
+      {% elif rec['message'] != None%}
+        {% if rec['status'] == 0 %}
+        <td>Pending: {{rec['message']}}</td>
+        {% elif rec['status'] == 1 %}
+        <td>Request Approved</td>
+        {% elif rec['status'] == -1 %}
+        <td>Request Denied</td>
+        {% endif %}
+      {% else %}
+        <td>Not Present</td>
+        <td>
+          <form action="/student/request/{{rec['seid']}}" method="POST">
+            <input type="text" style="width:400px" name="message" placeholder="Why were you absent?">
+            <button type="submit">Submit</button>
+          </form>
+        </td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </table>
+  </center>
 </body>
 </html>
