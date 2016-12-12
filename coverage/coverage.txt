@@ -44,3 +44,924 @@ TOTAL                                 1162    190    84%
 
 
 ========================== 38 passed in 53.22 seconds ==========================
+============================= test session starts ==============================
+platform darwin -- Python 2.7.12, pytest-3.0.5, py-1.4.31, pluggy-0.4.0
+rootdir: /Users/james/Adv_SE_4156/ImHere, inifile: 
+plugins: cov-2.4.0
+collected 38 items
+
+test/imhere_test/imhere_test.py EEEEEEEEE
+test/models_test/courses_test.py EEEEEEEEEEEE
+test/models_test/index_test.py EE
+test/models_test/model_test.py EE
+test/models_test/students_test.py EEEEEE
+test/models_test/teachers_test.py EEEE
+test/models_test/users_test.py EEE
+
+---------- coverage: platform darwin, python 2.7.12-final-0 ----------
+Name                                Stmts   Miss  Cover
+-------------------------------------------------------
+imhere/__init__.py                      1      0   100%
+imhere/imhere.py                      289    256    11%
+models/__init__.py                      0      0   100%
+models/courses_model.py               104     86    17%
+models/index_model.py                  13      8    38%
+models/model.py                        12      8    33%
+models/sessions_model.py               19     12    37%
+models/students_model.py               48     36    25%
+models/teachers_model.py               35     25    29%
+models/users_model.py                  16     12    25%
+oauth.py                               30     30     0%
+run.py                                 11     11     0%
+test/__init__.py                        0      0   100%
+test/db_util.py                        42     22    48%
+test/imhere_test/__init__.py            0      0   100%
+test/imhere_test/imhere_test.py       229    206    10%
+test/models_test/__init__.py            0      0   100%
+test/models_test/conftest.py            8      4    50%
+test/models_test/courses_test.py      137    123    10%
+test/models_test/index_test.py         19     12    37%
+test/models_test/model_test.py         24     19    21%
+test/models_test/students_test.py      52     44    15%
+test/models_test/teachers_test.py      51     45    12%
+test/models_test/users_test.py         22     18    18%
+-------------------------------------------------------
+TOTAL                                1162    977    16%
+
+
+==================================== ERRORS ====================================
+_________________________ ERROR at setup of test_index _________________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/imhere_test/imhere_test.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+________________________ ERROR at setup of test_teacher ________________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/imhere_test/imhere_test.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+________________ ERROR at setup of test_teacher_session_manage _________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/imhere_test/imhere_test.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+___________________ ERROR at setup of test_teacher_add_class ___________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/imhere_test/imhere_test.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+_________________ ERROR at setup of test_teacher_remove_class __________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/imhere_test/imhere_test.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+__________________ ERROR at setup of test_teacher_view_class ___________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/imhere_test/imhere_test.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+_______________________ ERROR at setup of test_register ________________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/imhere_test/imhere_test.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+_____________________ ERROR at setup of test_main_student ______________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/imhere_test/imhere_test.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+______________________ ERROR at setup of test_add_teacher ______________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/imhere_test/imhere_test.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+____________________ ERROR at setup of test_get_course_name ____________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+_____________________ ERROR at setup of test_get_students ______________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+______________________ ERROR at setup of test_add_student ______________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+____________________ ERROR at setup of test_remove_student _____________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+__________________ ERROR at setup of test_get_active_session ___________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+_____________________ ERROR at setup of test_close_session _____________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+_____________________ ERROR at setup of test_open_session ______________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+____________________ ERROR at setup of test_get_secret_code ____________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+___________________ ERROR at setup of test_get_num_sessions ____________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+_____________________ ERROR at setup of test_sql_injection _____________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+______________________ ERROR at setup of test_add_teacher ______________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+_______________________ ERROR at setup of test_sessions ________________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+______________________ ERROR at setup of test_is_student _______________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+______________________ ERROR at setup of test_is_teacher _______________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+________________________ ERROR at setup of test_deproxy ________________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+_____________________ ERROR at setup of test_escape_string _____________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+________________________ ERROR at setup of test_get_uni ________________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+______________________ ERROR at setup of test_get_courses ______________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+__________________ ERROR at setup of test_get_secret_and_seid __________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+_____________________ ERROR at setup of test_has_signed_in _____________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+_______________ ERROR at setup of test_insert_attendance_record ________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+______________ ERROR at setup of test_get_num_attendance_records _______________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+______________________ ERROR at setup of test_get_courses ______________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+_______________ ERROR at setup of test_get_courses_with_session ________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+______________________ ERROR at setup of test_add_course _______________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+_____________________ ERROR at setup of test_remove_course _____________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+______________________ ERROR at setup of test_get_create _______________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+_____________________ ERROR at setup of test_is_valid_uni ______________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+_____________________ ERROR at setup of test_sql_injection _____________________
+
+    @pytest.yield_fixture(scope="module")
+    def db():
+>       test_db = test.db_util.create_test_db()
+
+test/models_test/conftest.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test/db_util.py:29: in create_test_db
+    schema = _read_sql_file('../schema.sql')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = '../schema.sql'
+
+    def _read_sql_file(file):
+    
+        queries = []
+    
+        current = ''
+>       with open(file, 'r') as f:
+E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+
+test/db_util.py:50: IOError
+=========================== 38 error in 8.93 seconds ===========================
