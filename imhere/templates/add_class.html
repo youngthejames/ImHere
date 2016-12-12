@@ -1,20 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Add a Class</title>
+  <meta charset="UTF-8">
+  <title>Add a Class</title>
+
+  <!--Import Google Icon Font-->
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link rel="stylesheet"
+        type="text/css"
+        href="{{ url_for('static', filename='css/materialize.min.css') }}"
+        media="screen,projection"/>
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 
 <body>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo center">ImHere</a>
+        <ul id="nav-mobile" class="left hide-on-med-and-down">
+          <a class="btn waves-effect waves-light left" href="/teacher/">Home</a>
+        </ul>
+      </div>
+    </nav>
     <center>
-    <h2>ImHere</h2><br>
 
     <h4>Create a Class</h4>
     <form method="POST" action="/teacher/add_class">
-        Name: <input type="text" name="classname" required><br><br>
+        Name: <input style="width:400px" type="text" name="classname" required><br><br>
 
         <h4>Student Unis</h4>
-        <textarea rows="6" cols="50" placeholder="Please enter one uni per line" name="unis"></textarea><br>
+        <textarea style="width:400px" rows="20" cols="50" placeholder="Please enter one uni per line" name="unis"></textarea><br>
         <button>Create Class</button>
     </form><br>
 

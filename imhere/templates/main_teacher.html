@@ -29,57 +29,55 @@
 </head>
 
 <body>
-    <nav>
-      <div class="nav-wrapper">
-        <a href="#" class="brand-logo center">ImHere - Teacher View</a>
-        <ul id="nav-mobile" class="left hide-on-med-and-down">
-          <form  method="POST">
-            <button class="btn waves-effect waves-light" formaction="/switch_type" name="type" value="student"> Switch to student view
-            </button>
-            <button class="btn waves-effect waves-light" formaction="/oauth/logout" name="logout">Logout
-            </button>
-          </form>
-        </ul>
-      </div>
-    </nav>
-
-    <center>
-    <a href="/teacher/add_class">Add a Class</a>
-    {% if not empty %}
-        <a href="/teacher/remove_class">Remove a Class</a><br><br> 
-    {% endif %}
-
-    {% for n in data %}
-        {% if n[2] == 1 %}
-
-            <form method="POST" action="/teacher/view_class">
-            <button name="cid" value="{{n[0]}}" class="btn-link"><h4>{{n[1]}}</h4>
-            </button>
-            </form>
-
-            <form method="POST" action="/teacher/">
-            <button name="close" value="{{n[0]}}">Close Attendance Window
-            </button>
-            </form><br>
-
-            Secret Code:<br>
-            {{n[3]}}<br><br>
-
-        {% elif n[2] == 0 %}
-
-            <form method="POST" action="/teacher/view_class">
-            <button name="cid" value="{{n[0]}}" class="btn-link"><h4>{{n[1]}}</h4></button></form>
-
-            <form method="POST" action="/teacher/">
-            <button name="open" value="{{n[0]}}">Open Attendance Window
-            </button>
-            </form><br><br>
-
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo center">ImHere - Teacher View</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        {% if not empty %}
+          <a class="btn waves-effect waves-light right" href="/teacher/remove_class">Remove Class</a>
         {% endif %}
-    {% endfor %}
+        <a class="btn waves-effect waves-light right" href="/teacher/add_class">Add Class</a>
+        <a class="btn waves-effect waves-light right" href="/teacher/view_requests/">View Change Requests</a>
+      </ul>
+      <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <form  method="POST">
+          <button class="btn waves-effect waves-light" formaction="/switch_type" name="type" value="student"> Switch to student view
+          </button>
+          <button class="btn waves-effect waves-light" formaction="/oauth/logout" name="logout">Logout
+          </button>
+        </form>
+      </ul>
+    </div>
+  </nav>
 
-        <a href="/teacher/view_requests/">View Change Requests</a>
+  <center>
+  {% for n in data %}
+    {% if n[2] == 1 %}
+      <form method="POST" action="/teacher/view_class">
+      <button name="cid" value="{{n[0]}}" class="btn-link"><h4>{{n[1]}}</h4>
+      </button>
+      </form>
 
-    </center>
+      <form method="POST" action="/teacher/">
+      <button name="close" value="{{n[0]}}">Close Attendance Window
+      </button>
+      </form><br>
+
+      Secret Code:<br>
+      {{n[3]}}<br><br>
+
+    {% elif n[2] == 0 %}
+      <form method="POST" action="/teacher/view_class">
+      <button name="cid" value="{{n[0]}}" class="btn-link"><h4>{{n[1]}}</h4></button></form>
+
+      <form method="POST" action="/teacher/">
+      <button name="open" value="{{n[0]}}">Open Attendance Window
+      </button>
+      </form><br><br>
+    {% endif %}
+  {% endfor %}
+
+
+  </center>
 </body>
 </html>

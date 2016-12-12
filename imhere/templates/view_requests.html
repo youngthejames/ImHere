@@ -1,31 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>{{data|length}} Requests Pending</title>
-</head>
-<body>
-<center>
-{% if not data %}
-<h1>You have no pending change requests</h1>
-{% endif %}
+  <meta charset="UTF-8">
+  <title>{{data|length}} Requests Pending</title>
 
-{%for n in data %}
-<p>Class: {{n[0]}}</p>
+  <!--Import Google Icon Font-->
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link rel="stylesheet"
+        type="text/css"
+        href="{{ url_for('static', filename='css/materialize.min.css') }}"
+        media="screen,projection"/>
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+
+<body>
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo center">ImHere - View Requests</a>
+      <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <a class="btn waves-effect waves-light left" href="/teacher/">Home</a>
+      </ul>
+    </div>
+  </nav>
+
+  <center>
+  {% if not data %}
+  <h1>You have no pending change requests</h1>
+  {% endif %}
+
+  {% for n in data %}
+  <p>Class: {{n[0]}}</p>
     <p>Date: {{n[1]}}</p>
     <p>Student: {{n[2]}}</p>
     <p>Message: {{n[3]}}</p>
-    <br>
     <form method="POST", action="/teacher/view_requests/">
-        <button name="approve" value="{{n[4]}} {{n[5]}}">Approve</button>
-        <button name="deny" value="{{n[4]}} {{n[5]}}">Deny</button>
+      <button name="approve" value="{{n[4]}} {{n[5]}}">Approve</button>
+      <button name="deny" value="{{n[4]}} {{n[5]}}">Deny</button>
+    </form><br><br>
+  {% endfor %}
+  </center>
 
-    </form>
-
-
-{% endfor %}
-
-<a href="/teacher/">Home</a>
-</center>
 </body>
 </html>
