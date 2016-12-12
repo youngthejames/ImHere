@@ -4,7 +4,7 @@ rootdir: /Users/james/Adv_SE_4156/ImHere, inifile:
 plugins: cov-2.4.0
 collected 38 items
 
-test/imhere_test/imhere_test.py .........
+test/imhere_test/imhere_test.py .F.FFFFF.
 test/models_test/courses_test.py ............
 test/models_test/index_test.py ..
 test/models_test/model_test.py ..
@@ -16,7 +16,7 @@ test/models_test/users_test.py ...
 Name                                 Stmts   Miss  Cover
 --------------------------------------------------------
 imhere/__init__.py                       1      0   100%
-imhere/imhere.py                       289    119    59%
+imhere/imhere.py                       289    147    49%
 models/__init__.py                       0      0   100%
 models/courses_model.py                104      3    97%
 models/index_model.py                   13      0   100%
@@ -30,7 +30,7 @@ run.py                                  11     11     0%
 test/__init__.py                         0      0   100%
 test/db_util.py                         42      0   100%
 test/imhere_test/__init__.py             0      0   100%
-test/imhere_test/imhere_test.py        229      0   100%
+test/imhere_test/imhere_test.py        229     63    72%
 test/models_test/__init__.py             0      0   100%
 test/models_test/conftest.py             8      0   100%
 test/models_test/courses_test.py       137      0   100%
@@ -40,928 +40,215 @@ test/models_test/students_test.py       52      0   100%
 test/models_test/teachers_test.py       51      0   100%
 test/models_test/users_test.py          22      0   100%
 --------------------------------------------------------
-TOTAL                                 1162    190    84%
+TOTAL                                 1162    281    76%
 
 
-========================== 38 passed in 53.22 seconds ==========================
-============================= test session starts ==============================
-platform darwin -- Python 2.7.12, pytest-3.0.5, py-1.4.31, pluggy-0.4.0
-rootdir: /Users/james/Adv_SE_4156/ImHere, inifile: 
-plugins: cov-2.4.0
-collected 38 items
+=================================== FAILURES ===================================
+_________________________________ test_teacher _________________________________
 
-test/imhere_test/imhere_test.py EEEEEEEEE
-test/models_test/courses_test.py EEEEEEEEEEEE
-test/models_test/index_test.py EE
-test/models_test/model_test.py EE
-test/models_test/students_test.py EEEEEE
-test/models_test/teachers_test.py EEEE
-test/models_test/users_test.py EEE
+db = <sqlalchemy.engine.base.Connection object at 0x109e9fdd0>
 
----------- coverage: platform darwin, python 2.7.12-final-0 ----------
-Name                                Stmts   Miss  Cover
--------------------------------------------------------
-imhere/__init__.py                      1      0   100%
-imhere/imhere.py                      289    256    11%
-models/__init__.py                      0      0   100%
-models/courses_model.py               104     86    17%
-models/index_model.py                  13      8    38%
-models/model.py                        12      8    33%
-models/sessions_model.py               19     12    37%
-models/students_model.py               48     36    25%
-models/teachers_model.py               35     25    29%
-models/users_model.py                  16     12    25%
-oauth.py                               30     30     0%
-run.py                                 11     11     0%
-test/__init__.py                        0      0   100%
-test/db_util.py                        42     22    48%
-test/imhere_test/__init__.py            0      0   100%
-test/imhere_test/imhere_test.py       229    206    10%
-test/models_test/__init__.py            0      0   100%
-test/models_test/conftest.py            8      4    50%
-test/models_test/courses_test.py      137    123    10%
-test/models_test/index_test.py         19     12    37%
-test/models_test/model_test.py         24     19    21%
-test/models_test/students_test.py      52     44    15%
-test/models_test/teachers_test.py      51     45    12%
-test/models_test/users_test.py         22     18    18%
--------------------------------------------------------
-TOTAL                                1162    977    16%
-
-
-==================================== ERRORS ====================================
-_________________________ ERROR at setup of test_index _________________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/imhere_test/imhere_test.py:27: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-________________________ ERROR at setup of test_teacher ________________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/imhere_test/imhere_test.py:27: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-________________ ERROR at setup of test_teacher_session_manage _________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/imhere_test/imhere_test.py:27: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-___________________ ERROR at setup of test_teacher_add_class ___________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/imhere_test/imhere_test.py:27: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-_________________ ERROR at setup of test_teacher_remove_class __________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/imhere_test/imhere_test.py:27: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-__________________ ERROR at setup of test_teacher_view_class ___________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/imhere_test/imhere_test.py:27: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-_______________________ ERROR at setup of test_register ________________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/imhere_test/imhere_test.py:27: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-_____________________ ERROR at setup of test_main_student ______________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/imhere_test/imhere_test.py:27: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-______________________ ERROR at setup of test_add_teacher ______________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/imhere_test/imhere_test.py:27: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-____________________ ERROR at setup of test_get_course_name ____________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-_____________________ ERROR at setup of test_get_students ______________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-______________________ ERROR at setup of test_add_student ______________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-____________________ ERROR at setup of test_remove_student _____________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-__________________ ERROR at setup of test_get_active_session ___________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-_____________________ ERROR at setup of test_close_session _____________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-_____________________ ERROR at setup of test_open_session ______________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-____________________ ERROR at setup of test_get_secret_code ____________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-___________________ ERROR at setup of test_get_num_sessions ____________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-_____________________ ERROR at setup of test_sql_injection _____________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-______________________ ERROR at setup of test_add_teacher ______________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-_______________________ ERROR at setup of test_sessions ________________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-______________________ ERROR at setup of test_is_student _______________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-______________________ ERROR at setup of test_is_teacher _______________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-________________________ ERROR at setup of test_deproxy ________________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-_____________________ ERROR at setup of test_escape_string _____________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-________________________ ERROR at setup of test_get_uni ________________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
+    def test_teacher(db):
     
-        queries = []
+        with imhere.app.test_client() as c:
     
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-______________________ ERROR at setup of test_get_courses ______________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-__________________ ERROR at setup of test_get_secret_and_seid __________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
-    
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-_____________________ ERROR at setup of test_has_signed_in _____________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
+            # teacher page gated
+            res = c.get('/teacher/')
+            assert 302 == res.status_code
     
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-_______________ ERROR at setup of test_insert_attendance_record ________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
+            # redirects to index
+            res = c.get('/teacher/', follow_redirects=True)
+            assert 'Login' in res.data
+            assert 'Register' in res.data
+            assert 200 == res.status_code
     
-        queries = []
+            # lets login
+            with c.session_transaction() as sess:
+                login(sess, teacher_user, teacher_user_id)
     
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-______________ ERROR at setup of test_get_num_attendance_records _______________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
+            # not a teacher so still gated
+            res = c.get('/teacher/')
+            assert 302 == res.status_code
     
-        queries = []
+            # login as teacher
+            with c.session_transaction() as sess:
+                sess['is_teacher'] = True
     
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
+            # see the teacher page
+            res = c.get('/teacher/')
+>           assert 'Add a Class' in res.data
+E           assert 'Add a Class' in '<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <title>Teacher View</title>\n  <style>\n  .btn...utton>\n      </form><br>\n\n      Secret Code:<br>\n      0000<br><br>\n\n    \n  \n\n\n  </center>\n</body>\n</html>'
+E            +  where '<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <title>Teacher View</title>\n  <style>\n  .btn...utton>\n      </form><br>\n\n      Secret Code:<br>\n      0000<br><br>\n\n    \n  \n\n\n  </center>\n</body>\n</html>' = <Response 2104 bytes [200 OK]>.data
 
-test/db_util.py:50: IOError
-______________________ ERROR at setup of test_get_courses ______________________
+test/imhere_test/imhere_test.py:82: AssertionError
+----------------------------- Captured stdout call -----------------------------
+'_AppCtxGlobals' object has no attribute 'conn'
+'_AppCtxGlobals' object has no attribute 'conn'
+____________________________ test_teacher_add_class ____________________________
 
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
+db = <sqlalchemy.engine.base.Connection object at 0x109e9fdd0>
 
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
-    
-        queries = []
+    def test_teacher_add_class(db):
     
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-_______________ ERROR at setup of test_get_courses_with_session ________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
+        with imhere.app.test_client() as c:
     
-        queries = []
+            # first lets test this page is properly gated
+            res = c.get('/teacher/add_class')
+            assert 302 == res.status_code
     
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-______________________ ERROR at setup of test_add_course _______________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
+            with c.session_transaction() as sess:
+                login(sess, newt, newt_id)
     
-        queries = []
+            res = c.get('/teacher/add_class')
+            assert 302 == res.status_code
     
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-_____________________ ERROR at setup of test_remove_course _____________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
+            with c.session_transaction() as sess:
+                sess['is_teacher'] = True
     
-        queries = []
+            res = c.get('/teacher/add_class')
+            assert 'Create a Class' in res.data
+            assert 'Student Unis' in res.data
+            assert 200 == res.status_code
     
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-______________________ ERROR at setup of test_get_create _______________________
+            payload = {'unis': [''], 'classname': 'newts variety hour'}
+            res = c.post('/teacher/add_class', data=payload, follow_redirects=True)
+            assert 'newts variety hour' in res.data
+>           assert 'Add a Class' in res.data
+E           assert 'Add a Class' in '<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <title>Teacher View</title>\n  <style>\n  .btn... value="8">Open Attendance Window\n      </button>\n      </form><br><br>\n    \n  \n\n\n  </center>\n</body>\n</html>'
+E            +  where '<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <title>Teacher View</title>\n  <style>\n  .btn... value="8">Open Attendance Window\n      </button>\n      </form><br><br>\n    \n  \n\n\n  </center>\n</body>\n</html>' = <Response 2661 bytes [200 OK]>.data
 
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
+test/imhere_test/imhere_test.py:139: AssertionError
+----------------------------- Captured stdout call -----------------------------
+'_AppCtxGlobals' object has no attribute 'conn'
+'_AppCtxGlobals' object has no attribute 'conn'
+__________________________ test_teacher_remove_class ___________________________
 
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+db = <sqlalchemy.engine.base.Connection object at 0x109e9fdd0>
 
-file = '../schema.sql'
-
-    def _read_sql_file(file):
+    def test_teacher_remove_class(db):
     
-        queries = []
+        with imhere.app.test_client() as c:
     
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-_____________________ ERROR at setup of test_is_valid_uni ______________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
+            # first check page is auth protected
     
-        queries = []
+            res = c.get('/teacher/remove_class')
+            assert 302 == res.status_code
     
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-_____________________ ERROR at setup of test_sql_injection _____________________
-
-    @pytest.yield_fixture(scope="module")
-    def db():
->       test_db = test.db_util.create_test_db()
-
-test/models_test/conftest.py:7: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-test/db_util.py:29: in create_test_db
-    schema = _read_sql_file('../schema.sql')
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-file = '../schema.sql'
-
-    def _read_sql_file(file):
+            with c.session_transaction() as sess:
+                login(sess, newt, newt_id)
     
-        queries = []
+            res = c.get('/teacher/remove_class')
+            assert 302 == res.status_code
     
-        current = ''
->       with open(file, 'r') as f:
-E       IOError: [Errno 2] No such file or directory: '../schema.sql'
-
-test/db_util.py:50: IOError
-=========================== 38 error in 8.93 seconds ===========================
+            with c.session_transaction() as sess:
+                sess['is_teacher'] = True
+    
+            res = c.get('/teacher/remove_class')
+            assert 'Class List' in res.data
+            assert 'Remove Class' in res.data
+            assert 'Newts big blunder' in res.data
+            assert 200 == res.status_code
+    
+            payload = {'cid': 5}
+            res = c.post('/teacher/remove_class', data=payload, follow_redirects=True)
+>           assert 'Add a Class' in res.data
+E           assert 'Add a Class' in '<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <title>Teacher View</title>\n  <style>\n  .btn... value="8">Open Attendance Window\n      </button>\n      </form><br><br>\n    \n  \n\n\n  </center>\n</body>\n</html>'
+E            +  where '<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <title>Teacher View</title>\n  <style>\n  .btn... value="8">Open Attendance Window\n      </button>\n      </form><br><br>\n    \n  \n\n\n  </center>\n</body>\n</html>' = <Response 2353 bytes [200 OK]>.data
+
+test/imhere_test/imhere_test.py:183: AssertionError
+----------------------------- Captured stdout call -----------------------------
+'_AppCtxGlobals' object has no attribute 'conn'
+'_AppCtxGlobals' object has no attribute 'conn'
+___________________________ test_teacher_view_class ____________________________
+
+db = <sqlalchemy.engine.base.Connection object at 0x109e9fdd0>
+
+    def test_teacher_view_class(db):
+    
+        with imhere.app.test_client() as c:
+    
+            with c.session_transaction() as sess:
+                login(sess, newt, newt_id)
+                sess['is_teacher'] = True
+    
+            query = "select cid from courses where name = 'newts big class'"
+            cursor = db.execute(query)
+            for item in cursor:
+                cid = item[0]
+            #test basic display
+>           payload = {'cid': cid}
+E           UnboundLocalError: local variable 'cid' referenced before assignment
+
+test/imhere_test/imhere_test.py:200: UnboundLocalError
+----------------------------- Captured stdout call -----------------------------
+'_AppCtxGlobals' object has no attribute 'conn'
+________________________________ test_register _________________________________
+
+db = <sqlalchemy.engine.base.Connection object at 0x109e9fdd0>
+
+    def test_register(db):
+    
+    
+        # should be gated by sso
+        with imhere.app.test_client() as c:
+            res = c.get('/register')
+            assert 302 == res.status_code
+    
+            with c.session_transaction() as sess:
+                login(sess, unreg, unreg_id)
+    
+            res = c.get('/register')
+            assert 'Registration' in res.data
+            assert 'I am a' in res.data
+            assert 200 == res.status_code
+    
+            # give bad uni
+            payload = {'type': 'student', 'uni': 'ds9876'}
+            res = c.post('/register', data=payload)
+            assert 'UNI already in use' in res.data
+            with c.session_transaction() as sess:
+                assert sess['is_student'] == False
+    
+            payload = {'type': 'student', 'uni': 'uu0000'}
+            res = c.post('/register', data=payload, follow_redirects=True)
+            assert 'Registration' not in res.data
+            assert 200 == res.status_code
+            with c.session_transaction() as sess:
+                assert sess['is_student'] == True
+    
+            res = c.get('/register')
+            assert 'You are already registered as a student' in res.data
+    
+            payload = {'type': 'teacher'}
+            res = c.post('/register', data=payload, follow_redirects=True)
+            assert 'Registration' not in res.data
+>           assert 'Add a Class' in res.data
+E           assert 'Add a Class' in '<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <title>Teacher View</title>\n  <style>\n  .btn...    </button>\n        </form>\n      </ul>\n    </div>\n  </nav>\n\n  <center>\n  \n\n\n  </center>\n</body>\n</html>'
+E            +  where '<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <title>Teacher View</title>\n  <style>\n  .btn...    </button>\n        </form>\n      </ul>\n    </div>\n  </nav>\n\n  <center>\n  \n\n\n  </center>\n</body>\n</html>' = <Response 1635 bytes [200 OK]>.data
+
+test/imhere_test/imhere_test.py:271: AssertionError
+----------------------------- Captured stdout call -----------------------------
+'_AppCtxGlobals' object has no attribute 'conn'
+'_AppCtxGlobals' object has no attribute 'conn'
+'_AppCtxGlobals' object has no attribute 'conn'
+______________________________ test_main_student _______________________________
+
+db = <sqlalchemy.engine.base.Connection object at 0x109e9fdd0>
+
+    def test_main_student(db):
+        with imhere.app.test_client() as c:
+            res = c.get('/student/')
+            assert 302 == res.status_code
+    
+            with c.session_transaction() as sess:
+                login(sess, unreg, unreg_id)
+                sess['is_teacher'] = False
+                sess['is_student'] = True
+    
+>           cid = db.execute("select cid from courses where name = 'newts big class'").fetchone()['cid']
+E           TypeError: 'NoneType' object has no attribute '__getitem__'
+
+test/imhere_test/imhere_test.py:288: TypeError
+----------------------------- Captured stdout call -----------------------------
+'_AppCtxGlobals' object has no attribute 'conn'
+===================== 6 failed, 32 passed in 50.33 seconds =====================
