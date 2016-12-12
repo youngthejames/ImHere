@@ -1,150 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>{{course_name}}</title>
-    <style>
-        .beta table, .beta td, .beta th {
-            border: 1px solid black;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>{{course_name}}</title>
+  <style>
+      .beta table, .beta td, .beta th {
+          border: 1px solid black;
+      }
+  </style>
+
+  <!--Import Google Icon Font-->
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link rel="stylesheet"
+        type="text/css"
+        href="{{ url_for('static', filename='css/materialize.min.css') }}"
+        media="screen,projection"/>
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 
 <body>
-    <center>
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo center">ImHere - {{course_name}}</a>
+      <a class="btn waves-effect waves-light left" href="/teacher/">Home</a>
+      <ul id="nav-mobile" class="left hide-on-med-and-down">
+      </ul>
+    </div>
+  </nav>
+  <br>
 
-    <h2>ImHere</h2><br>
+  <center>
+  {% if secret %}
+    <form method="POST" action="/teacher/view_class">
+    <button name="close" value="{{cid}}">Close Attendance Window
+    </button>
+    </form>
 
-    <h3>{{course_name}}</h3>
+    Secret Code:<br>
+    {{secret}}<br>
 
-    {% if secret %}
+  {% else %}
+      <form method="POST" action="/teacher/view_class">
+      <button name="open" value="{{cid}}">Open Attendance Window
+      </button>
+      </form><br>
+
+  {% endif %}
+  <br>
+
+  <!-- teachers section -->
+  <h5>Teachers</h5>
+  <form method = "POST" action="/teacher/view_class">
+    <input style="width:300px" type="email" name="email" placeholder="Teacher's email" required></input>
+    <input type="hidden" name="cid" value="{{cid}}"></input>
+    <button name="add_teacher" value="{{cid}}">Add Teacher</button>
+  </form>
+  {% if res[0] == False %}
+    <font color="red">{{res[1]}}</font>
+  {% endif %}
+  <table style="width:500px" class="centered">
+    {% for teacher in teachers %}
+    <tr>
+      <td>{{teacher['name']}} {{teacher['family_name']}}</td>
+      <td>{{teacher['email']}}</td>
+      {% if teacher['uid'] != userid %}
+      <td> <!-- allow teacher to delete other teachers, not themselves -->
         <form method="POST" action="/teacher/view_class">
-        <button name="close" value="{{cid}}">Close Attendance Window
-        </button>
+          <button name="remove_teacher" value="{{teacher['uid']}}">Remove</button>
+          <input type="hidden" name="cid" value="{{cid}}"></input>
         </form>
-
-        Secret Code:<br>
-        {{secret}}<br>
-
-    {% else %}
-        <form method="POST" action="/teacher/view_class">
-        <button name="open" value="{{cid}}">Open Attendance Window
-        </button>
-        </form><br>
-
-    {% endif %}
-
-    <!-- teachers section -->
-    <h2>Teachers</h2>
-    <form method = "POST" action="/teacher/view_class">
-      <input type="email" name="email" placeholder="Teacher's email" required></input>
-      <input type="hidden" name="cid" value="{{cid}}"></input>
-      <button name="add_teacher" value="{{cid}}">Add Teacher</button>
-    </form>
-    {% if res[0] == False %}
-      <font color="red">{{res[1]}}</font>
-    {% endif %}
-    <table>
-      {% for teacher in teachers %}
-      <tr>
-        <td>{{teacher['name']}} {{teacher['family_name']}}</td>
-        <td>{{teacher['email']}}</td>
-        {% if teacher['uid'] != userid %}
-        <td> <!-- allow teacher to delete other teachers, not themselves -->
-          <form method="POST" action="/teacher/view_class">
-            <button name="remove_teacher" value="{{teacher['uid']}}">Remove</button>
-            <input type="hidden" name="cid" value="{{cid}}"></input>
-          </form>
-        </td>
-        {% endif %}
-      </tr>
-      {% endfor %}
-    </table>
-
-    <table cellspacing="35">
-    <thead>
-    <tr>
-
-    <th>
-    Add Student to Class:<br>
-    <form method="POST" action="/teacher/view_class">
-        <input type="text" required name="add_student" placeholder="uni">
-        <br>
-        <button name="cid" value={{cid}}>add</button>
-    </form>
-    </th>
-
-    {% if students %}
-    <th>
-    Del Student from Class:<br>
-    <form method="POST" action="/teacher/view_class">
-        <input type="text" required name="remove_student" placeholder="uni">
-        <br>
-        <button name="cid" value={{cid}}>remove</button>
-    </form>
-    </th>
-    {% endif %}
-
-    </tr>
-    </thead>
-    </table>
-
-    {% if res == -1 %}
-        <font color="red">'{{uni}}' is an invalid uni</font>
-    {% elif res == -2 %}
-        <font color="red">'{{uni}}' is already in the class</font>
-    {% elif res == -3 %}
-        <font color="red">'{{uni}}' is not in the class to begin with</font>
-    {% endif %}
-
-    <br><br>
-
-    <!-- students section -->
-    {% if students %}
-        {% if secret %}
-        <font color="red">attendance may be inaccurate due to the open sign-in window</font>
-        {% endif %}
-    <table cellspacing="5" class="beta" style="border-collapse:collapse">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>E-Mail</th>
-        <th>UNI</th>
-        <th>Attendance</th>
-    </tr>
-    </thead>
-
-    <!-- students is a list == [<RowProxy>, UNI, num_attendance_records] -->
-    {% for student in students %}
-    <tr>
-        <td align="center">{{student[0][1]}} {{student[0][2]}}</td>
-        <td align="center">{{student[0][3]}}</td>
-        <td align="center">{{student[1]}}</td>
-        <td align="center">{{student[2]}}/{{num_sessions}}</td>
+      </td>
+      {% endif %}
     </tr>
     {% endfor %}
-    </table><br><br>
-    {% endif %}
-    <!-- end students section -->
+  </table>
+  <br><br><br>
 
-    <!-- sessions -->
-    <h3>Sessions</h3>
-    <table>
+  <h5>Students</h5>
+  <table style="width:600px" class="centered" cellspacing="35">
+    <thead>
+      <tr>
+        <th>
+        Add Student to Class:<br>
+        <form method="POST" action="/teacher/view_class">
+          <input style="width:300px" type="text" required name="add_student" placeholder="uni">
+          <br>
+          <button name="cid" value={{cid}}>add</button>
+        </form>
+        </th>
+
+        {% if students %}
+        <th>
+        Del Student from Class:<br>
+        <form method="POST" action="/teacher/view_class">
+          <input style="width:300px" type="text" required name="remove_student" placeholder="uni">
+          <br>
+          <button name="cid" value={{cid}}>remove</button>
+        </form>
+        </th>
+        {% endif %}
+      </tr>
+    </thead>
+  </table>
+
+  {% if res == -1 %}
+      <font color="red">'{{uni}}' is an invalid uni</font>
+  {% elif res == -2 %}
+      <font color="red">'{{uni}}' is already in the class</font>
+  {% elif res == -3 %}
+      <font color="red">'{{uni}}' is not in the class to begin with</font>
+  {% endif %}
+
+  <br><br>
+
+  <!-- students section -->
+  {% if students %}
+      {% if secret %}
+      <font color="red">attendance may be inaccurate due to the open sign-in window</font>
+      {% endif %}
+  <table cellspacing="5" style="width:600px" class="centered" style="border-collapse:collapse">
+  <thead>
+  <tr>
+      <th>Name</th>
+      <th>E-Mail</th>
+      <th>UNI</th>
+      <th>Attendance</th>
+  </tr>
+  </thead>
+
+  <!-- students is a list == [<RowProxy>, UNI, num_attendance_records] -->
+  {% for student in students %}
+  <tr>
+      <td align="center">{{student[0][1]}} {{student[0][2]}}</td>
+      <td align="center">{{student[0][3]}}</td>
+      <td align="center">{{student[1]}}</td>
+      <td align="center">{{student[2]}}/{{num_sessions}}</td>
+  </tr>
+  {% endfor %}
+  </table><br><br>
+  {% endif %}
+  <!-- end students section -->
+
+  <!-- sessions -->
+  <h5>Sessions</h5>
+  <table class="centered" style="width:600px">
+    <thead>
       <tr>
         <th>Date</th>
         <th>Attendance</th>
       </tr>
-    {% for session in sessions %}
-      <tr>
-        <td><a href="/teacher/sessions/{{session['seid']}}">
-          {{session['day']}}
-        </a></td>
-        <td>{{session['attendance']}} / {{session['enrollment']}}</td>
-      </tr>
-    {% endfor %}
-    </table>
+    </thead>
+  {% for session in sessions %}
+    <tr>
+      <td><a href="/teacher/sessions/{{session['seid']}}">
+        {{session['day']}}
+      </a></td>
+      <td>{{session['attendance']}} / {{session['enrollment']}}</td>
+    </tr>
+  {% endfor %}
+  </table>
+  </center>
 
-    <a href="/teacher/">Home</a>
-    </center>
 </body>
 </html>
