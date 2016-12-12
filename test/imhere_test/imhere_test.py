@@ -79,7 +79,7 @@ def test_teacher(db):
 
         # see the teacher page
         res = c.get('/teacher/')
-        assert 'Add a Class' in res.data
+        assert 'Add Class' in res.data
         assert 'Logout' in res.data
         assert 200 == res.status_code
 
@@ -136,7 +136,7 @@ def test_teacher_add_class(db):
         payload = {'unis': [''], 'classname': 'newts variety hour'}
         res = c.post('/teacher/add_class', data=payload, follow_redirects=True)
         assert 'newts variety hour' in res.data
-        assert 'Add a Class' in res.data
+        assert 'Add Class' in res.data
         assert 200 == res.status_code
 
         payload = {'unis': ['fake'], 'classname': 'newts big class'}
@@ -146,7 +146,7 @@ def test_teacher_add_class(db):
         payload = {'unis': ['sw1234'], 'classname': 'newts big class'}
         res = c.post('/teacher/add_class', data=payload, follow_redirects=True)
         assert 'newts big class' in res.data
-        assert 'Add a Class' in res.data
+        assert 'Add Class' in res.data
         assert 200 == res.status_code
 
         # was sylvanas added to this class?
@@ -180,7 +180,7 @@ def test_teacher_remove_class(db):
 
         payload = {'cid': 5}
         res = c.post('/teacher/remove_class', data=payload, follow_redirects=True)
-        assert 'Add a Class' in res.data
+        assert 'Add Class' in res.data
         assert 'Newts big blunder' not in res.data
         assert 200 == res.status_code
 
@@ -268,7 +268,7 @@ def test_register(db):
         payload = {'type': 'teacher'}
         res = c.post('/register', data=payload, follow_redirects=True)
         assert 'Registration' not in res.data
-        assert 'Add a Class' in res.data
+        assert 'Add Class' in res.data
         with c.session_transaction() as sess:
             assert sess['is_teacher'] == True
 
