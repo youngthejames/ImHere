@@ -1,35 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Teacher View</title>
-    <style>
-    .btn-link {
-        border:none;
-        outline:none;
-        background:none;
-        cursor:pointer;
-        color:#4863a8;
-        padding-top:1em;
-        text-decoration:underline;
-        font-family:inherit;
-        font-size:inherit;
-    }
-    </style>
+  <meta charset="UTF-8">
+  <title>Teacher View</title>
+  <style>
+  .btn-link {
+      border:none;
+      outline:none;
+      background:none;
+      cursor:pointer;
+      color:#4863a8;
+      padding-top:1em;
+      text-decoration:underline;
+      font-family:inherit;
+      font-size:inherit;
+  }
+  </style>
+
+  <!--Import Google Icon Font-->
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link rel="stylesheet"
+        type="text/css"
+        href="{{ url_for('static', filename='css/materialize.min.css') }}"
+        media="screen,projection"/>
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 
 <body>
-    <form action="/switch_type" method="POST">
-    <button name="type" value="student">Switch to student view</button>
-    </form>
-    
-    <form action="/oauth/logout" method="POST">
-    <button name="logout">Logout</button>
-    </form><br>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo center">ImHere - Teacher View</a>
+        <ul id="nav-mobile" class="left hide-on-med-and-down">
+          <form  method="POST">
+            <button class="btn waves-effect waves-light" formaction="/switch_type" name="type" value="student"> Switch to student view
+            </button>
+            <button class="btn waves-effect waves-light" formaction="/oauth/logout" name="logout">Logout
+            </button>
+          </form>
+        </ul>
+      </div>
+    </nav>
 
     <center>
-    <h2>ImHere</h2>
-
     <a href="/teacher/add_class">Add a Class</a>
     {% if not empty %}
         <a href="/teacher/remove_class">Remove a Class</a><br><br> 
