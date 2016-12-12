@@ -26,12 +26,12 @@ def create_test_db():
     conn = db.connect()
 
     # create the schema
-    schema = _read_sql_file('../schema.sql')
+    schema = _read_sql_file('schema.sql')
     for q in schema:
         conn.execute(q)
 
     # put in some test data
-    data = _read_sql_file('data.sql')
+    data = _read_sql_file('test/data.sql')
     for q in data:
         conn.execute(q)
 
